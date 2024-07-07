@@ -14,11 +14,6 @@ pip install sv_ttk_colorizer
 
 To launch the module, run this command in your terminal:
 ```
-sv_ttk_colorizer
-```
-
-If the command above didn't work, try this one:
-```
 python -m sv_ttk_colorizer
 ```
 
