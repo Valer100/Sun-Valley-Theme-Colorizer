@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import tkinter as tk, sv_ttk, darkdetect, os, shutil, sys
 from tkinter import ttk, filedialog as fd, messagebox as msg
 from urllib.request import urlretrieve
