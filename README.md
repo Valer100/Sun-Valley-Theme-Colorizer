@@ -1,5 +1,5 @@
 <p align="center">
-  <img width=700 src="https://github.com/Valer100/Sun-Valley-Theme-Colorizer/blob/main/screenshots/screenshot_hero_dark.png"/>
+  <img width=700 src="https://github.com/Valer100/Sun-Valley-Theme-Colorizer/blob/main/screenshots/screenshot_hero_dark.png?raw=true"/>
 </p>
 
 # Sun Valley Theme Colorizer
@@ -13,6 +13,16 @@ pip install sv_ttk_colorizer
 ```
 
 To launch the module, run this command in your terminal:
+```
+sv_ttk_colorizer
+```
+
+... or even shorter:
+```
+sv_ttk_c
+```
+
+If all the commands above didn't work, try this one:
 ```
 python -m sv_ttk_colorizer
 ```
