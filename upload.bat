@@ -1,7 +1,5 @@
 @echo off
-pip install setuptools
-pip install wheel
-pip install twine
+pip install setuptools wheel twine
 rmdir /q /s dist
 python setup.py sdist bdist_wheel
 twine upload dist/*
