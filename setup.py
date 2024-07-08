@@ -4,7 +4,7 @@ description = open("README.md", "r").read()
 
 setup(
     name = "sv_ttk_colorizer",
-    version = "0.0.6",
+    version = "1.0.1",
     python_requires = ">=3.8",
     license = "MIT",
     author = "Valer100",
@@ -23,6 +23,9 @@ setup(
         "sv_ttk",
         "appdirs"
     ],
+    package_data={
+        "sv_ttk_colorizer": ["resources/*"],
+    },
     entry_points = {
         "console_scripts": [
             "sv_ttk_colorizer = sv_ttk_colorizer:main",
