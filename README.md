@@ -22,7 +22,7 @@ sv_ttk_colorizer
 sv_ttk_c
 ```
 
-If all the commands above didn't work, try this one:
+If all the commands above didn't work, try this one (it looks like your Python installation's ```Scripts``` folder is not on your PATH):
 ```
 python -m sv_ttk_colorizer
 ```
