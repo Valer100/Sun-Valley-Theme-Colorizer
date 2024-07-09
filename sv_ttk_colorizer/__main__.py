@@ -22,7 +22,7 @@ def main():
 
     util.set_title_bar_color(window, darkdetect.theme().lower())
 
-    print("Sun Valley Theme Colorizer - version 1.0.3")
+    print("Sun Valley Theme Colorizer - version 1.1.0")
     print("Work path: " + util.root_folder)
 
     title = ttk.Frame(window)
