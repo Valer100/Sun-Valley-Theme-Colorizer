@@ -1,4 +1,4 @@
-import tkinter as tk, colorsys, shutil, sys, appdirs, os
+import tkinter as tk, colorsys, shutil, sys, appdirs, os, darkdetect
 from PIL import Image
 
 latest_sv_ttk = "https://github.com/rdbende/Sun-Valley-ttk-theme/archive/refs/heads/main.zip"
@@ -17,6 +17,14 @@ preview = tk.PhotoImage(file = root_folder + "/resources/preview_accent.png")
 
 accent_light = "#005fb8"
 accent_dark = "#57c8ff"
+
+def update_colors(theme):
+    global bg, warning
+
+    if theme == "dark": bg = "#1c1c1c"; warning = "#FFFF00"
+    else: bg = "#fafafa"; warning = "#FF0000"
+
+update_colors(darkdetect.theme().lower())
 
 sv_ttk_download = root_folder + "/temp/sv_ttk repo/Sun-Valley-ttk-theme-main/sv_ttk/"
 sv_ttk_spritesheet_light = sv_ttk_download + "/theme/spritesheet_light.png"
