@@ -1,6 +1,0 @@
-darkdetect
-Pillow
-requests
-pywinstyles
-sv_ttk
-appdirs
