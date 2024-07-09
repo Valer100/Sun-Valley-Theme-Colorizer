@@ -8,6 +8,7 @@ def main():
 
     window = tk.Tk()
     window.title("Sun Valley Theme Colorizer")
+    window.state("zoomed")
     window.minsize(width = 1307, height = 579)
     window.configure(padx = 16, pady = 8)
 
