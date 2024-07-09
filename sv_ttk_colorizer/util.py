@@ -2,6 +2,8 @@ import tkinter as tk, colorsys, shutil, sys, appdirs, os
 from PIL import Image
 
 latest_sv_ttk = "https://github.com/rdbende/Sun-Valley-ttk-theme/archive/refs/heads/main.zip"
+sv_ttk_license = "https://raw.githubusercontent.com/rdbende/Sun-Valley-ttk-theme/main/LICENSE"
+dm_titlebars_patch = "https://raw.githubusercontent.com/Valer100/Sun-Valley-ttk-theme/windows-titlebar-tweaks/sv_ttk/__init__.py"
 root_folder = appdirs.user_data_dir("sv_ttk_colorizer")
 
 if not os.path.exists(root_folder): os.makedirs(root_folder)
