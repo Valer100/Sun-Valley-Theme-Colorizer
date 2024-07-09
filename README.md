@@ -31,7 +31,7 @@ python -m sv_ttk_colorizer
 Python 3.8 or newer (like the theme)
 
 ## What's this module doing?
-Well, like I said before, it downloads the latest version of the theme from GitHub, then it changes the hue of the spritesheet images, changes a few colors in ```light.tcl``` and ```dark.tcl``` and then it gives you the modified theme inside a folder named ```sv_ttk``` that you will have to move into your project's root folder. You don't have to do any changes in your code.
+Well, like I said before, it downloads the latest version of the theme from GitHub, then it changes the hue of the spritesheet images, changes some colors in ```light.tcl``` and ```dark.tcl``` and then it gives you the modified theme in a folder named ```sv_ttk``` that you have to move to the root folder of your project. You don't need to make any changes to your code.
 
 ## License (of the module)
 [MIT](https://github.com/Valer100/Sun-Valley-Theme-Colorizer/blob/main/LICENSE)
