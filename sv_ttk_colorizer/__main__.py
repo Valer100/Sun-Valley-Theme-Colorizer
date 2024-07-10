@@ -31,7 +31,7 @@ def main():
     ttk.Label(title, text = "Sun Valley Theme Colorizer", font = ("Segoe UI Semibold", 20)).pack(side = "left", padx = 16)
 
     theme_switch = ttk.Checkbutton(title, text = "Dark Mode", style = "Switch.TCheckbutton", command = lambda: toggle_theme())
-    if not sys.platform == "win32" or sys.platform == "darwin": theme_switch.pack(side = "right", fill = "y")
+    if not sys.platform == "win32" or sys.platform == "darwin": theme_switch.pack(side = "right", fill = "y", padx = 16)
 
     frame = tk.Frame(window, bg = util.bg)
     frame.pack(pady = (16, 0), fill = "both", expand = True)
@@ -159,6 +159,10 @@ def main():
         sv_ttk.toggle_theme()
         util.update_colors(sv_ttk.get_theme())
         warning1["foreground"] = util.warning
+        frame["background"] = util.bg
+        frame2["background"] = util.bg
+        preview_frame["background"] = util.bg
+        preview_image["background"] = util.bg
 
     save = ttk.Button(options_frame, text = "Save", style = "Accent.TButton", command = save_patch)
     save.pack(side = "bottom", fill = "x")
