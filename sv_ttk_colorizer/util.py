@@ -32,6 +32,8 @@ sv_ttk_spritesheet_dark = sv_ttk_download + "/theme/spritesheet_dark.png"
 sv_ttk_light = sv_ttk_download + "/theme/light.tcl"
 sv_ttk_dark = sv_ttk_download + "/theme/dark.tcl"
 
+desktop = os.path.expanduser("~") + "/Desktop"
+
 def change_hue_and_save(path, hue):
     img = Image.open(path)
     img.convert("RGBA")

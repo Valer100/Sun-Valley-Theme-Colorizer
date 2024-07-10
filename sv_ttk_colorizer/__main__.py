@@ -76,7 +76,7 @@ def main():
     warning1.pack(pady = (8, 0))
 
     def save_patch():
-        save_to = fd.askdirectory(title = "Choose where to save the theme")
+        save_to = fd.askdirectory(title = "Choose where to save the theme", initialdir = util.desktop)
 
         if not save_to == "":
             window.configure(cursor = "watch")
