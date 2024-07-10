@@ -54,13 +54,14 @@ def main():
     ttk.Separator(frame, orient = "vertical").pack(side = "right", fill = "y")
 
     def update_preview(event):
-        window.configure(cursor = "watch")
-        window.update()
-        util.update_preview(hue.get())
-        util.update_accents()
-        preview_image.create_image(0, 0, image = util.preview, anchor = "nw")
-        preview_image.create_image(0, 0, image = util.preview_text, anchor = "nw")
-        window.configure(cursor = "arrow")
+        if hue.focus_get():
+            window.configure(cursor = "watch")
+            window.update()
+            util.update_preview(hue.get())
+            util.update_accents()
+            preview_image.create_image(0, 0, image = util.preview, anchor = "nw")
+            preview_image.create_image(0, 0, image = util.preview_text, anchor = "nw")
+            window.configure(cursor = "arrow")
 
     hue_img = tk.PhotoImage(file = "resources/color_range.png")
 
@@ -71,7 +72,8 @@ def main():
 
     hue = ttk.Scale(hue_group, length = 250, from_= 0, to = 100)
     hue.pack(pady = (0, 5))
-    hue.bind("<ButtonRelease-1>", update_preview)
+    hue.bind("<ButtonRelease>", update_preview)
+    hue.bind("<KeyRelease>", update_preview)
 
     hue_image = ttk.Label(hue_group, image = hue_img)
     hue_image.pack()
@@ -172,6 +174,7 @@ def main():
 
     if sys.platform == "win32" or sys.platform == "darwin": sv_ttk.set_theme(darkdetect.theme())
     else: sv_ttk.set_theme("light")
+
     window.mainloop()
 
 if __name__ == "__main__": main()
