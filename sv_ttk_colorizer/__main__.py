@@ -13,7 +13,7 @@ def main():
     else: window.wm_attributes("-zoomed", True)
 
     window.minsize(width = 1307, height = 579)
-    window.configure(padx = 16, pady = 8)
+    window.configure()
 
     dm_titlebars = tk.BooleanVar(value = False)
 
@@ -26,25 +26,32 @@ def main():
     print("Work path: " + util.root_folder)
 
     title = ttk.Frame(window)
-    title.pack(fill = "x")
+    title.pack(fill = "x", pady = (8, 0))
 
-    ttk.Label(title, text = "Sun Valley Theme Colorizer", font = ("Segoe UI Semibold", 20)).pack(side = "left")
+    ttk.Label(title, text = "Sun Valley Theme Colorizer", font = ("Segoe UI Semibold", 20)).pack(side = "left", padx = 16)
 
     theme_switch = ttk.Checkbutton(title, text = "Dark Mode", style = "Switch.TCheckbutton", command = lambda: toggle_theme())
     if not sys.platform == "win32" or sys.platform == "darwin": theme_switch.pack(side = "right", fill = "y")
 
-    frame = ttk.Frame(window)
-    frame.pack(pady = (20, 0), padx = 16, fill = "both", expand = True)
+    frame = tk.Frame(window, bg = util.bg)
+    frame.pack(pady = (16, 0), fill = "both", expand = True)
 
-    preview_frame = ttk.Frame(frame)
-    preview_frame.pack(fill = "y", pady = 16, expand = True, side = "left")
+    frame2 = tk.Frame(frame, bg = util.bg)
+    frame2.pack(fill = "both", expand = True, side = "left")
+
+    ttk.Separator(frame2, orient = "horizontal").pack(fill = "x")
+
+    preview_frame = tk.Frame(frame2, bg = util.bg)
+    preview_frame.pack(fill = "y", padx = 16, pady = 16, expand = True, side = "left")
 
     preview_image = tk.Canvas(preview_frame, bg = util.bg, width = util.preview_bg.width(), height = util.preview.height(), bd = 0, highlightthickness = 0)
     preview_image.pack(side = "left")
     preview_image.create_image(0, 0, image = util.preview_bg, anchor = "nw")
 
-    options_frame = ttk.Frame(frame)
-    options_frame.pack(side = "right", padx = (32, 0), pady = (0, 16), anchor = "n", fill = "y")
+    options_frame = ttk.Frame(frame, padding = (24, 8, 24, 24))
+    options_frame.pack(side = "right", anchor = "n", fill = "y")
+
+    ttk.Separator(frame, orient = "vertical").pack(side = "right", fill = "y")
 
     def update_preview(event):
         window.configure(cursor = "watch")

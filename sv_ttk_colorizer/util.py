@@ -21,8 +21,8 @@ accent_dark = "#57c8ff"
 def update_colors(theme):
     global bg, warning
 
-    if theme == "dark": bg = "#1c1c1c"; warning = "#FFFF00"
-    else: bg = "#fafafa"; warning = "#FF0000"
+    if theme == "dark": bg = "#202020"; warning = "#FFFF00"
+    else: bg = "#ffffff"; warning = "#FF0000"
 
 update_colors(darkdetect.theme().lower())
 
