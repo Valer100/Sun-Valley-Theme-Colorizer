@@ -1,9 +1,9 @@
-<div align="center"><img src="icon/icon.png" width=100/> <h1>Sun Valley Theme Colorizer</h1></div>
-<br>
 <div align="center">
   <img width=700 src="https://github.com/Valer100/Sun-Valley-Theme-Colorizer/blob/main/screenshots/screenshot_hero_dark.png?raw=true"/>
 </div>
-<br>
+
+# Sun Valley Theme Colorizer
+
 This Python module allows you to change the accent color of [@rdbende](https://github.com/rdbende)'s Sun Valley ttk theme without the need to manually download the theme from GitHub, change the hue of the spritesheet files and change some colors in the tcl files. This module does everything for you.
 
 ## How to install
