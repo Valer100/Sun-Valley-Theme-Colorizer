@@ -19,10 +19,14 @@ accent_light = "#005fb8"
 accent_dark = "#57c8ff"
 
 def update_colors(theme):
-    global bg, warning
+    global bg, warning, bg_wallpaper
 
-    if theme == "dark": bg = "#202020"; warning = "#FFFF00"
-    else: bg = "#ffffff"; warning = "#FF0000"
+    if theme == "dark": 
+        bg = "#202020"
+        warning = "#FFFF00"
+    else: 
+        bg = "#ffffff"
+        warning = "#FF0000"
 
 update_colors(darkdetect.theme().lower())
 
@@ -89,6 +93,8 @@ def set_title_bar_color(root, theme):
             
         if theme == "dark": pywinstyles.change_header_color(root, "#1c1c1c")
         elif theme == "light": pywinstyles.change_header_color(root, "#fafafa")
+
+    if not get_windows_version() == 0: root.iconbitmap("resources/icon.ico")
 
 def get_windows_version() -> int:
     if sys.platform == "win32":
