@@ -1,8 +1,5 @@
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="screenshots/image_hero_dark.png" width =700>
-    <img src="screenshots/image_hero_light.png" width =700>
-  </picture>
+  <img width=700 src="screenshots/image_hero_dark.png"/>
 </div>
 
 # Sun Valley Theme Colorizer
