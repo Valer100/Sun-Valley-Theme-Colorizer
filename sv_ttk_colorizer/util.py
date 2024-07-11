@@ -18,6 +18,17 @@ preview = tk.PhotoImage(file = root_folder + "/resources/preview_accent.png")
 accent_light = "#005fb8"
 accent_dark = "#57c8ff"
 
+
+menus_patch_find = '''ttk::style map . -foreground [list disabled $ttk::theme::sv_light::colors(-disfg)]
+  }'''
+menus_patch_replace = '''ttk::style map . -foreground [list disabled $ttk::theme::sv_light::colors(-disfg)]
+  }
+
+  if {[tk windowingsystem] == "aqua" || [tk windowingsystem] == "win32"} {
+    option add *Menu.background systemMenu
+    option add *Menu.foreground systemMenuText
+  }'''
+
 def update_colors(theme):
     global bg, warning, bg_wallpaper
 
@@ -35,6 +46,7 @@ sv_ttk_spritesheet_light = sv_ttk_download + "/theme/spritesheet_light.png"
 sv_ttk_spritesheet_dark = sv_ttk_download + "/theme/spritesheet_dark.png"
 sv_ttk_light = sv_ttk_download + "/theme/light.tcl"
 sv_ttk_dark = sv_ttk_download + "/theme/dark.tcl"
+sv_ttk_sv = sv_ttk_download + "/sv.tcl"
 
 desktop = os.path.expanduser("~") + "/Desktop"
 
