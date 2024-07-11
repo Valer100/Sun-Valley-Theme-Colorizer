@@ -1,5 +1,5 @@
 <div align="center">
-  <img width=700 src="screenshots/image_hero_dark.png"/>
+  <img width=700 src="https://github.com/Valer100/Sun-Valley-Theme-Colorizer/blob/main/screenshots/image_hero_dark.png?raw=true"/>
 </div>
 
 # Sun Valley Theme Colorizer
