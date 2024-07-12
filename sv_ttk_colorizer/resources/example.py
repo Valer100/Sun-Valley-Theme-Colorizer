@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox as msg
 
 try: import __init__ as sv_ttk
 except: import sv_ttk
@@ -133,7 +133,7 @@ ttk.Checkbutton(other, text = "Switch", style = "Switch.TCheckbutton").pack(padx
 ttk.Checkbutton(other, text = "Toggle Button", style = "Toggle.TButton").pack(padx = 8, pady = 4, fill = "x")
 
 
-text = tk.Text(scrollbar_example, padx = 10, pady = 10, height = 5, wrap = "word", bd = 0, font = ("Segoe UI", 10))
+text = tk.Text(scrollbar_example, padx = 10, pady = 10, height = 5, wrap = "word", bd = 0, highlightthickness = 0, font = ("Segoe UI", 10))
 text.pack(side = "left", fill = "both", expand = True)
 text.insert("1.0", '''Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet eu libero at imperdiet. Curabitur a pretium lorem. Pellentesque sed augue ultricies, vestibulum nunc eget, gravida mauris. Vivamus venenatis arcu non fringilla laoreet. Duis vulputate id odio sit amet sodales. In velit nunc, vulputate quis sollicitudin sit amet, fermentum eget purus. Etiam sed felis ut nisi pulvinar ultricies sed id risus. Vestibulum mauris libero, consectetur quis lobortis ut, maximus ac ante. Donec molestie sit amet lorem ut porta. In odio ante, faucibus non elit eget, vehicula scelerisque mi. Proin aliquam neque nunc, quis rutrum erat ultricies euismod. Suspendisse lectus lacus, fringilla sit amet mollis quis, maximus vitae orci. Duis sodales eros nec sagittis molestie. Donec tristique pharetra ex, nec dictum est sodales vel. Proin maximus mattis sapien, id viverra nulla auctor sed.
 
@@ -170,5 +170,6 @@ ttk.Label(commands, text = "Commands", font = ("Segoe UI Semibold", 18)).pack(an
 ttk.Checkbutton(commands, text = "Dark Mode", command = sv_ttk.toggle_theme, style = "Switch.TCheckbutton").pack(anchor = "w")
 ttk.Checkbutton(commands, text = "Show menu", variable = menu_bool, command = show_menu).pack(anchor = "w", pady = (10, 0))
 ttk.Button(commands, text = "Open Toplevel", command = tk.Toplevel).pack(anchor = "w", pady = (10, 0))
+ttk.Button(commands, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(anchor = "w", pady = (10, 0))
 
 window.mainloop()
