@@ -7,6 +7,7 @@ except: import sv_ttk
 window = tk.Tk()
 window.title("Sun Valley Demo")
 window.configure(padx = 16, pady = 4)
+sv_ttk.set_theme("light")
 
 checked = tk.BooleanVar(value = True)
 unchecked = tk.BooleanVar(value = False)
@@ -136,5 +137,4 @@ ttk.Checkbutton(commands, text = "Dark Mode", command = sv_ttk.toggle_theme, sty
 ttk.Checkbutton(commands, text = "Show menu", variable = menu_bool, command = show_menu).pack(anchor = "w", pady = (10, 0))
 ttk.Button(commands, text = "Open Toplevel", command = tk.Toplevel).pack(anchor = "w", pady = (10, 0))
 
-sv_ttk.set_theme("light")
 window.mainloop()
