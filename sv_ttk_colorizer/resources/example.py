@@ -7,6 +7,7 @@ except: import sv_ttk
 window = tk.Tk()
 window.title("Sun Valley Demo")
 window.configure(padx = 16, pady = 4)
+window.minsize(width = 783, height = 440)
 sv_ttk.set_theme("light")
 
 checked = tk.BooleanVar(value = True)
