@@ -124,7 +124,7 @@ progressbar.pack(padx = 8, pady = 4, fill = "x")
 
 ttk.Separator(other, orient = "horizontal").pack(padx = 4, pady = 8, fill = "x")
 
-ttk.Checkbutton(other, text = "Switch", style = "Switch.TCheckbutton").pack(padx = 8, pady = 4, fill = "x")
+ttk.Checkbutton(other, text = "Switch", style = "Switch.TCheckbutton").pack(padx = 8, pady = 6, fill = "x")
 ttk.Checkbutton(other, text = "Toggle Button", style = "Toggle.TButton").pack(padx = 8, pady = 4, fill = "x")
 
 def show_menu():
