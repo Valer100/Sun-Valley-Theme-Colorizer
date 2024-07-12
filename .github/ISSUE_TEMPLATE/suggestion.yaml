@@ -2,7 +2,7 @@ name: '[💡] Suggest new features'
 description: Do you have ideas for new features? Share them with us!
 title: '[💡Suggestion]: '
 labels:
-  - question
+  - suggestion
 body:
   - type: textarea
     id: suggestion
