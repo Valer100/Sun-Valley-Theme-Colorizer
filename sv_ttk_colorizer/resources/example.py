@@ -7,7 +7,7 @@ except: import sv_ttk
 window = tk.Tk()
 window.title("Sun Valley Demo")
 window.configure(padx = 16, pady = 4)
-window.minsize(width = 783, height = 440)
+window.minsize(width = 799, height = 456)
 sv_ttk.set_theme("light")
 
 checked = tk.BooleanVar(value = True)
@@ -41,21 +41,21 @@ ttk.Label(window, text = "Sun Valley Theme Demo", font = ("Segoe UI Semibold", 2
 notebook = ttk.Notebook(window)
 notebook.pack(pady = 16, fill = "both", expand = True)
 
-frame = ttk.Frame(notebook, padding = 8)
+frame = ttk.Frame(notebook, padding = 16)
 frame.pack(fill = "both", expand = True)
 
-commands = ttk.Frame(notebook, padding = 16)
-commands.pack(fill = "x")
+options = ttk.Frame(notebook, padding = 16)
+options.pack(fill = "x")
 
 scrollbar_example = ttk.Frame(notebook, width = 751)
 scrollbar_example.pack(fill = "x")
 
 notebook.add(text = "Widgets", child = frame)
 notebook.add(text = "Scrollbar", child = scrollbar_example)
-notebook.add(text = "Options", child = commands)
+notebook.add(text = "Commands", child = options)
 
 frame1 = ttk.Frame(frame)
-frame1.pack()
+frame1.place(relx = .5, rely = .5, anchor = "center")
 
 main = ttk.Frame(frame1)
 main.pack(side = "left")
@@ -102,7 +102,6 @@ entry.insert(0, "Type here...")
 combo = ttk.Combobox(input, values = fruits)
 combo.pack(padx = 8, pady = 4, fill = "x")
 combo.insert(0, "Apple")
-
 
 spinbox = ttk.Spinbox(input, from_ = 0, to = 100)
 spinbox.pack(padx = 8, pady = 4, fill = "x")
@@ -165,11 +164,11 @@ def show_menu():
     if menu_bool.get(): window.configure(menu = menu)
     else: window.configure(menu = "")
 
-ttk.Label(commands, text = "Options", font = ("Segoe UI Semibold", 18)).pack(anchor = "w", pady = (0, 18))
+ttk.Label(options, text = "Commands", font = ("Segoe UI Semibold", 18)).pack(anchor = "w", pady = (0, 18))
 
-ttk.Checkbutton(commands, text = "Dark Mode", command = sv_ttk.toggle_theme, style = "Switch.TCheckbutton").pack(anchor = "w")
-ttk.Checkbutton(commands, text = "Show menu", variable = menu_bool, command = show_menu).pack(anchor = "w", pady = (10, 0))
-ttk.Button(commands, text = "Open Toplevel", command = tk.Toplevel).pack(anchor = "w", pady = (10, 0))
-ttk.Button(commands, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(anchor = "w", pady = (10, 0))
+ttk.Checkbutton(options, text = "Dark Mode", command = sv_ttk.toggle_theme, style = "Switch.TCheckbutton").pack(anchor = "w")
+ttk.Checkbutton(options, text = "Show menu", variable = menu_bool, command = show_menu).pack(anchor = "w", pady = (10, 0))
+ttk.Button(options, text = "Open Toplevel", command = tk.Toplevel).pack(anchor = "w", pady = (10, 0))
+ttk.Button(options, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(anchor = "w", pady = (10, 0))
 
 window.mainloop()
