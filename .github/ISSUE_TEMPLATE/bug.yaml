@@ -1,6 +1,8 @@
 name: '[🐞] Report a bug'
 description: Is something unexpected happening? Report it here.
 title: '[🐞Bug]: '
+labels:
+  - bug
 body:
   - type: textarea
     id: bug_description
