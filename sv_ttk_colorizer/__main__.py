@@ -19,7 +19,7 @@ def main():
     tkmenus_fix = tk.BooleanVar(value = False)
 
     try: import util
-    except Exception as e: from sv_ttk_colorizer import util; print(str(e)) # type: ignore
+    except Exception as e: from sv_ttk_colorizer import util # type: ignore
 
     util.set_title_bar_color(window, darkdetect.theme().lower())
 
