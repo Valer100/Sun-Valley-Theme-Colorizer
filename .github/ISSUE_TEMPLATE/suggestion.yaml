@@ -1,0 +1,22 @@
+name: '[💡] Suggest new features'
+description: Do you have ideas for new features? Share them with us!
+title: '[💡Suggestion]: '
+labels:
+  - question
+body:
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggestion
+      description: What's your suggestion?
+    validations:
+      required: true
+  - type: checkboxes
+    id: check
+    attributes:
+      label: Duplicate check
+      options:
+        - label: >-
+            I checked the issue tracker and I can confirm that my suggestion was
+            not already suggested by someone else
+          required: true
