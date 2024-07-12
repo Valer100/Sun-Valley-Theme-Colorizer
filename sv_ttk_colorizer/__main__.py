@@ -1,4 +1,4 @@
-import tkinter as tk, sv_ttk, darkdetect, os, shutil, sys
+import tkinter as tk, sv_ttk, darkdetect, os, shutil, sys, subprocess
 from tkinter import ttk, filedialog as fd, messagebox as msg
 from urllib.request import urlretrieve
 from zipfile import ZipFile
@@ -118,6 +118,8 @@ def main():
             util.change_hue_and_save(util.sv_ttk_spritesheet_light, hue.get())
             util.change_hue_and_save(util.sv_ttk_spritesheet_dark, hue.get())
 
+            shutil.copyfile(util.root_folder + "/resources/example.py", util.sv_ttk_download + "/example.py")
+
             light_tcl = open(util.sv_ttk_light, "r").read().replace("#005fb8", util.accent_light).replace("#2f60d8", util.accent_light).replace("#c1d8ee", util.accent_dark)
             dark_tcl = open(util.sv_ttk_dark, "r").read().replace("#57c8ff", util.accent_dark).replace("#2f60d8", util.accent_light).replace("#25536a", util.accent_light)
 
@@ -164,7 +166,8 @@ def main():
             menus_fix.configure(state = "enabled")
             theme_switch.configure(state = "enabled")
 
-            msg.showinfo("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved.")
+            show_preview = msg.askyesno("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved. Do you want to see it in action?", icon = "info")
+            if show_preview: subprocess.Popen(save_to + "/sv_ttk/example.py", shell = True)
 
     def help_me(): msg.showinfo("Help", "1) What's this app doing?\n\nThis app downloads sv_ttk from GitHub, changes the hue for the widgets by modifying some files and saves the modified module anywhere you want.\n\n\n2) How do I use the folder in my project?\n\nSimply put the folder in your project's root folder and you're done. It should work.")
 
