@@ -1,6 +1,6 @@
-name: '[🐞] Report a bug'
+name: '[🐛] Report a bug'
 description: Is something unexpected happening? Report it here.
-title: '[🐞Bug]: '
+title: '[🐛Bug]: '
 labels:
   - bug
 body:
