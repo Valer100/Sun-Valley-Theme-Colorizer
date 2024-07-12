@@ -52,7 +52,7 @@ scrollbar_example.pack(fill = "x")
 
 notebook.add(text = "Widgets", child = frame)
 notebook.add(text = "Scrollbar", child = scrollbar_example)
-notebook.add(text = "Commands", child = commands)
+notebook.add(text = "Options", child = commands)
 
 frame1 = ttk.Frame(frame)
 frame1.pack()
@@ -165,7 +165,7 @@ def show_menu():
     if menu_bool.get(): window.configure(menu = menu)
     else: window.configure(menu = "")
 
-ttk.Label(commands, text = "Commands", font = ("Segoe UI Semibold", 18)).pack(anchor = "w", pady = (0, 18))
+ttk.Label(commands, text = "Options", font = ("Segoe UI Semibold", 18)).pack(anchor = "w", pady = (0, 18))
 
 ttk.Checkbutton(commands, text = "Dark Mode", command = sv_ttk.toggle_theme, style = "Switch.TCheckbutton").pack(anchor = "w")
 ttk.Checkbutton(commands, text = "Show menu", variable = menu_bool, command = show_menu).pack(anchor = "w", pady = (10, 0))
