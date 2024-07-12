@@ -47,7 +47,11 @@ frame.pack(fill = "both", expand = True)
 commands = ttk.Frame(notebook, padding = 16)
 commands.pack(fill = "x")
 
+scrollbar_example = ttk.Frame(notebook, width = 751)
+scrollbar_example.pack(fill = "x")
+
 notebook.add(text = "Widgets", child = frame)
+notebook.add(text = "Scrollbar", child = scrollbar_example)
 notebook.add(text = "Commands", child = commands)
 
 frame1 = ttk.Frame(frame)
@@ -127,6 +131,35 @@ ttk.Separator(other, orient = "horizontal").pack(padx = 4, pady = 8, fill = "x")
 
 ttk.Checkbutton(other, text = "Switch", style = "Switch.TCheckbutton").pack(padx = 8, pady = 6, fill = "x")
 ttk.Checkbutton(other, text = "Toggle Button", style = "Toggle.TButton").pack(padx = 8, pady = 4, fill = "x")
+
+
+text = tk.Text(scrollbar_example, padx = 10, pady = 10, height = 5, wrap = "word", bd = 0, font = ("Segoe UI", 10))
+text.pack(side = "left", fill = "both", expand = True)
+text.insert("1.0", '''Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet eu libero at imperdiet. Curabitur a pretium lorem. Pellentesque sed augue ultricies, vestibulum nunc eget, gravida mauris. Vivamus venenatis arcu non fringilla laoreet. Duis vulputate id odio sit amet sodales. In velit nunc, vulputate quis sollicitudin sit amet, fermentum eget purus. Etiam sed felis ut nisi pulvinar ultricies sed id risus. Vestibulum mauris libero, consectetur quis lobortis ut, maximus ac ante. Donec molestie sit amet lorem ut porta. In odio ante, faucibus non elit eget, vehicula scelerisque mi. Proin aliquam neque nunc, quis rutrum erat ultricies euismod. Suspendisse lectus lacus, fringilla sit amet mollis quis, maximus vitae orci. Duis sodales eros nec sagittis molestie. Donec tristique pharetra ex, nec dictum est sodales vel. Proin maximus mattis sapien, id viverra nulla auctor sed.
+
+Donec ante nulla, dignissim id bibendum eget, rutrum nec erat. Suspendisse sodales arcu quis erat consequat tincidunt. Nunc nisl massa, maximus vehicula nulla sed, interdum molestie justo. Suspendisse convallis sem ac massa auctor pulvinar. Nulla turpis ex, tempor sit amet imperdiet eu, commodo at elit. Nullam eu auctor tortor, in vehicula velit. Aenean eu mi pharetra turpis semper pellentesque. Mauris mollis eget sapien quis rhoncus. Vivamus neque mauris, porttitor scelerisque neque eu, faucibus placerat mauris. In cursus sagittis dapibus. Praesent lacinia, arcu a suscipit laoreet, quam turpis consequat ipsum, nec aliquet ipsum orci eget lacus. Quisque justo odio, scelerisque tincidunt est ac, tempor ultricies erat.
+
+Etiam consequat, eros nec maximus vulputate, tellus urna feugiat purus, ut scelerisque enim felis nec nulla. Morbi viverra, magna quis interdum dapibus, urna lacus sollicitudin nulla, ac mattis ante dolor eu ligula. Vivamus nec laoreet lorem, ut lacinia lorem. Donec accumsan ligula felis, et tincidunt lorem pharetra in. Sed et facilisis ipsum. Vivamus et magna elementum, hendrerit felis in, dapibus purus. Nullam eleifend mattis ex, ac sagittis enim finibus nec. Praesent ut mauris lobortis, semper urna ultrices, imperdiet ligula. Pellentesque a diam rutrum mi venenatis dapibus. Curabitur eu tempus lacus. Phasellus convallis diam at fermentum sagittis.
+
+Aliquam erat volutpat. Maecenas eros eros, ultrices sit amet luctus vitae, lobortis id augue. Donec pulvinar ante sem, sed condimentum justo condimentum et. Pellentesque congue lectus lectus, at vehicula est feugiat vel. Proin cursus mi eget ultrices rutrum. Morbi in sodales mauris. Suspendisse convallis, lacus vitae dignissim mollis, nisi ligula egestas tellus, eu consectetur ligula lorem vitae purus. Aliquam iaculis massa vel ligula porttitor fermentum. Mauris imperdiet sed mauris vel semper. Cras eu ex justo. Mauris eu sollicitudin elit, vel maximus dolor.
+
+Sed a ex dictum, sagittis nulla ac, varius lacus. Maecenas sed commodo nunc. Ut eu convallis neque, et fringilla tellus. Nam facilisis nisl a lacus molestie rhoncus. Vestibulum eu turpis viverra, tempus tellus quis, imperdiet lectus. Aenean posuere lacus et aliquam accumsan. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tortor diam, volutpat id consequat sit amet, vestibulum quis tellus. Vivamus pellentesque commodo rutrum. Nulla varius semper commodo. Fusce laoreet neque vitae eros consectetur, semper pellentesque quam laoreet. Proin ultrices eget turpis sit amet faucibus. Etiam sit amet laoreet erat. Proin vitae auctor erat, non hendrerit metus.
+
+Fusce semper vitae est et ultricies. Nunc ut luctus arcu. Donec quis sapien viverra, malesuada lorem eget, pulvinar tortor. Nam tempus, elit id gravida rhoncus, ipsum diam tincidunt risus, ac scelerisque eros urna sit amet dui. Phasellus vel accumsan diam, eu auctor ipsum. Etiam nunc justo, rhoncus eu egestas consectetur, ornare a justo. Phasellus dapibus ligula vitae mauris gravida dictum. Quisque vel sem eros. Pellentesque malesuada pharetra lectus eu convallis. Nullam ullamcorper euismod nibh, sit amet placerat diam varius sit amet. Nulla at rutrum tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec risus libero.
+
+Sed ac pellentesque lorem. Morbi at elementum odio. Maecenas commodo pulvinar orci, sed sagittis odio ornare eget. Morbi et justo nec ipsum molestie imperdiet ullamcorper sed nibh. Praesent dignissim elementum metus eu convallis. Nam non tortor bibendum, feugiat augue interdum, faucibus mi. Nulla ipsum ex, elementum vitae odio quis, ullamcorper consectetur diam. Nam erat felis, sagittis quis feugiat nec, molestie vitae neque. Vivamus ullamcorper placerat augue sit amet euismod. In et pretium arcu, sit amet vestibulum risus. Nullam id tempus mauris, sollicitudin varius tortor. Donec ultricies, risus quis pellentesque volutpat, tellus velit tristique neque, id condimentum leo tellus eget risus. Fusce laoreet, arcu id lobortis porta, nunc orci tincidunt elit, non bibendum enim libero eu tortor. Vivamus nec ligula gravida, iaculis ante ut, varius tortor.
+
+Sed sit amet lectus quis elit faucibus rutrum. Aenean arcu diam, laoreet et elit eget, malesuada euismod nulla. Aenean quam eros, dapibus ut suscipit a, posuere vel justo. Nunc sed metus diam. Aliquam efficitur varius pellentesque. Praesent viverra odio eu nisi tincidunt tempor. Aliquam erat volutpat. Vestibulum sapien lorem, molestie id erat eget, accumsan ultrices magna. Vivamus convallis ex augue, sit amet finibus ante cursus convallis. Duis ornare nisi in lacinia venenatis. Duis id semper mi.
+
+In a odio gravida, mollis purus ut, dignissim nisl. Donec in tellus convallis felis sodales tincidunt non a mauris. Aliquam ac lorem nisl. Pellentesque vehicula neque quis sapien facilisis semper. Proin vel blandit velit. Integer elementum nisi lorem, quis gravida sapien placerat et. Morbi vitae diam enim. Pellentesque eget malesuada lorem. Nullam quis leo sit amet leo egestas luctus. Suspendisse ut posuere metus. Nunc interdum mattis elit vitae pellentesque. Cras placerat convallis posuere. Suspendisse elementum diam eget arcu commodo feugiat. Etiam porttitor ante sed mi vulputate, vitae sodales felis sagittis. Nam egestas augue neque, a dictum libero fringilla at. Nam auctor lorem lacus, quis sagittis risus vulputate at.
+
+Praesent odio sapien, auctor efficitur suscipit sed, dictum et elit. Vivamus quis diam eu lectus laoreet pulvinar. Nunc malesuada posuere augue. Suspendisse potenti. Nam blandit mi eget suscipit egestas. Nulla arcu felis, faucibus vel justo ac, iaculis finibus lacus. Curabitur ut justo et arcu gravida condimentum. Nam malesuada orci turpis. Proin eu massa at dolor rhoncus vehicula. In quis lorem orci. Mauris laoreet diam varius est porttitor, sit amet facilisis purus rhoncus. Pellentesque rhoncus egestas lorem, nec mattis sem faucibus vel. Nam vitae dolor tincidunt, congue nibh ac, iaculis lorem. Vivamus quam mauris, molestie nec dui sit amet, egestas ultrices leo. Quisque congue justo id nulla semper pretium. Sed molestie eget ex sed malesuada.''')
+text.configure(state = "disabled")
+
+scrollbar = ttk.Scrollbar(scrollbar_example, orient = "vertical", command = text.yview)
+scrollbar.pack(side = "left", fill = "y", pady = 8)
+
+text.configure(yscrollcommand = scrollbar.set)
 
 def show_menu():
     if menu_bool.get(): window.configure(menu = menu)
