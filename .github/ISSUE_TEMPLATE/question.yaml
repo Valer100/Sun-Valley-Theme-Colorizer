@@ -11,3 +11,12 @@ body:
       description: What's your question?
     validations:
       required: true
+  - type: checkboxes
+    id: check
+    attributes:
+      label: Duplicate check
+      options:
+        - label: >-
+            I checked the issue tracker and I can confirm that my question was
+            not already answered in another issue created by someone else.
+          required: true
