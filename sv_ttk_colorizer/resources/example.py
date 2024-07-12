@@ -75,9 +75,9 @@ ttk.Checkbutton(checkboxes, text = "Disabled", variable = disabled, state = "dis
 buttons = ttk.Labelframe(row1, text = "Buttons", padding = 4)
 buttons.pack(side = "left", padx = (16, 0))
 
-ttk.Button(buttons, text = "Toolbutton", width = 27, style = "Toolbutton").pack(anchor = "w", padx = 8, pady = 4)
 ttk.Button(buttons, text = "Button", width = 27).pack(anchor = "w", padx = 8, pady = 4)
 ttk.Button(buttons, text = "Accent Button", width = 27, style = "Accent.TButton").pack(anchor = "w", padx = 8, pady = 4)
+ttk.Button(buttons, text = "Toolbutton", width = 27, style = "Toolbutton").pack(anchor = "w", padx = 8, pady = 4)
 
 
 row2 = ttk.Frame(main)
