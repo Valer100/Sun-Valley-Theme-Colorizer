@@ -167,7 +167,7 @@ def main():
             theme_switch.configure(state = "enabled")
 
             show_preview = msg.askyesno("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved. Do you want to see it in action?", icon = "info")
-            if show_preview: subprocess.Popen(save_to + "/sv_ttk/example.py", shell = True)
+            if show_preview: subprocess.Popen(f"\"{sys.executable}\" \"{save_to}/sv_ttk/example.py\"", shell = True)
 
     def help_me(): msg.showinfo("Help", "1) What's this app doing?\n\nThis app downloads sv_ttk from GitHub, changes the hue for the widgets by modifying some files and saves the modified module anywhere you want.\n\n\n2) How do I use the folder in my project?\n\nSimply put the folder in your project's root folder and you're done. It should work.")
 
