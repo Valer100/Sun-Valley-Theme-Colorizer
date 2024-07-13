@@ -55,7 +55,7 @@ notebook.add(text = "Scrollbar", child = scrollbar_example)
 notebook.add(text = "Options", child = options)
 
 frame1 = ttk.Frame(frame)
-frame1.place(relx = .5, rely = .5, anchor = "center")
+frame1.pack()
 
 main = ttk.Frame(frame1)
 main.pack(side = "left")
@@ -170,5 +170,14 @@ ttk.Checkbutton(options, text = "Dark Mode", command = sv_ttk.toggle_theme, styl
 ttk.Checkbutton(options, text = "Show menu", variable = menu_bool, command = show_menu).pack(anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Open Toplevel", command = tk.Toplevel).pack(anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(anchor = "w", pady = (10, 0))
+ttk.Button(options, text = "Send <<ThemeChanged>> event", command = lambda: window.event_generate("<<ThemeChanged>>")).pack(anchor = "w", pady = (10, 0))
+
+window.update()
+
+geometry = window.geometry().split("+")[0].split("x")
+window.minsize(width = geometry[0], height = geometry[1])
+
+frame1.forget()
+frame1.place(relx = .5, rely = .5, anchor = "center")
 
 window.mainloop()
