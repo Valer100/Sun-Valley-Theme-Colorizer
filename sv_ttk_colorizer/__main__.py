@@ -23,7 +23,7 @@ def main():
 
     util.set_title_bar_color(window, darkdetect.theme().lower())
 
-    print("Sun Valley Theme Colorizer - version 1.2.0")
+    print("Sun Valley Theme Colorizer - version 1.1.1")
     print("Work path: " + util.root_folder)
 
     title = ttk.Frame(window)
@@ -85,9 +85,6 @@ def main():
     warning1 = ttk.Label(options_frame, text = "This setting requires an additional dependency for your project: pywinstyles.", foreground = util.warning, wraplength = 270)
     warning1.pack(pady = (8, 0))
 
-    menus_fix = ttk.Checkbutton(options_frame, text = "Don't change menu colors on\nWindows and macOS", style = "Switch.TCheckbutton", variable = tkmenus_fix)
-    menus_fix.pack(pady = (16, 0), fill = "x")
-
     def save_patch():
         save_to = fd.askdirectory(title = "Choose where to save the theme", initialdir = util.desktop)
 
@@ -95,7 +92,6 @@ def main():
             window.configure(cursor = "watch")
             hue.configure(state = "disabled")
             dark_mode_titlebars.configure(state = "disabled")
-            menus_fix.configure(state = "disabled")
             theme_switch.configure(state = "disabled")
             save.forget()
             help.forget()
@@ -130,10 +126,6 @@ def main():
                 os.remove(util.sv_ttk_download + "/__init__.py")
                 urlretrieve(util.dm_titlebars_patch, util.sv_ttk_download + "/__init__.py")
 
-            if tkmenus_fix.get():
-                sv_tcl = open(util.sv_ttk_sv, "r").read().replace(util.menus_patch_find, util.menus_patch_replace)
-                open(util.sv_ttk_sv, "w").write(sv_tcl)
-
             if os.path.exists(save_to + "/sv_ttk"): 
                 delete = msg.askyesno("Error", "The folder \"sv_ttk\" already exists in \"" + save_to + "\". The folder must be deleted to continue. Do you want to delete it?", icon = "error")
 
@@ -147,7 +139,6 @@ def main():
                     help.pack(side = "bottom", pady = (0, 8), fill = "x")
                     hue.configure(state = "enabled")
                     dark_mode_titlebars.configure(state = "enabled")
-                    menus_fix.configure(state = "enabled")
                     theme_switch.configure(state = "enabled")
 
                     msg.showinfo("Sun Valley Theme Colorizer", "The save has been canceled.")
@@ -163,7 +154,6 @@ def main():
             help.pack(side = "bottom", pady = (0, 8), fill = "x")
             hue.configure(state = "enabled")
             dark_mode_titlebars.configure(state = "enabled")
-            menus_fix.configure(state = "enabled")
             theme_switch.configure(state = "enabled")
 
             show_preview = msg.askyesno("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved. Do you want to see it in action?", icon = "info")
