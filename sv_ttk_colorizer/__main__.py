@@ -16,14 +16,13 @@ def main():
     window.configure()
 
     dm_titlebars = tk.BooleanVar(value = False)
-    tkmenus_fix = tk.BooleanVar(value = False)
 
-    try: import util
-    except Exception as e: from sv_ttk_colorizer import util # type: ignore
+    try: import util, assistance
+    except Exception as e: from sv_ttk_colorizer import util, assistance # type: ignore
 
     util.set_title_bar_color(window, darkdetect.theme().lower())
 
-    print("Sun Valley Theme Colorizer - version 1.1.1")
+    print("Sun Valley Theme Colorizer - version 1.2.0")
     print("Work path: " + util.root_folder)
 
     title = ttk.Frame(window)
@@ -94,7 +93,7 @@ def main():
             dark_mode_titlebars.configure(state = "disabled")
             theme_switch.configure(state = "disabled")
             save.forget()
-            help.forget()
+            help_btn.forget()
 
             status = ttk.Label(options_frame, text = "Downloading sv-ttk...", font = ("Segoe UI Semibold", 15))
             status.pack(side = "bottom")
@@ -136,7 +135,7 @@ def main():
                     window.configure(cursor = "arrow")
                     status.destroy()
                     save.pack(side = "bottom", fill = "x")
-                    help.pack(side = "bottom", pady = (0, 8), fill = "x")
+                    help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
                     hue.configure(state = "enabled")
                     dark_mode_titlebars.configure(state = "enabled")
                     theme_switch.configure(state = "enabled")
@@ -151,7 +150,7 @@ def main():
             window.configure(cursor = "arrow")
             status.destroy()
             save.pack(side = "bottom", fill = "x")
-            help.pack(side = "bottom", pady = (0, 8), fill = "x")
+            help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
             hue.configure(state = "enabled")
             dark_mode_titlebars.configure(state = "enabled")
             theme_switch.configure(state = "enabled")
@@ -173,8 +172,8 @@ def main():
     save = ttk.Button(options_frame, text = "Save", style = "Accent.TButton", command = save_patch)
     save.pack(side = "bottom", fill = "x")
 
-    help = ttk.Button(options_frame, text = "Help", command = help_me)
-    help.pack(side = "bottom", pady = (0, 8), fill = "x")
+    help_btn = ttk.Button(options_frame, text = "Help", command = assistance.show)
+    help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
 
     if sys.platform == "win32" or sys.platform == "darwin": sv_ttk.set_theme(darkdetect.theme())
     else: sv_ttk.set_theme("light")
