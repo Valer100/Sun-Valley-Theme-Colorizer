@@ -4,7 +4,7 @@ description = open("README.md", "r").read()
 
 setup(
     name = "sv_ttk_colorizer",
-    version = "1.2.0",
+    version = "1.1.1",
     python_requires = ">=3.8",
     license = "MIT",
     author = "Valer100",
