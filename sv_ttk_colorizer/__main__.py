@@ -17,6 +17,7 @@ def main():
 
     dm_titlebars = tk.BooleanVar(value = False)
     accent_funcs = tk.BooleanVar(value = False)
+    include_examplepy = tk.BooleanVar(value = True)
 
     try: import util, assistance
     except Exception as e: from sv_ttk_colorizer import util, assistance # type: ignore
@@ -91,14 +92,15 @@ def main():
     warning2 = ttk.Label(options_frame, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 270)
     warning2.pack(pady = (8, 0))
 
+    include_example = ttk.Checkbutton(options_frame, text = "Include \"example.py\" file to test\nthe theme", style = "Switch.TCheckbutton", variable = include_examplepy)
+    include_example.pack(pady = (16, 0), fill = "x")
+
     def save_patch():
         save_to = fd.askdirectory(title = "Choose where to save the theme", initialdir = util.desktop)
 
         if not save_to == "":
             window.configure(cursor = "watch")
-            hue.configure(state = "disabled")
-            dark_mode_titlebars.configure(state = "disabled")
-            get_accent_functions.configure(state = "disabled")
+            util.disable_all_widgets(options_frame)
             theme_switch.configure(state = "disabled")
             save.forget()
             help_btn.forget()
@@ -121,7 +123,7 @@ def main():
             util.change_hue_and_save(util.sv_ttk_spritesheet_light, hue.get())
             util.change_hue_and_save(util.sv_ttk_spritesheet_dark, hue.get())
 
-            shutil.copyfile(util.root_folder + "/resources/example.py", util.sv_ttk_download + "/example.py")
+            if include_examplepy.get(): shutil.copyfile(util.root_folder + "/resources/example.py", util.sv_ttk_download + "/example.py")
 
             light_tcl = open(util.sv_ttk_light, "r").read().replace("#005fb8", util.accent_light).replace("#2f60d8", util.accent_light).replace("#c1d8ee", util.accent_dark)
             dark_tcl = open(util.sv_ttk_dark, "r").read().replace("#57c8ff", util.accent_dark).replace("#2f60d8", util.accent_light).replace("#25536a", util.accent_light)
@@ -148,9 +150,7 @@ def main():
                     status.destroy()
                     save.pack(side = "bottom", fill = "x")
                     help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
-                    hue.configure(state = "enabled")
-                    dark_mode_titlebars.configure(state = "enabled")
-                    get_accent_functions.configure(state = "enabled")
+                    util.enable_all_widgets(options_frame)
                     theme_switch.configure(state = "enabled")
 
                     msg.showinfo("Sun Valley Theme Colorizer", "The save has been canceled.")
@@ -164,13 +164,14 @@ def main():
             status.destroy()
             save.pack(side = "bottom", fill = "x")
             help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
-            hue.configure(state = "enabled")
-            dark_mode_titlebars.configure(state = "enabled")
-            get_accent_functions.configure(state = "enabled")
+            util.enable_all_widgets(options_frame)
             theme_switch.configure(state = "enabled")
 
-            show_preview = msg.askyesno("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved. Do you want to see it in action?", icon = "info")
-            if show_preview: subprocess.Popen(f"\"{sys.executable}\" \"{save_to}/sv_ttk/example.py\"", shell = True)
+            if include_examplepy.get():
+                show_preview = msg.askyesno("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved. Do you want to see it in action?", icon = "info")
+                if show_preview: subprocess.Popen(f"\"{sys.executable}\" \"{save_to}/sv_ttk/example.py\"", shell = True)
+            else:
+                msg.showinfo("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved.")
 
     def toggle_theme():
         sv_ttk.toggle_theme()

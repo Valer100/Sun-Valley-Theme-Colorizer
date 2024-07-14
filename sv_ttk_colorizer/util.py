@@ -127,11 +127,18 @@ def get_windows_version() -> int:
     if sys.platform == "win32":
         version = sys.getwindowsversion()
 
-        if version.major == 10 and version.build >= 22000:
-            return 11
-        elif version.major == 10:
-            return 10
+        if version.major == 10 and version.build >= 22000: return 11
+        elif version.major == 10: return 10
+        else: return version.major
+    else: return 0
+
+def disable_all_widgets(root):
+    for widget in root.winfo_children():
+        if isinstance(widget, (tk.Frame, ttk.Frame)): disable_all_widgets(widget)
         else:
-            return version.major
-    else:
-        return 0
+            if not isinstance(widget, ttk.Label): widget["state"] = "disabled"
+
+def enable_all_widgets(root):
+    for widget in root.winfo_children():
+        if isinstance(widget, (tk.Frame, ttk.Frame)): enable_all_widgets(widget)
+        else: widget["state"] = "enabled"
