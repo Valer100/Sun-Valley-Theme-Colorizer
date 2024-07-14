@@ -33,16 +33,18 @@ use_dark_theme = partial(set_theme, "dark")
 use_light_theme = partial(set_theme, "light")'''
 
 def update_colors(theme):
-    global bg, warning, bg_wallpaper, accent
+    global bg, warning, bg_wallpaper, accent, reference
 
     if theme == "dark": 
         bg = "#202020"
         warning = "#FFFF00"
         accent = "#57c8ff"
+        reference = "#121212"
     else: 
         bg = "#ffffff"
         warning = "#FF0000"
         accent = "#005fb8"
+        reference = "#383838"
 
 update_colors(darkdetect.theme().lower())
 

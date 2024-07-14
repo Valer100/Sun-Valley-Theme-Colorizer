@@ -53,9 +53,11 @@ def show():
         uncheck_all()
         show_help_info("Why do menus have a white border when using this theme with the dark mode variant?", "heading")
         show_help_info("\nThis theme also changes the background color of the menus. But on Windows, if the background color of the menus is changed, there will be a white border. The only way to fix this is to revert the colors of the menu back to default. Here's how you can do this:\n\n")
-        show_help_info("yourmenu.configure(bg=\"SystemMenu\", fg=\"SystemMenuText\")", "code")
-        show_help_info("\n\nReplace yourmenu with the reference to your menu. Make sure to only run this code on Windows, because on Linux the menus colors look just fine. You can do that using the sys module. The final code would look like this:\n\n")
-        show_help_info("import sys\n\n# Making sure the code runs only on Windows\nif sys.platform == \"win32\":\n    yourmenu.configure(bg=\"SystemMenu\", fg=\"SystemMenuText\")", "code")
+        show_help_info("\nyourmenu.configure(bg=\"SystemMenu\", fg=\"SystemMenuText\")\n\n", "code")
+        show_help_info("\nReplace ")
+        show_help_info(" yourmenu ", "code_reference")
+        show_help_info(" with the reference to your menu. Make sure to only run this code on Windows, because on Linux the menus don't have a white border and they look fine. You can do that using the sys module. The final code would look like this:\n\n")
+        show_help_info("\nimport sys\n\n# Making sure the code runs only on Windows\nif sys.platform == \"win32\":\n    yourmenu.configure(bg=\"SystemMenu\", fg=\"SystemMenuText\")\n\n", "code")
         select_category(category_menu_colors)
 
     def show_give_feedback():
@@ -90,7 +92,8 @@ def show():
     help_info.tag_configure("normal", font = ("Segoe UI", 11))
     help_info.tag_configure("link", font = ("Segoe UI Semibold", 11), underline = True, foreground = util.accent, selectforeground = "#FFFFFF")
     help_info.tag_configure("heading", font = ("Segoe UI Semibold", 17), spacing3 = 7)
-    help_info.tag_configure("code", font = ("Courier", 11))
+    help_info.tag_configure("code", rmargin = 16, lmargin1 = 16, font = ("Consolas", 11), background = "#000000", foreground = "#FFFFFF", selectbackground = "#00417e")
+    help_info.tag_configure("code_reference", rmargin = 16, lmargin1 = 16, font = ("Consolas", 11), background = util.reference, foreground = "#FFFFFF", selectbackground = "#00417e")
 
     style = ttk.Style()
     style.configure("TScrollbar", background = util.bg)
