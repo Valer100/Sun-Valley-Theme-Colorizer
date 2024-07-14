@@ -6,7 +6,6 @@ except Exception as e: from sv_ttk_colorizer import util # type: ignore
 
 def show():
     window = tk.Toplevel()
-    window.grab_set()
     window.title("Help")
     util.set_title_bar_color(window, sv_ttk.get_theme())
 
@@ -70,13 +69,24 @@ def show():
 
     ttk.Separator(help_frame, orient = "vertical").pack(fill = "x")
 
-    help_info = tk.Text(help_frame, width = 70, height = 25, wrap = "word", bg = util.bg, bd = 0, highlightthickness = 0,
+    frame2 = tk.Frame(help_frame, bg = util.bg)
+    frame2.pack(fill = "both", expand = True)
+
+    help_info = tk.Text(frame2, width = 70, height = 25, wrap = "word", bg = util.bg, bd = 0, highlightthickness = 0,
                         font = ("Segoe UI", 11), padx = 16, pady = 16, state = "disabled")
-    help_info.pack(fill = "both", expand = True)
+    help_info.pack(side = "left", fill = "both", expand = True)
     help_info.tag_configure("normal", font = ("Segoe UI", 11))
     help_info.tag_configure("link", font = ("Segoe UI Semibold", 11), underline = True, foreground = util.accent, selectforeground = "#FFFFFF")
     help_info.tag_configure("heading", font = ("Segoe UI Semibold", 17), spacing3 = 7)
     help_info.tag_configure("code", font = ("Consolas", 11))
+
+    style = ttk.Style()
+    style.configure("TScrollbar", background = util.bg)
+
+    scrollbar = ttk.Scrollbar(frame2, orient = "vertical", command = help_info.yview)
+    scrollbar.pack(side = "left", fill = "y", pady = 4)
+
+    help_info.configure(yscrollcommand = scrollbar.set)
 
     def show_help_info(help, tag = "normal"):
         help_info.configure(state = "normal")
@@ -91,4 +101,10 @@ def show():
     show_faq()
 
     window.focus_set()
+    window.grab_set()
+    
+    window.update()
+    geometry = window.geometry().split("+")[0].split("x")
+    window.minsize(width = geometry[0], height = geometry[1])
+
     window.mainloop()
