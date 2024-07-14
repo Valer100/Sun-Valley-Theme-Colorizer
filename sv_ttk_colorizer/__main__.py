@@ -16,6 +16,7 @@ def main():
     window.configure()
 
     dm_titlebars = tk.BooleanVar(value = False)
+    accent_funcs = tk.BooleanVar(value = False)
 
     try: import util, assistance
     except Exception as e: from sv_ttk_colorizer import util, assistance # type: ignore
@@ -84,6 +85,12 @@ def main():
     warning1 = ttk.Label(options_frame, text = "This setting requires an additional dependency for your project: pywinstyles.", foreground = util.warning, wraplength = 270)
     warning1.pack(pady = (8, 0))
 
+    get_accent_functions = ttk.Checkbutton(options_frame, text = "Add functions to get the accent\ncolors", style = "Switch.TCheckbutton", variable = accent_funcs)
+    get_accent_functions.pack(pady = (16, 0), fill = "x")
+
+    warning2 = ttk.Label(options_frame, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 270)
+    warning2.pack(pady = (8, 0))
+
     def save_patch():
         save_to = fd.askdirectory(title = "Choose where to save the theme", initialdir = util.desktop)
 
@@ -91,6 +98,7 @@ def main():
             window.configure(cursor = "watch")
             hue.configure(state = "disabled")
             dark_mode_titlebars.configure(state = "disabled")
+            get_accent_functions.configure(state = "disabled")
             theme_switch.configure(state = "disabled")
             save.forget()
             help_btn.forget()
@@ -125,6 +133,10 @@ def main():
                 os.remove(util.sv_ttk_download + "/__init__.py")
                 urlretrieve(util.dm_titlebars_patch, util.sv_ttk_download + "/__init__.py")
 
+            if accent_funcs.get():
+                __init__file = open(util.sv_ttk_download + "/__init__.py", "r").read().replace(util.get_accents_patch_find, util.get_accents_patch_replace)
+                open(util.sv_ttk_download + "/__init__.py", "w").write(__init__file)
+
             if os.path.exists(save_to + "/sv_ttk"): 
                 delete = msg.askyesno("Error", "The folder \"sv_ttk\" already exists in \"" + save_to + "\". The folder must be deleted to continue. Do you want to delete it?", icon = "error")
 
@@ -138,6 +150,7 @@ def main():
                     help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
                     hue.configure(state = "enabled")
                     dark_mode_titlebars.configure(state = "enabled")
+                    get_accent_functions.configure(state = "enabled")
                     theme_switch.configure(state = "enabled")
 
                     msg.showinfo("Sun Valley Theme Colorizer", "The save has been canceled.")
@@ -153,17 +166,17 @@ def main():
             help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
             hue.configure(state = "enabled")
             dark_mode_titlebars.configure(state = "enabled")
+            get_accent_functions.configure(state = "enabled")
             theme_switch.configure(state = "enabled")
 
             show_preview = msg.askyesno("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved. Do you want to see it in action?", icon = "info")
             if show_preview: subprocess.Popen(f"\"{sys.executable}\" \"{save_to}/sv_ttk/example.py\"", shell = True)
 
-    def help_me(): msg.showinfo("Help", "1) What's this app doing?\n\nThis app downloads sv_ttk from GitHub, changes the hue for the widgets by modifying some files and saves the modified module anywhere you want.\n\n\n2) How do I use the folder in my project?\n\nSimply put the folder in your project's root folder and you're done. It should work.")
-
     def toggle_theme():
         sv_ttk.toggle_theme()
         util.update_colors(sv_ttk.get_theme())
         warning1["foreground"] = util.warning
+        warning2["foreground"] = util.warning
         frame["background"] = util.bg
         frame2["background"] = util.bg
         preview_frame["background"] = util.bg

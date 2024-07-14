@@ -18,6 +18,19 @@ preview = tk.PhotoImage(file = root_folder + "/resources/preview_accent.png")
 accent_light = "#005fb8"
 accent_dark = "#57c8ff"
 
+get_accents_patch_find = '''use_dark_theme = partial(set_theme, "dark")
+use_light_theme = partial(set_theme, "light")'''
+
+get_accents_patch_replace = f'''def get_accent_color() -> str:
+    if get_theme() == "dark": return "{accent_dark}"
+    return "{accent_light}"
+    
+def get_selection_accent_color() -> str: return "{accent_light}"
+
+
+use_dark_theme = partial(set_theme, "dark")
+use_light_theme = partial(set_theme, "light")'''
+
 def update_colors(theme):
     global bg, warning, bg_wallpaper, accent
 
@@ -65,7 +78,7 @@ def change_hue_and_save(path, hue):
     img.close()
 
 def update_accents():
-    global accent_light, accent_dark
+    global accent_light, accent_dark, get_accents_patch_replace
     img = Image.open(root_folder + "/resources/preview_accent_modified.png")
 
     accent_light_rgb = img.getpixel((50, 75))
@@ -73,6 +86,16 @@ def update_accents():
 
     accent_light = "#{:02x}{:02x}{:02x}".format(accent_light_rgb[0], accent_light_rgb[1], accent_light_rgb[2])
     accent_dark = "#{:02x}{:02x}{:02x}".format(accent_dark_rgb[0], accent_dark_rgb[1], accent_dark_rgb[2])
+
+    get_accents_patch_replace = f'''def get_accent_color() -> str:
+    if get_theme() == "dark": return "{accent_dark}"
+    return "{accent_light}"
+    
+def get_selection_accent_color() -> str: return "{accent_light}"
+
+
+use_dark_theme = partial(set_theme, "dark")
+use_light_theme = partial(set_theme, "light")'''
 
 def update_preview(hue):
     global preview
