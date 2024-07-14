@@ -19,13 +19,25 @@ def show():
 
     style = ttk.Style()
     style.configure("Selected.Accent.TButton", anchor = "w")
-    style.configure("Unselected.Toolbutton", anchor = "w")
+    style.configure("Unselected.TButton", anchor = "w")
+    style.configure("Unselected.TLabel", anchor = "w", padding = (12, 6, 12, 7))
 
     def uncheck_all():
         for category in categories.winfo_children():
-            if isinstance(category, ttk.Button): category.configure(style = "Unselected.Toolbutton")
+            if isinstance(category, ttk.Button): 
+                category.configure(style = "Unselected.TLabel")
+                conigure_category(category)
 
         clear_help_info()
+
+    def conigure_category(category):
+        category.bind("<Enter>", lambda event: category.configure(style = "Unselected.TButton"))
+        category.bind("<Leave>", lambda event: category.configure(style = "Unselected.TLabel"))
+
+    def select_category(category):
+        category.bind("<Enter>", lambda event: None)
+        category.bind("<Leave>", lambda event: None)
+        category.configure(style = "Selected.Accent.TButton")
 
     def show_faq(): 
         uncheck_all()
@@ -35,7 +47,7 @@ def show():
         show_help_info("\nSimply put the folder in your project's root folder and you're done. It should work.\n\n")
         show_help_info("Why is the package stuck at \"Downloading sv_ttk...\" stage?", "heading")
         show_help_info("\nThat may happen because you're not connected to the Internet or your Internet connection signal strength is weak. Try waiting a few minutes. If nothing happens, check your Internet connection and try again.")
-        category_faq["style"] = "Selected.Accent.TButton"
+        select_category(category_faq)
 
     def show_menu_colors(): 
         uncheck_all()
@@ -44,22 +56,22 @@ def show():
         show_help_info("yourmenu.configure(bg=\"SystemMenu\", fg=\"SystemMenuText\")", "code")
         show_help_info("\n\nReplace yourmenu with the reference to your menu. Make sure to only run this code on Windows, because on Linux the menus colors look just fine. You can do that using the sys module. The final code would look like this:\n\n")
         show_help_info("import sys\n\n# Making sure the code runs only on Windows\nif sys.platform == \"win32\":\n    yourmenu.configure(bg=\"SystemMenu\", fg=\"SystemMenuText\")", "code")
-        category_menu_colors["style"] = "Selected.Accent.TButton"
+        select_category(category_menu_colors)
 
     def show_give_feedback():
         uncheck_all()
         show_help_info("Give feedback", "heading")
         show_help_info("\nIs something unexpected happening? Do you have suggestions for new features or improvements to this packages? Or you simply want to ask a question and get an answer about this package? You can give us feedback on our GitHub repository. Just open a new Issue and give us your feedback. Here's a link to the GitHub repository:\n\n")
         show_help_info("https://github.com/Valer100/Sun-Valley-Theme-Colorizer", "link")
-        category_feedback["style"] = "Selected.Accent.TButton"
+        select_category(category_feedback)
 
     category_faq = ttk.Button(categories, text = "Frequently asked questions", width = 25, style = "Selected.Accent.TButton", command = show_faq)
     category_faq.pack()
     
-    category_menu_colors = ttk.Button(categories, text = "Menu white borders", width = 25, style = "Unselected.Toolbutton", command = show_menu_colors)
+    category_menu_colors = ttk.Button(categories, text = "Menu white borders", width = 25, style = "Unselected.TLabel", command = show_menu_colors)
     category_menu_colors.pack(pady = (8, 0))
 
-    category_feedback = ttk.Button(categories, text = "Give feedback", width = 25, style = "Unselected.Toolbutton", command = show_give_feedback)
+    category_feedback = ttk.Button(categories, text = "Give feedback", width = 25, style = "Unselected.TLabel", command = show_give_feedback)
     category_feedback.pack(pady = (8, 0))
 
     ttk.Separator(frame, orient = "vertical").pack(side = "left", fill = "y")
@@ -78,7 +90,7 @@ def show():
     help_info.tag_configure("normal", font = ("Segoe UI", 11))
     help_info.tag_configure("link", font = ("Segoe UI Semibold", 11), underline = True, foreground = util.accent, selectforeground = "#FFFFFF")
     help_info.tag_configure("heading", font = ("Segoe UI Semibold", 17), spacing3 = 7)
-    help_info.tag_configure("code", font = ("Consolas", 11))
+    help_info.tag_configure("code", font = ("Courier", 11))
 
     style = ttk.Style()
     style.configure("TScrollbar", background = util.bg)
