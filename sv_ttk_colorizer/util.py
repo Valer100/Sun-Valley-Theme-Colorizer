@@ -19,14 +19,16 @@ accent_light = "#005fb8"
 accent_dark = "#57c8ff"
 
 def update_colors(theme):
-    global bg, warning, bg_wallpaper
+    global bg, warning, bg_wallpaper, accent
 
     if theme == "dark": 
         bg = "#202020"
         warning = "#FFFF00"
+        accent = accent_dark
     else: 
         bg = "#ffffff"
         warning = "#FF0000"
+        accent = accent_light
 
 update_colors(darkdetect.theme().lower())
 
