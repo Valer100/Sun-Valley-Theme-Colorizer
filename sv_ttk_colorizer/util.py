@@ -1,4 +1,5 @@
 import tkinter as tk, colorsys, shutil, sys, appdirs, os, darkdetect
+from tkinter import ttk
 from PIL import Image
 
 latest_sv_ttk = "https://github.com/rdbende/Sun-Valley-ttk-theme/archive/refs/heads/main.zip"
@@ -37,11 +38,11 @@ def update_colors(theme):
     if theme == "dark": 
         bg = "#202020"
         warning = "#FFFF00"
-        accent = accent_dark
+        accent = "#57c8ff"
     else: 
         bg = "#ffffff"
         warning = "#FF0000"
-        accent = accent_light
+        accent = "#005fb8"
 
 update_colors(darkdetect.theme().lower())
 
