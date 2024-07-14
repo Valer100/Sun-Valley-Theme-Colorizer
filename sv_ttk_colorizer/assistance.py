@@ -102,9 +102,6 @@ def show():
 
     window.focus_set()
     window.grab_set()
-    
     window.update()
     geometry = window.geometry().split("+")[0].split("x")
     window.minsize(width = geometry[0], height = geometry[1])
-
-    window.mainloop()
