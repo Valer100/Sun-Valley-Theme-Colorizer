@@ -32,6 +32,9 @@ def get_selection_accent_color() -> str: return "{accent_light}"
 use_dark_theme = partial(set_theme, "dark")
 use_light_theme = partial(set_theme, "light")'''
 
+toolbutton_fix_find = '''empty 152 64 10 10 \\'''
+toolbutton_fix_replace = '''empty 152 209 20 20 \\'''
+
 def update_colors(theme):
     global bg, warning, bg_wallpaper, accent, reference
 
@@ -53,6 +56,8 @@ sv_ttk_spritesheet_light = sv_ttk_download + "/theme/spritesheet_light.png"
 sv_ttk_spritesheet_dark = sv_ttk_download + "/theme/spritesheet_dark.png"
 sv_ttk_light = sv_ttk_download + "/theme/light.tcl"
 sv_ttk_dark = sv_ttk_download + "/theme/dark.tcl"
+sv_ttk_light_sprites = sv_ttk_download + "/theme/sprites_light.tcl"
+sv_ttk_dark_sprites = sv_ttk_download + "/theme/sprites_dark.tcl"
 sv_ttk_sv = sv_ttk_download + "/sv.tcl"
 
 desktop = os.path.expanduser("~") + "/Desktop"
@@ -144,3 +149,12 @@ def enable_all_widgets(root):
     for widget in root.winfo_children():
         if isinstance(widget, (tk.Frame, ttk.Frame)): enable_all_widgets(widget)
         else: widget["state"] = "enabled"
+
+class AutoScrollbar(ttk.Scrollbar):
+    def set(self, lo, hi):
+        if float(lo) <= 0.0 and float(hi) >= 1.0: self.pack_forget()
+        else:
+            if self.cget("orient") == "horizontal": self.pack(fill = "x")
+            else: self.pack(fill = "y", expand = True)
+            
+        ttk.Scrollbar.set(self, lo, hi)

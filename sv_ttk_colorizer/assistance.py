@@ -98,7 +98,7 @@ def show():
     style = ttk.Style()
     style.configure("TScrollbar", background = util.bg)
 
-    scrollbar = ttk.Scrollbar(frame2, orient = "vertical", command = help_info.yview)
+    scrollbar = util.AutoScrollbar(frame2, orient = "vertical", command = help_info.yview)
     scrollbar.pack(side = "left", fill = "y", pady = 4)
 
     help_info.configure(yscrollcommand = scrollbar.set)

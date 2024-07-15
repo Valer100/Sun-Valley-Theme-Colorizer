@@ -17,6 +17,7 @@ def main():
 
     dm_titlebars = tk.BooleanVar(value = False)
     accent_funcs = tk.BooleanVar(value = False)
+    fix_lag = tk.BooleanVar(value = False)
     include_examplepy = tk.BooleanVar(value = True)
 
     try: import util, assistance
@@ -92,6 +93,9 @@ def main():
     warning2 = ttk.Label(options_frame, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 270)
     warning2.pack(pady = (8, 0))
 
+    toolbutton_fix = ttk.Checkbutton(options_frame, text = "Fix Toolbutton lag in complex\nlayouts on Windows", style = "Switch.TCheckbutton", variable = fix_lag)
+    toolbutton_fix.pack(pady = (16, 0), fill = "x")
+
     include_example = ttk.Checkbutton(options_frame, text = "Include \"example.py\" file to test\nthe theme", style = "Switch.TCheckbutton", variable = include_examplepy)
     include_example.pack(pady = (16, 0), fill = "x")
 
@@ -138,6 +142,13 @@ def main():
             if accent_funcs.get():
                 __init__file = open(util.sv_ttk_download + "/__init__.py", "r").read().replace(util.get_accents_patch_find, util.get_accents_patch_replace)
                 open(util.sv_ttk_download + "/__init__.py", "w").write(__init__file)
+
+            if fix_lag.get():
+                sprites_light = open(util.sv_ttk_light_sprites, "r").read().replace(util.toolbutton_fix_find, util.toolbutton_fix_replace)
+                sprites_dark = open(util.sv_ttk_dark_sprites, "r").read().replace(util.toolbutton_fix_find, util.toolbutton_fix_replace)
+
+                open(util.sv_ttk_light_sprites, "w").write(sprites_light)
+                open(util.sv_ttk_dark_sprites, "w").write(sprites_dark)
 
             if os.path.exists(save_to + "/sv_ttk"): 
                 delete = msg.askyesno("Error", "The folder \"sv_ttk\" already exists in \"" + save_to + "\". The folder must be deleted to continue. Do you want to delete it?", icon = "error")
