@@ -1,5 +1,6 @@
 import tkinter as tk, sv_ttk, darkdetect, os, shutil, sys, subprocess
 from tkinter import ttk, filedialog as fd, messagebox as msg
+from tkscrollframe import ScrollFrame
 from urllib.request import urlretrieve
 from zipfile import ZipFile
 
@@ -51,7 +52,7 @@ def main():
     preview_image.pack(side = "left")
     preview_image.create_image(0, 0, image = util.preview_bg, anchor = "nw")
 
-    options_frame = ttk.Frame(frame, padding = (24, 8, 24, 24))
+    options_frame = ttk.Frame(frame, padding = (24, 8, 0, 24))
     options_frame.pack(side = "right", anchor = "n", fill = "y")
 
     ttk.Separator(frame, orient = "vertical").pack(side = "right", fill = "y")
@@ -68,10 +69,20 @@ def main():
 
     hue_img = tk.PhotoImage(file = "resources/color_range.png")
 
-    ttk.Label(options_frame, text = "Accent color").pack(anchor = "w", pady = (0, 8))
+    scrolled_frame_parent = tk.Frame(options_frame)
+    scrolled_frame_parent.pack(fill = "y", expand = True)
 
-    hue_group = ttk.Frame(options_frame)
-    hue_group.pack()
+    scrolled_frame = ScrollFrame(scrolled_frame_parent)
+    scrolled_frame.pack(fill = "both", expand = True, pady = (0, 24), anchor = "w")
+
+    scrolled_frame.canvas.configure(width = 280)
+
+    options = scrolled_frame.viewPort
+
+    ttk.Label(options, text = "Accent color").pack(anchor = "w", pady = (0, 8))
+
+    hue_group = ttk.Frame(options)
+    hue_group.pack(anchor = "w")
 
     hue = ttk.Scale(hue_group, length = 250, from_= 0, to = 100)
     hue.pack(pady = (0, 5))
@@ -81,22 +92,22 @@ def main():
     hue_image = ttk.Label(hue_group, image = hue_img)
     hue_image.pack()
 
-    dark_mode_titlebars = ttk.Checkbutton(options_frame, text = "Dark mode title bars on Windows", style = "Switch.TCheckbutton", variable = dm_titlebars)
-    dark_mode_titlebars.pack(pady = (32, 0))
+    dark_mode_titlebars = ttk.Checkbutton(options, text = "Dark mode title bars on Windows", style = "Switch.TCheckbutton", variable = dm_titlebars)
+    dark_mode_titlebars.pack(pady = (32, 0), fill = "x")
 
-    warning1 = ttk.Label(options_frame, text = "This setting requires an additional dependency for your project: pywinstyles.", foreground = util.warning, wraplength = 270)
-    warning1.pack(pady = (8, 0))
+    warning1 = ttk.Label(options, text = "This setting requires an additional dependency for your project: pywinstyles.", foreground = util.warning, wraplength = 270)
+    warning1.pack(pady = (8, 0), anchor = "w")
 
-    get_accent_functions = ttk.Checkbutton(options_frame, text = "Add functions to get the accent\ncolors", style = "Switch.TCheckbutton", variable = accent_funcs)
+    get_accent_functions = ttk.Checkbutton(options, text = "Add functions to get the accent\ncolors", style = "Switch.TCheckbutton", variable = accent_funcs)
     get_accent_functions.pack(pady = (16, 0), fill = "x")
 
-    warning2 = ttk.Label(options_frame, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 270)
-    warning2.pack(pady = (8, 0))
+    warning2 = ttk.Label(options, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 270)
+    warning2.pack(pady = (8, 0), anchor = "w")
 
-    toolbutton_fix = ttk.Checkbutton(options_frame, text = "Fix Toolbutton lag in complex\nlayouts on Windows", style = "Switch.TCheckbutton", variable = fix_lag)
+    toolbutton_fix = ttk.Checkbutton(options, text = "Fix Toolbutton lag in complex\nlayouts on Windows", style = "Switch.TCheckbutton", variable = fix_lag)
     toolbutton_fix.pack(pady = (16, 0), fill = "x")
 
-    include_example = ttk.Checkbutton(options_frame, text = "Include \"example.py\" file to test\nthe theme", style = "Switch.TCheckbutton", variable = include_examplepy)
+    include_example = ttk.Checkbutton(options, text = "Include \"example.py\" file to test\nthe theme", style = "Switch.TCheckbutton", variable = include_examplepy)
     include_example.pack(pady = (16, 0), fill = "x")
 
     def save_patch():
@@ -195,10 +206,10 @@ def main():
         preview_image["background"] = util.bg
 
     save = ttk.Button(options_frame, text = "Save", style = "Accent.TButton", command = save_patch)
-    save.pack(side = "bottom", fill = "x")
+    save.pack(side = "bottom", fill = "x", padx = (0, 24))
 
     help_btn = ttk.Button(options_frame, text = "Help", command = assistance.show)
-    help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
+    help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
 
     if sys.platform == "win32" or sys.platform == "darwin": sv_ttk.set_theme(darkdetect.theme())
     else: sv_ttk.set_theme("light")
