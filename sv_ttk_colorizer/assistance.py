@@ -21,6 +21,7 @@ def show():
     style.configure("Selected.Accent.TButton", anchor = "w")
     style.configure("Unselected.TButton", anchor = "w")
     style.configure("Unselected.TLabel", anchor = "w", padding = (12, 6, 12, 7))
+    style.configure("Help.Vertical.TScrollbar", background = util.bg)
 
     def uncheck_all():
         for category in categories.winfo_children():
@@ -95,10 +96,7 @@ def show():
     help_info.tag_configure("code", rmargin = 16, lmargin1 = 16, font = ("Consolas", 11), background = "#000000", foreground = "#FFFFFF", selectbackground = "#00417e")
     help_info.tag_configure("code_reference", rmargin = 16, lmargin1 = 16, font = ("Consolas", 11), background = util.reference, foreground = "#FFFFFF", selectbackground = "#00417e")
 
-    style = ttk.Style()
-    style.configure("TScrollbar", background = util.bg)
-
-    scrollbar = util.AutoScrollbar(frame2, orient = "vertical", command = help_info.yview)
+    scrollbar = util.AutoScrollbar(frame2, command = help_info.yview, style = "Help.Vertical.TScrollbar")
     scrollbar.pack(side = "left", fill = "y", pady = 4)
 
     help_info.configure(yscrollcommand = scrollbar.set)

@@ -74,8 +74,17 @@ def main():
 
     scrolled_frame = ScrollFrame(scrolled_frame_parent)
     scrolled_frame.pack(fill = "both", expand = True, pady = (0, 24), anchor = "w")
-
     scrolled_frame.canvas.configure(width = 280)
+
+    def fix_scrolling(event):
+        if sys.platform.startswith("darwin"): scrolled_frame.canvas.yview_scroll(-1 * event.delta, "units") #macOS
+        elif event.num == 4: scrolled_frame.canvas.yview_scroll(-1, "units") # Linux (scroll up)
+        elif event.num == 5: scrolled_frame.canvas.yview_scroll(1, "units") # Linux (scroll down)
+        else: scrolled_frame.canvas.yview_scroll(-1 * (event.delta // 120), "units") # Windows
+
+    scrolled_frame.canvas.bind_all("<MouseWheel>", fix_scrolling)
+    scrolled_frame.canvas.bind_all("<Button-4>", fix_scrolling)
+    scrolled_frame.canvas.bind_all("<Button-5>", fix_scrolling)
 
     options = scrolled_frame.viewPort
 
@@ -99,7 +108,7 @@ def main():
 
     util.add_switch(options, "Add functions to get the accent colors", accent_funcs)
 
-    warning2 = ttk.Label(options, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 270)
+    warning2 = ttk.Label(options, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 250)
     warning2.pack(pady = (8, 0), anchor = "w")
 
     util.add_switch(options, "Fix Toolbutton lag in complex layouts", fix_lag)
