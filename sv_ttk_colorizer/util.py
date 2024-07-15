@@ -158,3 +158,16 @@ class AutoScrollbar(ttk.Scrollbar):
             else: self.pack(fill = "y", expand = True)
             
         ttk.Scrollbar.set(self, lo, hi)
+
+def add_switch(parent, text, variable):
+    layout = ttk.Frame(parent)
+    layout.pack(fill = "x", pady = (16, 0))
+
+    checkbox = ttk.Checkbutton(layout, variable = variable, style = "Switch.TCheckbutton")
+    checkbox.pack(side = "left")
+
+    label = ttk.Label(layout, text = text, wraplength = 200, anchor = "w")
+    label.pack(side = "left")
+    label.bind("<Enter>", lambda event: checkbox.configure(state = "active"))
+    label.bind("<Leave>", lambda event: checkbox.configure(state = "!active"))
+    label.bind("<ButtonRelease-1>", lambda event: variable.set(not variable.get()))

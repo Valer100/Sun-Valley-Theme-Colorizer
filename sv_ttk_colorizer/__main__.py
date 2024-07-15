@@ -82,7 +82,7 @@ def main():
     ttk.Label(options, text = "Accent color").pack(anchor = "w", pady = (0, 8))
 
     hue_group = ttk.Frame(options)
-    hue_group.pack(anchor = "w")
+    hue_group.pack(anchor = "w", pady = (0, 8))
 
     hue = ttk.Scale(hue_group, length = 250, from_= 0, to = 100)
     hue.pack(pady = (0, 5))
@@ -92,36 +92,31 @@ def main():
     hue_image = ttk.Label(hue_group, image = hue_img)
     hue_image.pack()
 
-    dark_mode_titlebars = ttk.Checkbutton(options, text = "Dark mode title bars on Windows", style = "Switch.TCheckbutton", variable = dm_titlebars)
-    dark_mode_titlebars.pack(pady = (32, 0), fill = "x")
+    util.add_switch(options, "Dark Mode title bars on Windows", dm_titlebars)
 
     warning1 = ttk.Label(options, text = "This setting requires an additional dependency for your project: pywinstyles.", foreground = util.warning, wraplength = 270)
     warning1.pack(pady = (8, 0), anchor = "w")
 
-    get_accent_functions = ttk.Checkbutton(options, text = "Add functions to get the accent\ncolors", style = "Switch.TCheckbutton", variable = accent_funcs)
-    get_accent_functions.pack(pady = (16, 0), fill = "x")
+    util.add_switch(options, "Add functions to get the accent colors", accent_funcs)
 
     warning2 = ttk.Label(options, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 270)
     warning2.pack(pady = (8, 0), anchor = "w")
 
-    toolbutton_fix = ttk.Checkbutton(options, text = "Fix Toolbutton lag in complex\nlayouts on Windows", style = "Switch.TCheckbutton", variable = fix_lag)
-    toolbutton_fix.pack(pady = (16, 0), fill = "x")
-
-    include_example = ttk.Checkbutton(options, text = "Include \"example.py\" file to test\nthe theme", style = "Switch.TCheckbutton", variable = include_examplepy)
-    include_example.pack(pady = (16, 0), fill = "x")
+    util.add_switch(options, "Fix Toolbutton lag in complex layouts", fix_lag)
+    util.add_switch(options, "Include \"example.py\" file to test the theme", include_examplepy)
 
     def save_patch():
         save_to = fd.askdirectory(title = "Choose where to save the theme", initialdir = util.desktop)
 
         if not save_to == "":
             window.configure(cursor = "watch")
-            util.disable_all_widgets(options_frame)
+            util.disable_all_widgets(options)
             theme_switch.configure(state = "disabled")
             save.forget()
             help_btn.forget()
 
             status = ttk.Label(options_frame, text = "Downloading sv-ttk...", font = ("Segoe UI Semibold", 15))
-            status.pack(side = "bottom")
+            status.pack(side = "bottom", padx = (0, 24))
 
             window.update()
             if os.path.exists(util.root_folder + "/temp"): shutil.rmtree(util.root_folder + "/temp")
@@ -170,9 +165,9 @@ def main():
                     window.update()
                     window.configure(cursor = "arrow")
                     status.destroy()
-                    save.pack(side = "bottom", fill = "x")
-                    help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
-                    util.enable_all_widgets(options_frame)
+                    save.pack(side = "bottom", fill = "x", padx = (0, 24))
+                    help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
+                    util.enable_all_widgets(options)
                     theme_switch.configure(state = "enabled")
 
                     msg.showinfo("Sun Valley Theme Colorizer", "The save has been canceled.")
@@ -184,9 +179,9 @@ def main():
             window.update()
             window.configure(cursor = "arrow")
             status.destroy()
-            save.pack(side = "bottom", fill = "x")
-            help_btn.pack(side = "bottom", pady = (0, 8), fill = "x")
-            util.enable_all_widgets(options_frame)
+            save.pack(side = "bottom", fill = "x", padx = (0, 24))
+            help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
+            util.enable_all_widgets(options)
             theme_switch.configure(state = "enabled")
 
             if include_examplepy.get():
