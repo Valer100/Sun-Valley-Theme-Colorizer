@@ -21,7 +21,8 @@ setup(
         "requests",
         "pywinstyles",
         "sv_ttk",
-        "appdirs"
+        "appdirs",
+        "tkscrollframe"
     ],
     package_data={
         "sv_ttk_colorizer": ["resources/*"],
