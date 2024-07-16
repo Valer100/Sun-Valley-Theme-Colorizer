@@ -82,28 +82,28 @@ def main():
     def export_settings():
         file_path = fd.asksaveasfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], title = "Export settings", initialdir = util.desktop, initialfile = "configuration.svttkc")
 
-        if not file_path.name == "":
+        if not file_path == None:
             open(file_path.name, "w").write(gen_export_file())
             msg.showinfo("Sun Valley Theme Colorizer", "The settings have been exported.")
 
     def import_settings():
         file_path = fd.askopenfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], initialdir = util.desktop, initialfile = "configuration.svttkc")
 
-        if not file_path.name == "":
+        if not file_path == None:
             settings = open(file_path.name).read().split("\n")
 
-        try:
-            hue.set(float(settings[3]))
-            update_preview(None)
-
-            dm_titlebars.set(int(settings[4]))
-            accent_funcs.set(int(settings[5]))
-            fix_lag.set(int(settings[6]))
-            include_examplepy.set(int(settings[7]))
-            include_config.set(int(settings[8]))
-
-            msg.showinfo("Sun Valley Theme Colorizer", "The settings were imported.")
-        except Exception as e: msg.showerror("Sun Valley Theme Colorizer", "Invalid configuration file or the configuration file was made using an older version of Sun Valley Theme Colorizer."); print(e)
+            try:
+                hue.set(float(settings[3]))
+                update_preview(None)
+    
+                dm_titlebars.set(int(settings[4]))
+                accent_funcs.set(int(settings[5]))
+                fix_lag.set(int(settings[6]))
+                include_examplepy.set(int(settings[7]))
+                include_config.set(int(settings[8]))
+    
+                msg.showinfo("Sun Valley Theme Colorizer", "The settings were imported.")
+            except Exception as e: msg.showerror("Sun Valley Theme Colorizer", "Invalid configuration file or the configuration file was made using an older version of Sun Valley Theme Colorizer."); print(e)
 
     hue_img = tk.PhotoImage(file = "resources/color_range.png")
 
