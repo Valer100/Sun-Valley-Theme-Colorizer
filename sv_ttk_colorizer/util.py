@@ -39,7 +39,6 @@ menu_revert_colors_find = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.
 
 menu_revert_colors_replace = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.tcl").absolute()
 
-
 class MenuFix(tkinter.Menu):
     def __init__(self, master=None, **kw):
         super().__init__(master, **kw)

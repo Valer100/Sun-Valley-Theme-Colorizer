@@ -190,6 +190,7 @@ def main():
             status["text"] = "Unzipping sv-ttk..."
             ZipFile(util.root_folder + "/temp/sv_ttk.zip").extractall(util.root_folder + "/temp/sv_ttk repo")
             urlretrieve(util.sv_ttk_license, util.sv_ttk_download + "/LICENSE")
+            shutil.copyfile(util.root_folder + "/resources/LICENSE_MODIFICATIONS", util.sv_ttk_download + "/LICENSE_MODIFICATIONS")
 
             window.update()
             status["text"] = "Patching files..."
