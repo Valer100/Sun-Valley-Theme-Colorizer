@@ -161,8 +161,8 @@ def main():
     warning2.pack(pady = (8, 0), anchor = "w")
 
     util.add_switch(options, "Fix Toolbutton lag in complex layouts", fix_lag)
-    util.add_switch(options, "Include \"example.py\" file to test the theme", include_examplepy)
-    util.add_switch(options, "Include a configuration file with these settings", include_config)
+    util.add_switch(options, "Include a preview file to test the theme (\"example.py\")", include_examplepy)
+    util.add_switch(options, "Include a configuration file with these settings (\"config.svttkc\")", include_config)
 
     def save_patch():
         save_to = fd.askdirectory(title = "Choose where to save the theme", initialdir = util.desktop)
