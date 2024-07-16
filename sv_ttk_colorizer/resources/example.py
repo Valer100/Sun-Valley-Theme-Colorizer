@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, messagebox as msg
+from tkinter import ttk, messagebox as msg, filedialog as fd
 
 try: import __init__ as sv_ttk
 except: import sv_ttk
@@ -67,7 +67,7 @@ row1.pack()
 checkboxes = ttk.Labelframe(row1, text = "Checkbuttons", padding = 4)
 checkboxes.pack(side = "left", fill = "y")
 
-ttk.Checkbutton(checkboxes, text = "Checked", variable = checked, width = 15).pack(anchor = "w", padx = 4, pady = 4)
+ttk.Checkbutton(checkboxes, text = "Checked", variable = checked, width = 15).pack(anchor = "w", padx = 4, pady = (8, 4))
 ttk.Checkbutton(checkboxes, text = "Unhecked", variable = unchecked, width = 15).pack(anchor = "w", padx = 4, pady = 4)
 ttk.Checkbutton(checkboxes, text = "Disabled", variable = disabled, state = "disabled", width = 15).pack(anchor = "w", padx = 4, pady = 4)
 
@@ -87,7 +87,7 @@ row2.pack(pady = (16, 0))
 radiobuttons = ttk.Labelframe(row2, text = "Radiobuttons", padding = 4)
 radiobuttons.pack(side = "left", fill = "y")
 
-ttk.Radiobutton(radiobuttons, text = "Selected", width = 15, variable = radio, value = "1").pack(anchor = "w", padx = 4, pady = 4)
+ttk.Radiobutton(radiobuttons, text = "Selected", width = 15, variable = radio, value = "1").pack(anchor = "w", padx = 4, pady = (8, 4))
 ttk.Radiobutton(radiobuttons, text = "Unselected", width = 15, variable = radio, value = "2").pack(anchor = "w", padx = 4, pady = 4)
 ttk.Radiobutton(radiobuttons, text = "Disabled", width = 15, state = "disabled").pack(anchor = "w", padx = 4, pady = 4)
 
@@ -170,6 +170,7 @@ ttk.Checkbutton(options, text = "Dark Mode", command = sv_ttk.toggle_theme, styl
 ttk.Checkbutton(options, text = "Show menu", variable = menu_bool, command = show_menu).pack(anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Open Toplevel", command = tk.Toplevel).pack(anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(anchor = "w", pady = (10, 0))
+ttk.Button(options, text = "Show file dialog", command = lambda: fd.askdirectory()).pack(anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Send <<ThemeChanged>> event", command = lambda: window.event_generate("<<ThemeChanged>>")).pack(anchor = "w", pady = (10, 0))
 
 window.update()
