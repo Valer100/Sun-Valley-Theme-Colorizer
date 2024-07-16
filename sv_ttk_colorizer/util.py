@@ -35,6 +35,28 @@ use_light_theme = partial(set_theme, "light")'''
 toolbutton_fix_find = '''empty 152 64 10 10 \\'''
 toolbutton_fix_replace = '''empty 152 209 20 20 \\'''
 
+menu_revert_colors_find = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.tcl").absolute()'''
+
+menu_revert_colors_replace = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.tcl").absolute()
+
+
+class MenuFix(tkinter.Menu):
+    def __init__(self, master=None, **kw):
+        super().__init__(master, **kw)
+
+        def fix_menu_colors(event = None):
+            import sys
+            
+            if sys.platform == "win32" or sys.platform == "darwin":
+                if (str(self["bg"]).lower() == "#fafafa" and str(self["fg"]).lower() == "#1c1c1c") or (str(self["bg"]).lower() == "#1c1c1c" and str(self["fg"]).lower() == "#fafafa"): 
+                    self.configure(bg="SystemMenu", fg="SystemMenuText")
+        
+        fix_menu_colors()
+        self.after(100, fix_menu_colors)
+        self.bind("<<ThemeChanged>>", fix_menu_colors)
+
+tkinter.Menu = MenuFix'''
+
 def update_colors(theme):
     global bg, warning, bg_wallpaper, accent, reference
 

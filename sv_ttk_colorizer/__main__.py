@@ -17,6 +17,7 @@ def main():
     window.configure()
 
     dm_titlebars = tk.BooleanVar(value = False)
+    menu_revert_colors = tk.BooleanVar(value = False)
     accent_funcs = tk.BooleanVar(value = False)
     fix_lag = tk.BooleanVar(value = False)
     include_examplepy = tk.BooleanVar(value = True)
@@ -77,7 +78,8 @@ def main():
 {str(int(accent_funcs.get()))}
 {str(int(fix_lag.get()))}
 {str(int(include_examplepy.get()))}
-{str(int(include_config.get()))}'''
+{str(int(include_config.get()))}
+{str(int(menu_revert_colors.get()))}'''
 
     def export_settings():
         file_path = fd.asksaveasfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], title = "Export settings", initialdir = util.desktop, initialfile = "configuration.svttkc")
@@ -101,6 +103,7 @@ def main():
                 fix_lag.set(int(settings[6]))
                 include_examplepy.set(int(settings[7]))
                 include_config.set(int(settings[8]))
+                menu_revert_colors.set(int(settings[9]))
 
                 msg.showinfo("Sun Valley Theme Colorizer", "The settings were imported.")
             except Exception as e: msg.showerror("Sun Valley Theme Colorizer", "Invalid configuration file or the configuration file was made using an older version of Sun Valley Theme Colorizer."); print(e)
@@ -155,6 +158,7 @@ def main():
     warning1 = ttk.Label(options, text = "This setting requires an additional dependency for your project: pywinstyles.", foreground = util.warning, wraplength = 270)
     warning1.pack(pady = (8, 0), anchor = "w")
 
+    util.add_switch(options, "Don't change menu colors on Windows and macOS", menu_revert_colors)
     util.add_switch(options, "Add functions to get the accent colors", accent_funcs)
 
     warning2 = ttk.Label(options, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 250)
@@ -214,6 +218,10 @@ def main():
 
                 open(util.sv_ttk_light_sprites, "w").write(sprites_light)
                 open(util.sv_ttk_dark_sprites, "w").write(sprites_dark)
+
+            if menu_revert_colors.get():
+                __init__file = open(util.sv_ttk_download + "/__init__.py", "r").read().replace(util.menu_revert_colors_find, util.menu_revert_colors_replace)
+                open(util.sv_ttk_download + "/__init__.py", "w").write(__init__file)
 
             if include_config.get(): open(util.sv_ttk_download + "/config.svttkc", "w").write(gen_export_file())
 
