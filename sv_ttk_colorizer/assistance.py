@@ -50,17 +50,6 @@ def show():
         show_help_info("\nThat may happen because you're not connected to the Internet or your Internet connection signal strength is weak. Try waiting a few minutes. If nothing happens, check your Internet connection and try again.")
         select_category(category_faq)
 
-    def show_menu_colors(): 
-        uncheck_all()
-        show_help_info("Why do menus have a white border when using this theme with the dark mode variant?", "heading")
-        show_help_info("\nThis theme also changes the background color of the menus. But on Windows, if the background color of the menus is changed, there will be a white border. The only way to fix this is to revert the colors of the menu back to default. Here's how you can do this:\n\n")
-        show_help_info("\nyourmenu.configure(bg=\"SystemMenu\", fg=\"SystemMenuText\")\n\n", "code")
-        show_help_info("\nReplace ")
-        show_help_info(" yourmenu ", "code_reference")
-        show_help_info(" with the reference to your menu. Make sure to only run this code on Windows, because on Linux the menus don't have a white border and they look fine. You can do that using the sys module. The final code would look like this:\n\n")
-        show_help_info("\nimport sys\n\n# Making sure the code runs only on Windows\nif sys.platform == \"win32\":\n    yourmenu.configure(bg=\"SystemMenu\", fg=\"SystemMenuText\")\n\n", "code")
-        select_category(category_menu_colors)
-
     def show_give_feedback():
         uncheck_all()
         show_help_info("Give feedback", "heading")
@@ -70,9 +59,6 @@ def show():
 
     category_faq = ttk.Button(categories, text = "Frequently asked questions", width = 25, style = "Selected.Accent.TButton", command = show_faq)
     category_faq.pack()
-    
-    category_menu_colors = ttk.Button(categories, text = "Menu white borders", width = 25, style = "Unselected.TLabel", command = show_menu_colors)
-    category_menu_colors.pack(pady = (8, 0))
 
     category_feedback = ttk.Button(categories, text = "Give feedback", width = 25, style = "Unselected.TLabel", command = show_give_feedback)
     category_feedback.pack(pady = (8, 0))
