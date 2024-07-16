@@ -20,6 +20,7 @@ def main():
     accent_funcs = tk.BooleanVar(value = False)
     fix_lag = tk.BooleanVar(value = False)
     include_examplepy = tk.BooleanVar(value = True)
+    include_config = tk.BooleanVar(value = True)
 
     try: import util, assistance
     except Exception as e: from sv_ttk_colorizer import util, assistance # type: ignore
@@ -35,7 +36,7 @@ def main():
     ttk.Label(title, text = "Sun Valley Theme Colorizer", font = ("Segoe UI Semibold", 20)).pack(side = "left", padx = 16)
 
     theme_switch = ttk.Checkbutton(title, text = "Dark Mode", style = "Switch.TCheckbutton", command = lambda: toggle_theme())
-    if not sys.platform == "win32" or sys.platform == "darwin": theme_switch.pack(side = "right", fill = "y", padx = 16)
+    if not sys.platform == "win32" or sys.platform == "darwin": theme_switch.pack(side = "right", fill = "y", padx = (0, 16))
 
     frame = tk.Frame(window, bg = util.bg)
     frame.pack(pady = (16, 0), fill = "both", expand = True)
@@ -67,6 +68,43 @@ def main():
             preview_image.create_image(0, 0, image = util.preview_text, anchor = "nw")
             window.configure(cursor = "arrow")
 
+    def gen_export_file(): 
+        return f'''// This is a Sun Valley Theme Colorizer configuration file.
+// Do not edit it by hand or unexpected things will happen.
+
+{str(hue.get())}
+{str(int(dm_titlebars.get()))}
+{str(int(accent_funcs.get()))}
+{str(int(fix_lag.get()))}
+{str(int(include_examplepy.get()))}
+{str(int(include_config.get()))}'''
+
+    def export_settings():
+        file_path = fd.asksaveasfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], title = "Export settings", initialdir = util.desktop, initialfile = "configuration.svttkc")
+
+        if not file_path.name == "":
+            open(file_path.name, "w").write(gen_export_file())
+            msg.showinfo("Sun Valley Theme Colorizer", "The settings have been exported.")
+
+    def import_settings():
+        file_path = fd.askopenfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], initialdir = util.desktop, initialfile = "configuration.svttkc")
+
+        if not file_path.name == "":
+            settings = open(file_path.name).read().split("\n")
+
+        try:
+            hue.set(float(settings[3]))
+            update_preview(None)
+
+            dm_titlebars.set(int(settings[4]))
+            accent_funcs.set(int(settings[5]))
+            fix_lag.set(int(settings[6]))
+            include_examplepy.set(int(settings[7]))
+            include_config.set(int(settings[8]))
+
+            msg.showinfo("Sun Valley Theme Colorizer", "The settings were imported.")
+        except Exception as e: msg.showerror("Sun Valley Theme Colorizer", "Invalid configuration file or the configuration file was made using an older version of Sun Valley Theme Colorizer."); print(e)
+
     hue_img = tk.PhotoImage(file = "resources/color_range.png")
 
     scrolled_frame_parent = tk.Frame(options_frame)
@@ -87,6 +125,17 @@ def main():
     scrolled_frame.canvas.bind_all("<Button-5>", fix_scrolling)
 
     options = scrolled_frame.viewPort
+    
+    import_export = ttk.Frame(options)
+    import_export.pack(anchor = "w", pady = (0, 16), padx = (0, 24), fill = "x")
+    import_export.columnconfigure(index = 0, weight = 1)
+    import_export.columnconfigure(index = 1, weight = 1)
+
+    import_ = ttk.Button(import_export, text = "Import", command = import_settings)
+    import_.grid(row = 0, column = 0, sticky = "nesw", padx = (0, 4))
+
+    export = ttk.Button(import_export, text = "Export", style = "Accent.TButton", command = export_settings)
+    export.grid(row = 0, column = 1, sticky = "nesw", padx = (4, 0))
 
     ttk.Label(options, text = "Accent color").pack(anchor = "w", pady = (0, 8))
 
@@ -113,6 +162,7 @@ def main():
 
     util.add_switch(options, "Fix Toolbutton lag in complex layouts", fix_lag)
     util.add_switch(options, "Include \"example.py\" file to test the theme", include_examplepy)
+    util.add_switch(options, "Include a configuration file with these settings", include_config)
 
     def save_patch():
         save_to = fd.askdirectory(title = "Choose where to save the theme", initialdir = util.desktop)
@@ -164,6 +214,8 @@ def main():
 
                 open(util.sv_ttk_light_sprites, "w").write(sprites_light)
                 open(util.sv_ttk_dark_sprites, "w").write(sprites_dark)
+
+            if include_config.get(): open(util.sv_ttk_download + "/config.svttkc", "w").write(gen_export_file())
 
             if os.path.exists(save_to + "/sv_ttk"): 
                 delete = msg.askyesno("Error", "The folder \"sv_ttk\" already exists in \"" + save_to + "\". The folder must be deleted to continue. Do you want to delete it?", icon = "error")
