@@ -95,13 +95,13 @@ def main():
             try:
                 hue.set(float(settings[3]))
                 update_preview(None)
-    
+
                 dm_titlebars.set(int(settings[4]))
                 accent_funcs.set(int(settings[5]))
                 fix_lag.set(int(settings[6]))
                 include_examplepy.set(int(settings[7]))
                 include_config.set(int(settings[8]))
-    
+
                 msg.showinfo("Sun Valley Theme Colorizer", "The settings were imported.")
             except Exception as e: msg.showerror("Sun Valley Theme Colorizer", "Invalid configuration file or the configuration file was made using an older version of Sun Valley Theme Colorizer."); print(e)
 

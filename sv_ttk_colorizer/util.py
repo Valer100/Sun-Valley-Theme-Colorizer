@@ -166,8 +166,17 @@ def add_switch(parent, text, variable):
     checkbox = ttk.Checkbutton(layout, variable = variable, style = "Switch.TCheckbutton")
     checkbox.pack(side = "left")
 
+    def on_enter(event):
+        if not str(checkbox["state"]).__contains__("disabled"): checkbox.configure(state = "active")
+
+    def on_leave(event):
+        if not str(checkbox["state"]).__contains__("disabled"): checkbox.configure(state = "!active")
+
+    def on_click(event):
+        if not str(checkbox["state"]).__contains__("disabled"): variable.set(not variable.get())
+
     label = ttk.Label(layout, text = text, wraplength = 200, anchor = "w")
     label.pack(side = "left")
-    label.bind("<Enter>", lambda event: checkbox.configure(state = "active"))
-    label.bind("<Leave>", lambda event: checkbox.configure(state = "!active"))
-    label.bind("<ButtonRelease-1>", lambda event: variable.set(not variable.get()))
+    label.bind("<Enter>", on_enter)
+    label.bind("<Leave>", on_leave)
+    label.bind("<ButtonRelease-1>", on_click)
