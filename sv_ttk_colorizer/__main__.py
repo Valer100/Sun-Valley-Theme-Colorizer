@@ -82,14 +82,14 @@ def main():
 {str(int(menu_revert_colors.get()))}'''
 
     def export_settings():
-        file_path = fd.asksaveasfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], title = "Export settings", initialdir = util.desktop, initialfile = "configuration.svttkc")
+        file_path = fd.asksaveasfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], title = "Export settings", initialdir = util.desktop, initialfile = "config.svttkc")
 
         if not file_path == None:
             open(file_path.name, "w").write(gen_export_file())
             msg.showinfo("Sun Valley Theme Colorizer", "The settings have been exported.")
 
     def import_settings():
-        file_path = fd.askopenfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], initialdir = util.desktop, initialfile = "configuration.svttkc")
+        file_path = fd.askopenfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], initialdir = util.desktop, initialfile = "config.svttkc")
 
         if not file_path == None:
             settings = open(file_path.name).read().split("\n")
@@ -169,7 +169,7 @@ def main():
     util.add_switch(options, "Include a configuration file with these settings (\"config.svttkc\")", include_config)
 
     def save_patch():
-        save_to = fd.askdirectory(title = "Choose where to save the theme", initialdir = util.desktop)
+        save_to = fd.askdirectory(title = "Choose a folder to save the modified theme", initialdir = util.desktop)
 
         if not save_to == "":
             window.configure(cursor = "watch")
