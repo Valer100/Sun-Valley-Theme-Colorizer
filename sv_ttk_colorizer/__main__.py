@@ -13,7 +13,7 @@ def main():
     if sys.platform == "win32" or sys.platform == "darwin": window.state("zoomed")
     else: window.wm_attributes("-zoomed", True)
 
-    window.minsize(width = 1307, height = 579)
+    window.minsize(width = 1307, height = 600)
     window.configure()
 
     dm_titlebars = tk.BooleanVar(value = False)
@@ -42,17 +42,19 @@ def main():
     frame = tk.Frame(window, bg = util.bg)
     frame.pack(pady = (16, 0), fill = "both", expand = True)
 
-    frame2 = tk.Frame(frame, bg = util.bg)
-    frame2.pack(fill = "both", expand = True, side = "left")
+    if sys.platform == "win32" or sys.platform == "darwin": sv_ttk.set_theme(darkdetect.theme())
+    else: sv_ttk.set_theme("light")
 
-    ttk.Separator(frame2, orient = "horizontal").pack(fill = "x")
+    window.configure(cursor = "watch")
+    window.update()
+    image = tk.PhotoImage(file = util.root_folder + "/resources/image.png")
 
-    preview_frame = tk.Frame(frame2, bg = util.bg)
-    preview_frame.pack(fill = "y", padx = 16, pady = 16, expand = True, side = "left")
+    window.configure(cursor = "")
 
-    preview_image = tk.Canvas(preview_frame, bg = util.bg, width = util.preview_bg.width(), height = util.preview.height(), bd = 0, highlightthickness = 0)
-    preview_image.pack(side = "left")
-    preview_image.create_image(0, 0, image = util.preview_bg, anchor = "nw")
+    preview = tk.Canvas(frame, bg = util.bg, highlightthickness = 0)
+    preview.pack(fill = "both", expand = True, side = "left")
+
+    ttk.Separator(preview, orient = "horizontal").pack(fill = "x")
 
     options_frame = ttk.Frame(frame, padding = (24, 8, 0, 24))
     options_frame.pack(side = "right", anchor = "n", fill = "y")
@@ -65,9 +67,11 @@ def main():
             window.update()
             util.update_preview(hue.get())
             util.update_accents()
-            preview_image.create_image(0, 0, image = util.preview, anchor = "nw")
-            preview_image.create_image(0, 0, image = util.preview_text, anchor = "nw")
-            window.configure(cursor = "arrow")
+            preview.delete("accent")
+            preview.delete("text")
+            preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview, anchor = "center", tag = "accent")
+            preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_text, anchor = "center", tag = "text")
+            window.configure(cursor = "")
 
     def gen_export_file(): 
         return f'''// This is a Sun Valley Theme Colorizer configuration file.
@@ -233,7 +237,7 @@ def main():
                     if os.path.exists(save_to + "/sv_ttk"): shutil.rmtree(save_to + "/sv_ttk")
                 else: 
                     window.update()
-                    window.configure(cursor = "arrow")
+                    window.configure(cursor = "")
                     status.destroy()
                     save.pack(side = "bottom", fill = "x", padx = (0, 24))
                     help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
@@ -247,7 +251,7 @@ def main():
             shutil.rmtree(util.root_folder + "/temp")
 
             window.update()
-            window.configure(cursor = "arrow")
+            window.configure(cursor = "")
             status.destroy()
             save.pack(side = "bottom", fill = "x", padx = (0, 24))
             help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
@@ -266,9 +270,7 @@ def main():
         warning1["foreground"] = util.warning
         warning2["foreground"] = util.warning
         frame["background"] = util.bg
-        frame2["background"] = util.bg
-        preview_frame["background"] = util.bg
-        preview_image["background"] = util.bg
+        preview["background"] = util.bg
 
     save = ttk.Button(options_frame, text = "Save", style = "Accent.TButton", command = save_patch)
     save.pack(side = "bottom", fill = "x", padx = (0, 24))
@@ -276,9 +278,19 @@ def main():
     help_btn = ttk.Button(options_frame, text = "Help", command = assistance.show)
     help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
 
-    if sys.platform == "win32" or sys.platform == "darwin": sv_ttk.set_theme(darkdetect.theme())
-    else: sv_ttk.set_theme("light")
+    preview.update()
+    preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = image, anchor = "center")
+    preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_bg, anchor = "center")
 
+    def on_resize(event):
+        preview.update()
+        preview.delete("all")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = image, anchor = "center")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_bg, anchor = "center")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview, anchor = "center", tag = "accent")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_text, anchor = "center", tag = "text")
+
+    preview.bind("<Configure>", on_resize)
     window.mainloop()
 
 if __name__ == "__main__": main()

@@ -12,7 +12,7 @@ if os.path.exists(root_folder + "/resources"): shutil.rmtree(root_folder + "/res
 
 shutil.copytree("resources", root_folder + "/resources")
 
-preview_bg = tk.PhotoImage(file = root_folder + "/resources/preview.png")
+preview_bg = tk.PhotoImage(file = root_folder + "/resources/preview2.png")
 preview_text = tk.PhotoImage(file = root_folder + "/resources/preview_accent_text.png")
 preview = tk.PhotoImage(file = root_folder + "/resources/preview_accent.png")
 
