@@ -1,4 +1,4 @@
-import tkinter as tk, sv_ttk, darkdetect, os, shutil, sys, subprocess
+import tkinter as tk, sv_ttk, darkdetect, os, shutil, sys, subprocess, importlib.metadata
 from tkinter import ttk, filedialog as fd, messagebox as msg
 from tkscrollframe import ScrollFrame
 from urllib.request import urlretrieve
@@ -22,6 +22,7 @@ def main():
     fix_lag = tk.BooleanVar(value = False)
     include_examplepy = tk.BooleanVar(value = True)
     include_config = tk.BooleanVar(value = True)
+    working_mode = tk.StringVar(value = "online")
 
     try: import util, assistance
     except Exception as e: from sv_ttk_colorizer import util, assistance # type: ignore
@@ -47,7 +48,7 @@ def main():
 
     window.configure(cursor = "watch")
     window.update()
-    image = tk.PhotoImage(file = util.root_folder + "/resources/image.png")
+    image = tk.PhotoImage(file = util.root_folder + f"/resources/image.png")
 
     window.configure(cursor = "")
 
@@ -144,7 +145,11 @@ def main():
     export = ttk.Button(import_export, text = "Export", style = "Accent.TButton", command = export_settings)
     export.grid(row = 0, column = 1, sticky = "nesw", padx = (4, 0))
 
-    ttk.Label(options, text = "Accent color").pack(anchor = "w", pady = (0, 8))
+    ttk.Label(options, text = "Working mode").pack(anchor = "w")
+    util.add_radiobutton(options, "Download the latest version of sv_ttk from GitHub", working_mode, "online")
+    util.add_radiobutton(options, "Use the version downloaded from pip", working_mode, "offline")
+
+    ttk.Label(options, text = "Accent color").pack(anchor = "w", pady = (16, 8))
 
     hue_group = ttk.Frame(options)
     hue_group.pack(anchor = "w", pady = (0, 8))
@@ -182,22 +187,37 @@ def main():
             save.forget()
             help_btn.forget()
 
-            status = ttk.Label(options_frame, text = "Downloading sv-ttk...", font = ("Segoe UI Semibold", 15))
-            status.pack(side = "bottom", padx = (0, 24))
-
-            window.update()
             if os.path.exists(util.root_folder + "/temp"): shutil.rmtree(util.root_folder + "/temp")
             os.mkdir(util.root_folder + "/temp")
-            urlretrieve(util.latest_sv_ttk, util.root_folder + "/temp/sv_ttk.zip")
 
-            window.update()
-            status["text"] = "Unzipping sv-ttk..."
-            ZipFile(util.root_folder + "/temp/sv_ttk.zip").extractall(util.root_folder + "/temp/sv_ttk repo")
-            urlretrieve(util.sv_ttk_license, util.sv_ttk_download + "/LICENSE")
+
+            if working_mode.get() == "online":
+                status = ttk.Label(options_frame, text = "Downloading sv_ttk...", font = ("Segoe UI Semibold", 15))
+                status.pack(side = "bottom", padx = (0, 24))
+
+                window.update()
+                urlretrieve(util.latest_sv_ttk, util.root_folder + "/temp/sv_ttk.zip")
+
+                status["text"] = "Unzipping sv-ttk..."
+                window.update()
+                ZipFile(util.root_folder + "/temp/sv_ttk.zip").extractall(util.root_folder + "/temp/sv_ttk repo")
+                urlretrieve(util.sv_ttk_license, util.sv_ttk_download + "/LICENSE")
+            elif working_mode.get() == "offline":
+                status = ttk.Label(options_frame, text = "Copying sv_ttk...", font = ("Segoe UI Semibold", 15))
+                status.pack(side = "bottom", padx = (0, 24))
+
+                window.update()
+                os.makedirs(util.root_folder + "/temp/sv_ttk repo/Sun-Valley-ttk-theme-main")
+                shutil.copytree(sv_ttk.__path__[0], util.root_folder + "/temp/sv_ttk repo/Sun-Valley-ttk-theme-main/sv_ttk")
+                shutil.copyfile(f"{sv_ttk.__path__[0]}-{importlib.metadata.metadata('sv_ttk')['Version']}.dist-info/{importlib.metadata.metadata('sv_ttk')['License-File']}", util.sv_ttk_download + "/LICENSE")
+
+                if os.path.exists(util.sv_ttk_download + "/__pycache__"): shutil.rmtree(util.sv_ttk_download + "/__pycache__")
+
             shutil.copyfile(util.root_folder + "/resources/LICENSE_MODIFICATIONS", util.sv_ttk_download + "/LICENSE_MODIFICATIONS")
 
             window.update()
             status["text"] = "Patching files..."
+            
             util.change_hue_and_save(util.sv_ttk_spritesheet_light, hue.get())
             util.change_hue_and_save(util.sv_ttk_spritesheet_dark, hue.get())
 
@@ -210,8 +230,8 @@ def main():
             open(util.sv_ttk_dark, "w").write(dark_tcl)
 
             if dm_titlebars.get():
-                os.remove(util.sv_ttk_download + "/__init__.py")
-                urlretrieve(util.dm_titlebars_patch, util.sv_ttk_download + "/__init__.py")
+                __init__file = open(util.sv_ttk_download + "/__init__.py", "r").read().replace(util.dm_titlebars_find1, util.dm_titlebars_replace1).replace(util.dm_titlebars_find2, util.dm_titlebars_replace2).replace(util.dm_titlebars_find3, util.dm_titlebars_replace3)
+                open(util.sv_ttk_download + "/__init__.py", "w").write(__init__file)
 
             if accent_funcs.get():
                 __init__file = open(util.sv_ttk_download + "/__init__.py", "r").read().replace(util.get_accents_patch_find, util.get_accents_patch_replace)

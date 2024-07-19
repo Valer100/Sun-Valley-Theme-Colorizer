@@ -19,6 +19,7 @@ preview = tk.PhotoImage(file = root_folder + "/resources/preview_accent.png")
 accent_light = "#005fb8"
 accent_dark = "#57c8ff"
 
+
 get_accents_patch_find = '''use_dark_theme = partial(set_theme, "dark")
 use_light_theme = partial(set_theme, "light")'''
 
@@ -55,6 +56,74 @@ class MenuFix(tkinter.Menu):
         self.bind("<<ThemeChanged>>", fix_menu_colors)
 
 tkinter.Menu = MenuFix'''
+
+dm_titlebars_find1 = '''use_dark_theme = partial(set_theme, "dark")'''
+
+dm_titlebars_replace1 = '''def get_windows_version() -> int:
+    import sys
+
+    if sys.platform == "win32":
+        # Running on Windows
+        version = sys.getwindowsversion()
+
+        if version.major == 10 and version.build >= 22000:
+            # Windows 11
+            return 11
+        elif version.major == 10:
+            # Windows 10
+            return 10
+        else:
+            # Other Windows version (like 7, 8, 8.1, etc...)
+            return version.major
+    else:
+        # Not running on Windows
+        return 0
+
+use_dark_theme = partial(set_theme, "dark")'''
+
+dm_titlebars_find2 = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.tcl").absolute()'''
+
+dm_titlebars_replace2 = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.tcl").absolute()
+
+
+# A hacky way to change a Toplevel's title bar color after it's created
+class ThemedToplevel(tkinter.Toplevel):
+    def __init__(self, master=None, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+
+        try: set_theme(get_theme())
+        except: pass
+
+tkinter.Toplevel = ThemedToplevel'''
+
+dm_titlebars_find3 = '''style.theme_use(f"sun-valley-{theme}")'''
+
+dm_titlebars_replace3 = '''# Set title bar color on Windows
+    def set_title_bar_color(root):
+        if get_windows_version() == 10:
+            import pywinstyles
+
+            if theme == "dark": pywinstyles.apply_style(root, "dark")
+            else: pywinstyles.apply_style(root, "normal")
+
+            # A hacky way to update the title bar's color on Windows 10 (it doesn't update instantly like on Windows 11)
+            root.wm_attributes("-alpha", 0.99)
+            root.wm_attributes("-alpha", 1)
+        elif get_windows_version() == 11:
+            import pywinstyles
+            
+            if theme == "dark": pywinstyles.change_header_color(root, "#1c1c1c")
+            elif theme == "light": pywinstyles.change_header_color(root, "#fafafa")
+
+    def set_title_bar_color_toplevels():
+        for widget in style.master.winfo_children():
+            if isinstance(widget, tkinter.Toplevel): set_title_bar_color(widget)
+
+    set_title_bar_color(style.master)
+    set_title_bar_color_toplevels()
+
+    style.theme_use(f"sun-valley-{theme}")'''
+
 
 def update_colors(theme):
     global bg, warning, bg_wallpaper, accent, reference
@@ -195,6 +264,30 @@ def add_switch(parent, text, variable):
 
     def on_click(event):
         if not str(checkbox["state"]).__contains__("disabled"): variable.set(not variable.get())
+        checkbox.focus_set()
+
+    label = ttk.Label(layout, text = text, wraplength = 200, anchor = "w")
+    label.pack(side = "left")
+    label.bind("<Enter>", on_enter)
+    label.bind("<Leave>", on_leave)
+    label.bind("<ButtonRelease-1>", on_click)
+
+def add_radiobutton(parent, text, variable, value):
+    layout = ttk.Frame(parent)
+    layout.pack(fill = "x", pady = (8, 0))
+
+    radiobutton = ttk.Radiobutton(layout, variable = variable, value = value)
+    radiobutton.pack(side = "left")
+
+    def on_enter(event):
+        if not str(radiobutton["state"]).__contains__("disabled"): radiobutton.configure(state = "active")
+
+    def on_leave(event):
+        if not str(radiobutton["state"]).__contains__("disabled"): radiobutton.configure(state = "!active")
+
+    def on_click(event):
+        if not str(radiobutton["state"]).__contains__("disabled"): variable.set(value)
+        radiobutton.focus_set()
 
     label = ttk.Label(layout, text = text, wraplength = 200, anchor = "w")
     label.pack(side = "left")
