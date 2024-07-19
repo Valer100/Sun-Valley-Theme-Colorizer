@@ -177,7 +177,19 @@ def main():
     util.add_switch(options, "Include a preview file to test the theme (\"example.py\")", include_examplepy)
     util.add_switch(options, "Include a configuration file with these settings (\"config.svttkc\")", include_config)
 
+    def allow_editing():
+        global status
+
+        window.update()
+        window.configure(cursor = "")
+        status.destroy()
+        save.pack(side = "bottom", fill = "x", padx = (0, 24))
+        help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
+        util.enable_all_widgets(options)
+        theme_switch.configure(state = "enabled")
+
     def save_patch():
+        global status
         save_to = fd.askdirectory(title = "Choose a folder to save the modified theme", initialdir = util.desktop)
 
         if not save_to == "":
@@ -196,7 +208,12 @@ def main():
                 status.pack(side = "bottom", padx = (0, 24))
 
                 window.update()
-                urlretrieve(util.latest_sv_ttk, util.root_folder + "/temp/sv_ttk.zip")
+
+                try: urlretrieve(util.latest_sv_ttk, util.root_folder + "/temp/sv_ttk.zip")
+                except:
+                    allow_editing()
+                    msg.showerror("Failed to download sv_ttk", "Check your internet connection and try again. If your internet connection is down or unstable, try choosing \"Use the version downloaded from pip\" under \"Working mode\".")
+                    return
 
                 status["text"] = "Unzipping sv-ttk..."
                 window.update()
@@ -256,13 +273,7 @@ def main():
                 if delete:
                     if os.path.exists(save_to + "/sv_ttk"): shutil.rmtree(save_to + "/sv_ttk")
                 else: 
-                    window.update()
-                    window.configure(cursor = "")
-                    status.destroy()
-                    save.pack(side = "bottom", fill = "x", padx = (0, 24))
-                    help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
-                    util.enable_all_widgets(options)
-                    theme_switch.configure(state = "enabled")
+                    allow_editing()
 
                     msg.showinfo("Sun Valley Theme Colorizer", "The save has been canceled.")
                     return
@@ -270,13 +281,7 @@ def main():
             shutil.move(util.sv_ttk_download, f"{save_to}/sv_ttk")
             shutil.rmtree(util.root_folder + "/temp")
 
-            window.update()
-            window.configure(cursor = "")
-            status.destroy()
-            save.pack(side = "bottom", fill = "x", padx = (0, 24))
-            help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
-            util.enable_all_widgets(options)
-            theme_switch.configure(state = "enabled")
+            allow_editing()
 
             if include_examplepy.get():
                 show_preview = msg.askyesno("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved. Do you want to see it in action?", icon = "info")
