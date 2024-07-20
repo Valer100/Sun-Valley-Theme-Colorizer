@@ -45,9 +45,7 @@ def show():
         show_help_info("What's this package doing?", "heading")
         show_help_info("\nThis package downloads sv_ttk from GitHub, changes the hue for the widgets by modifying some files and saves the modified module anywhere you want.\n\n")
         show_help_info("How do I use the folder in my project?", "heading")
-        show_help_info("\nSimply put the folder in your project's root folder and you're done. It should work.\n\n")
-        show_help_info("Why is the package stuck at \"Downloading sv_ttk...\" stage?", "heading")
-        show_help_info("\nThat may happen because you're not connected to the Internet or your Internet connection signal strength is weak. Try waiting a few minutes. If nothing happens, check your Internet connection and try again.")
+        show_help_info("\nSimply put the folder in your project's root folder and you're done. It should work.")
         select_category(category_faq)
 
     def show_give_feedback():

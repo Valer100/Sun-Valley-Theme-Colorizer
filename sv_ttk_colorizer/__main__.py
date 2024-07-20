@@ -145,9 +145,13 @@ def main():
     export = ttk.Button(import_export, text = "Export", style = "Accent.TButton", command = export_settings)
     export.grid(row = 0, column = 1, sticky = "nesw", padx = (4, 0))
 
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (0, 16))
+
     ttk.Label(options, text = "Working mode").pack(anchor = "w")
     util.add_radiobutton(options, "Download the latest version of sv_ttk from GitHub", working_mode, "online")
     util.add_radiobutton(options, "Use the version downloaded from pip", working_mode, "offline")
+
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
 
     ttk.Label(options, text = "Accent color").pack(anchor = "w", pady = (16, 8))
 
@@ -162,20 +166,31 @@ def main():
     hue_image = ttk.Label(hue_group, image = hue_img)
     hue_image.pack()
 
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
+
     util.add_switch(options, "Dark Mode title bars on Windows", dm_titlebars)
 
     warning1 = ttk.Label(options, text = "This setting requires an additional dependency for your project: pywinstyles.", foreground = util.warning, wraplength = 270)
     warning1.pack(pady = (8, 0), anchor = "w")
 
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
+
     util.add_switch(options, "Don't change menu colors on Windows and macOS", menu_revert_colors)
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
+
     util.add_switch(options, "Add functions to get the accent colors", accent_funcs)
 
     warning2 = ttk.Label(options, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 250)
     warning2.pack(pady = (8, 0), anchor = "w")
 
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
+
     util.add_switch(options, "Fix Toolbutton lag in complex layouts", fix_lag)
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
     util.add_switch(options, "Include a preview file to test the theme (\"example.py\")", include_examplepy)
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
     util.add_switch(options, "Include a configuration file with these settings (\"config.svttkc\")", include_config)
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
 
     def allow_editing():
         global status
@@ -266,6 +281,9 @@ def main():
                 open(util.sv_ttk_download + "/__init__.py", "w").write(__init__file)
 
             if include_config.get(): open(util.sv_ttk_download + "/config.svttkc", "w").write(gen_export_file())
+
+            window.update()
+            status["text"] = "Almost there..."
 
             if os.path.exists(save_to + "/sv_ttk"): 
                 delete = msg.askyesno("Error", "The folder \"sv_ttk\" already exists in \"" + save_to + "\". The folder must be deleted to continue. Do you want to delete it?", icon = "error")
