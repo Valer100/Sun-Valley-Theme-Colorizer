@@ -231,13 +231,13 @@ def get_windows_version() -> int:
 
 def disable_all_widgets(root):
     for widget in root.winfo_children():
-        if isinstance(widget, (tk.Frame, ttk.Frame)): disable_all_widgets(widget)
+        if isinstance(widget, (tk.Frame, ttk.Frame, ttk.Separator)): disable_all_widgets(widget)
         else:
             if not isinstance(widget, ttk.Label): widget["state"] = "disabled"
 
 def enable_all_widgets(root):
     for widget in root.winfo_children():
-        if isinstance(widget, (tk.Frame, ttk.Frame)): enable_all_widgets(widget)
+        if isinstance(widget, (tk.Frame, ttk.Frame, ttk.Separator)): enable_all_widgets(widget)
         else: widget["state"] = "enabled"
 
 class AutoScrollbar(ttk.Scrollbar):
