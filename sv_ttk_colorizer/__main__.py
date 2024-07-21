@@ -6,6 +6,7 @@ from zipfile import ZipFile
 
 def main():
     global hue_value, hue_thumb, hue_thumb_pressed, is_editing_allowed
+    hue_value = 0
     is_editing_allowed = True
     
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
