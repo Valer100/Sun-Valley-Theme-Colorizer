@@ -5,6 +5,9 @@ from urllib.request import urlretrieve
 from zipfile import ZipFile
 
 def main():
+    global hue_value, hue_thumb, hue_thumb_pressed, is_editing_allowed
+    is_editing_allowed = True
+    
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
     window = tk.Tk()
@@ -63,10 +66,14 @@ def main():
     ttk.Separator(frame, orient = "vertical").pack(side = "right", fill = "y")
 
     def update_preview(event):
-        if hue.focus_get():
+        if is_editing_allowed:
+            thumb_coords = hue_slider.coords("thumb")
+            hue_slider.delete("thumb")
+            hue_slider.create_image(thumb_coords[0], thumb_coords[1], image = hue_thumb, anchor = "center", tag = "thumb")
+
             window.configure(cursor = "watch")
             window.update()
-            util.update_preview(hue.get())
+            util.update_preview(hue_value)
             util.update_accents()
             preview.delete("accent")
             preview.delete("text")
@@ -78,7 +85,7 @@ def main():
         return f'''// This is a Sun Valley Theme Colorizer configuration file.
 // Do not edit it by hand or unexpected things will happen.
 
-{str(hue.get())}
+{str(hue_value)}
 {str(int(dm_titlebars.get()))}
 {str(int(accent_funcs.get()))}
 {str(int(fix_lag.get()))}
@@ -94,13 +101,17 @@ def main():
             msg.showinfo("Sun Valley Theme Colorizer", "The settings have been exported.")
 
     def import_settings():
+        global hue_value
         file_path = fd.askopenfile(filetypes = [("Sun Valley Theme Colorizer configuration file", ".svttkc")], initialdir = util.desktop, initialfile = "config.svttkc")
 
         if not file_path == None:
             settings = open(file_path.name).read().split("\n")
 
             try:
-                hue.set(float(settings[3]))
+                hue_value = (float(settings[3]))
+                hue_slider.delete("thumb")
+
+                update_hue_slider()
                 update_preview(None)
 
                 dm_titlebars.set(int(settings[4]))
@@ -112,8 +123,6 @@ def main():
 
                 msg.showinfo("Sun Valley Theme Colorizer", "The settings were imported.")
             except Exception as e: msg.showerror("Sun Valley Theme Colorizer", "Invalid configuration file or the configuration file was made using an older version of Sun Valley Theme Colorizer."); print(e)
-
-    hue_img = tk.PhotoImage(file = "resources/color_range.png")
 
     scrolled_frame_parent = tk.Frame(options_frame)
     scrolled_frame_parent.pack(fill = "y", expand = True)
@@ -155,16 +164,37 @@ def main():
 
     ttk.Label(options, text = "Accent color").pack(anchor = "w", pady = (16, 8))
 
-    hue_group = ttk.Frame(options)
-    hue_group.pack(anchor = "w", pady = (0, 8))
+    hue_img = tk.PhotoImage(file = "resources/hue_scale/track.png")
+    hue_thumb = tk.PhotoImage(file = f"resources/hue_scale/thumb_{sv_ttk.get_theme()}.png")
+    hue_thumb_pressed = tk.PhotoImage(file = f"resources/hue_scale/thumb_pressed_{sv_ttk.get_theme()}.png")
 
-    hue = ttk.Scale(hue_group, length = 250, from_= 0, to = 100)
-    hue.pack(pady = (0, 5))
-    hue.bind("<ButtonRelease>", update_preview)
-    hue.bind("<KeyRelease>", update_preview)
+    def on_progress_change(event):
+        global hue_value, hue_thumb, hue_thumb_pressed, is_editing_allowed
+        
+        if is_editing_allowed:
+            if event.x >= 10 and event.x <= 240:
+                hue_slider.delete("thumb")
+                hue_slider.create_image(event.x, hue_thumb.height() // 2, image = hue_thumb_pressed, anchor = "center", tag = "thumb")
 
-    hue_image = ttk.Label(hue_group, image = hue_img)
-    hue_image.pack()
+                hue_value = event.x / 2.4
+            elif event.x <= 10:
+                hue_slider.delete("thumb")
+                hue_slider.create_image(10, hue_thumb.height() // 2, image = hue_thumb_pressed, anchor = "center", tag = "thumb")
+
+                hue_value = 0
+            elif event.x >= 240:
+                hue_slider.delete("thumb")
+                hue_slider.create_image(240, hue_thumb.height() // 2, image = hue_thumb_pressed, anchor = "center", tag = "thumb")
+
+                hue_value = 100
+
+    hue_slider = tk.Canvas(options, highlightthickness = 0, width = hue_img.width(), height = hue_thumb.height())
+    hue_slider.pack(anchor = "w")
+    hue_slider.create_image(0, 8, image = hue_img, anchor = "nw")
+    hue_slider.create_image(10, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb")
+    hue_slider.bind("<Button-1>", on_progress_change)
+    hue_slider.bind("<B1-Motion>", on_progress_change)
+    hue_slider.bind("<ButtonRelease-1>", update_preview)
 
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
 
@@ -193,7 +223,11 @@ def main():
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
 
     def allow_editing():
-        global status
+        global status, is_editing_allowed, hue_thumb
+        is_editing_allowed = True
+
+        hue_thumb = tk.PhotoImage(file = f"resources/hue_scale/thumb_{sv_ttk.get_theme()}.png")
+        update_hue_slider()
 
         window.update()
         window.configure(cursor = "")
@@ -204,10 +238,14 @@ def main():
         theme_switch.configure(state = "enabled")
 
     def save_patch():
-        global status
+        global status, is_editing_allowed, hue_thumb
         save_to = fd.askdirectory(title = "Choose a folder to save the modified theme", initialdir = util.desktop)
 
         if not save_to == "":
+            is_editing_allowed = False
+            hue_thumb = tk.PhotoImage(file = f"resources/hue_scale/thumb_disabled_{sv_ttk.get_theme()}.png")
+            update_hue_slider()
+
             window.configure(cursor = "watch")
             util.disable_all_widgets(options)
             theme_switch.configure(state = "disabled")
@@ -250,8 +288,8 @@ def main():
             window.update()
             status["text"] = "Patching files..."
             
-            util.change_hue_and_save(util.sv_ttk_spritesheet_light, hue.get())
-            util.change_hue_and_save(util.sv_ttk_spritesheet_dark, hue.get())
+            util.change_hue_and_save(util.sv_ttk_spritesheet_light, hue_value)
+            util.change_hue_and_save(util.sv_ttk_spritesheet_dark, hue_value)
 
             if include_examplepy.get(): shutil.copyfile(util.root_folder + "/resources/example.py", util.sv_ttk_download + "/example.py")
 
@@ -308,12 +346,26 @@ def main():
                 msg.showinfo("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved.")
 
     def toggle_theme():
+        global hue_value, hue_thumb, hue_thumb_pressed
+
         sv_ttk.toggle_theme()
         util.update_colors(sv_ttk.get_theme())
         warning1["foreground"] = util.warning
         warning2["foreground"] = util.warning
         frame["background"] = util.bg
         preview["background"] = util.bg
+
+        hue_thumb = tk.PhotoImage(file = f"resources/hue_scale/thumb_{sv_ttk.get_theme()}.png")
+        hue_thumb_pressed = tk.PhotoImage(file = f"resources/hue_scale/thumb_pressed_{sv_ttk.get_theme()}.png")
+        update_hue_slider()
+
+    def update_hue_slider():
+        global hue_value, hue_thumb, hue_thumb_pressed
+        hue_slider.delete("thumb")
+
+        if hue_value == 0: hue_slider.create_image(10, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb")
+        elif hue_value == 100: hue_slider.create_image(240, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb")
+        else: hue_slider.create_image(hue_value * 2.4, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb")
 
     save = ttk.Button(options_frame, text = "Save", style = "Accent.TButton", command = save_patch)
     save.pack(side = "bottom", fill = "x", padx = (0, 24))
