@@ -68,9 +68,14 @@ def main():
 
     def update_preview(event):
         if is_editing_allowed:
-            thumb_coords = hue_slider.coords("thumb")
-            hue_slider.delete("thumb")
-            hue_slider.create_image(thumb_coords[0], thumb_coords[1], image = hue_thumb, anchor = "center", tag = "thumb")
+            try:
+                thumb_coords = hue_slider.coords("thumb")
+                hue_slider.delete("thumb")
+                hue_slider.create_image(thumb_coords[0], thumb_coords[1], image = hue_thumb, anchor = "center", tag = "thumb")
+            except:
+                thumb_coords = hue_slider.coords("thumb_hover")
+                hue_slider.delete("thumb_hover")
+                hue_slider.create_image(thumb_coords[0], thumb_coords[1], image = hue_thumb, anchor = "center", tag = "thumb_hover")
 
             window.configure(cursor = "watch")
             window.update()
@@ -84,7 +89,7 @@ def main():
 
     def gen_export_file(): 
         return f'''// This is a Sun Valley Theme Colorizer configuration file.
-// Do not edit it by hand or unexpected things will happen.
+// Do not edit this by hand or unexpected things will happen.
 
 {str(hue_value)}
 {str(int(dm_titlebars.get()))}
@@ -159,7 +164,7 @@ def main():
 
     ttk.Label(options, text = "Working mode").pack(anchor = "w")
     util.add_radiobutton(options, "Download the latest version of sv_ttk from GitHub", working_mode, "online")
-    util.add_radiobutton(options, "Use the version downloaded from pip", working_mode, "offline")
+    util.add_radiobutton(options, "Use the version of sv_ttk from site-packages", working_mode, "offline")
 
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
 
@@ -266,7 +271,7 @@ def main():
                 try: urlretrieve(util.latest_sv_ttk, util.root_folder + "/temp/sv_ttk.zip")
                 except:
                     allow_editing()
-                    msg.showerror("Failed to download sv_ttk", "Check your internet connection and try again. If your internet connection is down or unstable, try choosing \"Use the version downloaded from pip\" under \"Working mode\".")
+                    msg.showerror("Failed to download sv_ttk", "Check your internet connection and try again. If your internet connection is down or unstable, try choosing \"Use the version of sv_ttk from site-packages\" under \"Working mode\".")
                     return
 
                 status["text"] = "Unzipping sv-ttk..."
@@ -360,13 +365,30 @@ def main():
         hue_thumb_pressed = tk.PhotoImage(file = f"resources/hue_scale/thumb_pressed_{sv_ttk.get_theme()}.png")
         update_hue_slider()
 
-    def update_hue_slider():
-        global hue_value, hue_thumb, hue_thumb_pressed
+    def update_hue_slider(event = None):
+        global hue_value, hue_thumb
+        hue_thumb = tk.PhotoImage(file = f"resources/hue_scale/thumb_{sv_ttk.get_theme()}.png")
+        
         hue_slider.delete("thumb")
+        hue_slider.delete("thumb_hover")
 
         if hue_value == 0: hue_slider.create_image(10, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb")
         elif hue_value == 100: hue_slider.create_image(240, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb")
         else: hue_slider.create_image(hue_value * 2.4, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb")
+
+    def update_hue_slider_hover(event = None):
+        global hue_value, hue_thumb
+        hue_thumb = tk.PhotoImage(file = f"resources/hue_scale/thumb_hover_{sv_ttk.get_theme()}.png")
+
+        hue_slider.delete("thumb")
+        hue_slider.delete("thumb_hover")
+
+        if hue_value == 0: hue_slider.create_image(10, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb_hover")
+        elif hue_value == 100: hue_slider.create_image(240, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb_hover")
+        else: hue_slider.create_image(hue_value * 2.4, hue_thumb.height() // 2, image = hue_thumb, anchor = "center", tag = "thumb_hover")
+
+    hue_slider.tag_bind("thumb", "<Enter>", update_hue_slider_hover)
+    hue_slider.tag_bind("thumb_hover", "<Leave>", update_hue_slider)
 
     save = ttk.Button(options_frame, text = "Save", style = "Accent.TButton", command = save_patch)
     save.pack(side = "bottom", fill = "x", padx = (0, 24))
