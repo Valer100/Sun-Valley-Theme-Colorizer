@@ -51,7 +51,7 @@ def show():
     def show_give_feedback():
         uncheck_all()
         show_help_info("Give feedback", "heading")
-        show_help_info("\nIs something unexpected happening? Do you have suggestions for new features or improvements to this package? Or you simply want to ask a question and get an answer about this package? You can give us feedback on our GitHub repository. Just open a new Issue and give us your feedback. Here's a link to the GitHub repository:\n\n")
+        show_help_info("\nIs something unexpected happening? Do you have suggestions for new features or improvements to this package? Or you simply have a question and want to get an answer to it? You can give us your feedback on our GitHub repository. Just open a new issue and start talking to us. Here's a link to it:\n\n")
         show_help_info("https://github.com/Valer100/Sun-Valley-Theme-Colorizer", "link")
         select_category(category_feedback)
 
