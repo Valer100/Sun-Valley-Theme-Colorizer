@@ -1,4 +1,4 @@
-import tkinter as tk, sv_ttk, darkdetect, os, shutil, sys, subprocess, importlib.metadata
+import tkinter as tk, sv_ttk, darkdetect, os, shutil, sys, subprocess, importlib.metadata, appdirs
 from tkinter import ttk, filedialog as fd, messagebox as msg
 from tkscrollframe import ScrollFrame
 from urllib.request import urlretrieve
@@ -8,14 +8,21 @@ def main():
     global hue_value, hue_thumb, hue_thumb_pressed, is_editing_allowed
     hue_value = 0
     is_editing_allowed = True
-    
+
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
     window = tk.Tk()
     window.title("Sun Valley Theme Colorizer")
 
-    if sys.platform == "win32" or sys.platform == "darwin": window.state("zoomed")
-    else: window.wm_attributes("-zoomed", True)
+    dark_mode = tk.BooleanVar(value = False)
+
+    if sys.platform == "win32" or sys.platform == "darwin": 
+        window.state("zoomed")
+    else: 
+        window.wm_attributes("-zoomed", True)
+
+        if os.path.exists(appdirs.user_data_dir("sv_ttk_colorizer") + "/dark_mode"): 
+            if open(appdirs.user_data_dir("sv_ttk_colorizer") + "/dark_mode").read() == "1": dark_mode.set(True)
 
     window.minsize(width = 1307, height = 600)
     window.configure()
@@ -41,7 +48,7 @@ def main():
 
     ttk.Label(title, text = "Sun Valley Theme Colorizer", font = ("Segoe UI Semibold", 20)).pack(side = "left", padx = 16)
 
-    theme_switch = ttk.Checkbutton(title, text = "Dark Mode", style = "Switch.TCheckbutton", command = lambda: toggle_theme())
+    theme_switch = ttk.Checkbutton(title, text = "Dark Mode", style = "Switch.TCheckbutton", command = lambda: toggle_theme(), variable = dark_mode)
     if not sys.platform == "win32" or sys.platform == "darwin": theme_switch.pack(side = "right", fill = "y", padx = (0, 16))
 
     frame = tk.Frame(window, bg = util.bg)
@@ -365,6 +372,9 @@ def main():
         hue_thumb_pressed = tk.PhotoImage(file = f"resources/hue_scale/thumb_pressed_{sv_ttk.get_theme()}.png")
         update_hue_slider()
 
+        if sv_ttk.get_theme() == "dark": open(util.root_folder + "/dark_mode", "w").write("1")
+        else: open(util.root_folder + "/dark_mode", "w").write("0")
+
     def update_hue_slider(event = None):
         global hue_value, hue_thumb
         hue_thumb = tk.PhotoImage(file = f"resources/hue_scale/thumb_{sv_ttk.get_theme()}.png")
@@ -407,6 +417,8 @@ def main():
         preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_bg, anchor = "center")
         preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview, anchor = "center", tag = "accent")
         preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_text, anchor = "center", tag = "text")
+
+    if not (sys.platform == "win32" or sys.platform == "darwin") and dark_mode.get(): toggle_theme()
 
     preview.bind("<Configure>", on_resize)
     window.mainloop()
