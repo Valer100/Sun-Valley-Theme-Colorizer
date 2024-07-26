@@ -170,8 +170,8 @@ def main():
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (0, 16))
 
     ttk.Label(options, text = "Working mode").pack(anchor = "w")
-    util.add_radiobutton(options, "Download the latest version of sv_ttk from GitHub", working_mode, "online")
-    util.add_radiobutton(options, "Use the version of sv_ttk from site-packages", working_mode, "offline")
+    util.add_radiobutton(options, "Download sv_ttk from GitHub (recommended)", working_mode, "online")
+    util.add_radiobutton(options, "Use sv_ttk from site-packages", working_mode, "offline")
 
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
 
