@@ -1,4 +1,4 @@
-import tkinter as tk
+import tkinter as tk, sys
 from tkinter import ttk, messagebox as msg, filedialog as fd
 
 try: import __init__ as sv_ttk
@@ -6,14 +6,15 @@ except: import sv_ttk
 
 window = tk.Tk()
 window.title("Sun Valley Demo")
-window.configure(padx = 16, pady = 4)
+window.configure()
 window.minsize(width = 799, height = 456)
 sv_ttk.set_theme("light")
 
 checked = tk.BooleanVar(value = True)
 unchecked = tk.BooleanVar(value = False)
 disabled = tk.BooleanVar(value = False)
-menu_bool = tk.BooleanVar(value = False)
+native_menu_bool = tk.BooleanVar(value = False)
+custom_menu_bool = tk.BooleanVar(value = False)
 radio = tk.StringVar(value = "1")
 radio_enabled = tk.StringVar(value = "1")
 option = tk.StringVar(value = "Python")
@@ -31,15 +32,26 @@ menu = tk.Menu()
 menu.add_cascade(label = "File", menu = test_menu)
 menu.add_cascade(label = "Edit", menu = test_menu)
 menu.add_cascade(label = "View", menu = test_menu)
-menu.add_cascade(label = "Options", menu = test_menu)
 menu.add_cascade(label = "Help", menu = test_menu)
 
+# Custom menu bar
+menu_bar = ttk.Frame(window)
+menu_bar_frame = ttk.Frame(menu_bar, padding = (4, 0, 4, 4))
+menu_bar_frame.pack(fill = "x")
 
-ttk.Label(window, text = "Sun Valley Theme Demo", font = ("Segoe UI Semibold", 20)).pack(anchor = "w")
+if not sys.platform == "win32": menu_bar_frame.configure(padding = 4)
 
+ttk.Separator(menu_bar, orient = "horizontal").pack(fill = "x")
+ttk.Menubutton(menu_bar_frame, text = "File", menu = test_menu, style = "Toolbutton", padding = (8, 1, 8, 1)).pack(side = "left")
+ttk.Menubutton(menu_bar_frame, text = "Edit", menu = test_menu, style = "Toolbutton", padding = (8, 1, 8, 1)).pack(side = "left")
+ttk.Menubutton(menu_bar_frame, text = "View", menu = test_menu, style = "Toolbutton", padding = (8, 1, 8, 1)).pack(side = "left")
+ttk.Menubutton(menu_bar_frame, text = "Help", menu = test_menu, style = "Toolbutton", padding = (8, 1, 8, 1)).pack(side = "left")
+
+title = ttk.Label(window, text = "Sun Valley Theme Demo", font = ("Segoe UI Semibold", 20))
+title.pack(padx = 16, pady = (8, 0), side = "top", anchor = "w")
 
 notebook = ttk.Notebook(window)
-notebook.pack(pady = 16, fill = "both", expand = True)
+notebook.pack(pady = 16, padx = 16, fill = "both", expand = True, side = "bottom")
 
 frame = ttk.Frame(notebook, padding = 16)
 frame.pack(fill = "both", expand = True)
@@ -160,14 +172,19 @@ scrollbar.pack(side = "left", fill = "y", pady = 8)
 
 text.configure(yscrollcommand = scrollbar.set)
 
-def show_menu():
-    if menu_bool.get(): window.configure(menu = menu)
+def show_native_menu():
+    if native_menu_bool.get(): window.configure(menu = menu)
     else: window.configure(menu = "")
+
+def show_custom_menu():
+    if custom_menu_bool.get(): menu_bar.pack(side = "top", fill = "x"); title.forget()
+    else: menu_bar.forget(); title.pack(padx = 16, pady = (8, 0), side = "top", anchor = "w")
 
 ttk.Label(options, text = "Options", font = ("Segoe UI Semibold", 18)).pack(anchor = "w", pady = (0, 18))
 
 ttk.Checkbutton(options, text = "Dark Mode", command = sv_ttk.toggle_theme, style = "Switch.TCheckbutton").pack(anchor = "w")
-ttk.Checkbutton(options, text = "Show menu", variable = menu_bool, command = show_menu).pack(anchor = "w", pady = (10, 0))
+ttk.Checkbutton(options, text = "Show native menu", variable = native_menu_bool, command = show_native_menu).pack(anchor = "w", pady = (10, 0))
+ttk.Checkbutton(options, text = "Show custom menu", variable = custom_menu_bool, command = show_custom_menu).pack(anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Open Toplevel", command = tk.Toplevel).pack(anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Show file dialog", command = lambda: fd.askdirectory()).pack(anchor = "w", pady = (10, 0))
