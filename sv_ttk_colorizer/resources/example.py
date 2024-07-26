@@ -6,7 +6,6 @@ except: import sv_ttk
 
 window = tk.Tk()
 window.title("Sun Valley Demo")
-window.configure()
 window.minsize(width = 799, height = 456)
 sv_ttk.set_theme("light")
 
@@ -177,12 +176,24 @@ def show_native_menu():
     else: window.configure(menu = "")
 
 def show_custom_menu():
-    if custom_menu_bool.get(): menu_bar.pack(side = "top", fill = "x"); title.forget()
-    else: menu_bar.forget(); title.pack(padx = 16, pady = (8, 0), side = "top", anchor = "w")
+    if custom_menu_bool.get(): 
+        menu_bar.pack(side = "top", fill = "x")
+        title.forget()
+        
+        if sv_ttk.get_theme() == "dark": window.configure(bg = "#1f1f1f")
+        else: window.configure(bg = "#ffffff")
+    else: 
+        menu_bar.forget()
+        title.pack(padx = 16, pady = (8, 0), side = "top", anchor = "w")
+
+        if sv_ttk.get_theme() == "dark": window.configure(bg = "#1c1c1c")
+        else: window.configure(bg = "#fafafa")
+
+def toggle_theme(): sv_ttk.toggle_theme(); show_custom_menu()
 
 ttk.Label(options, text = "Options", font = ("Segoe UI Semibold", 18)).pack(anchor = "w", pady = (0, 18))
 
-ttk.Checkbutton(options, text = "Dark Mode", command = sv_ttk.toggle_theme, style = "Switch.TCheckbutton").pack(anchor = "w")
+ttk.Checkbutton(options, text = "Dark Mode", command = toggle_theme, style = "Switch.TCheckbutton").pack(anchor = "w")
 ttk.Checkbutton(options, text = "Show native menu", variable = native_menu_bool, command = show_native_menu).pack(anchor = "w", pady = (10, 0))
 ttk.Checkbutton(options, text = "Show custom menu", variable = custom_menu_bool, command = show_custom_menu).pack(anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Open Toplevel", command = tk.Toplevel).pack(anchor = "w", pady = (10, 0))
