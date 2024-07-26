@@ -21,6 +21,7 @@ radio = tk.StringVar(value = "1")
 radio_enabled = tk.StringVar(value = "1")
 option = tk.StringVar(value = "Python")
 progress = tk.IntVar(value = 0)
+menubar = tk.StringVar(value = "none")
 
 test_menu = tk.Menu()
 for i in range(5):
@@ -174,34 +175,49 @@ scrollbar.pack(side = "left", fill = "y", pady = 8)
 
 text.configure(yscrollcommand = scrollbar.set)
 
+def hide_menu():
+    window.configure(menu = "")
+    menu_bar.forget()
+    title.pack(padx = 16, pady = (8, 0), side = "top", anchor = "w")
+    update_colors()
+
 def show_native_menu():
-    if native_menu_bool.get(): window.configure(menu = menu)
-    else: window.configure(menu = "")
+    window.configure(menu = menu)
+    title.forget()
+    menu_bar.forget()
+    update_colors()
 
 def show_custom_menu():
-    if custom_menu_bool.get(): 
-        menu_bar.pack(side = "top", fill = "x")
-        title.forget()
+    window.configure(menu = "")
+    menu_bar.pack(side = "top", fill = "x")
+    title.forget()
+    update_colors()
         
+def update_colors():
+    if menubar.get() == "custom":
         if sv_ttk.get_theme() == "dark": window.configure(bg = "#1f1f1f")
         else: window.configure(bg = "#ffffff")
-    else: 
-        menu_bar.forget()
-        title.pack(padx = 16, pady = (8, 0), side = "top", anchor = "w")
-
+    else:
         if sv_ttk.get_theme() == "dark": window.configure(bg = "#1c1c1c")
         else: window.configure(bg = "#fafafa")
 
-def toggle_theme(): sv_ttk.toggle_theme(); show_custom_menu()
+def toggle_theme(): sv_ttk.toggle_theme(); update_colors()
 
 ttk.Label(options, text = "Options", font = ("Segoe UI Semibold", 18)).pack(anchor = "w", pady = (0, 18))
 
 ttk.Checkbutton(options, text = "Dark Mode", command = toggle_theme, style = "Switch.TCheckbutton").pack(anchor = "w")
-ttk.Checkbutton(options, text = "Show native menu", variable = native_menu_bool, command = show_native_menu).pack(anchor = "w", pady = (10, 0))
-ttk.Checkbutton(options, text = "Show custom menu", variable = custom_menu_bool, command = show_custom_menu).pack(anchor = "w", pady = (10, 0))
-ttk.Button(options, text = "Open Toplevel", command = tk.Toplevel).pack(anchor = "w", pady = (10, 0))
-ttk.Button(options, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(anchor = "w", pady = (10, 0))
-ttk.Button(options, text = "Show file dialog", command = lambda: fd.askdirectory()).pack(anchor = "w", pady = (10, 0))
+
+ttk.Label(options, text = "Menu bar", font = ("Segoe UI Semibold", 13)).pack(anchor = "w", pady = (16, 8))
+ttk.Radiobutton(options, text = "None", variable = menubar, command = hide_menu, value = "none").pack(anchor = "w", pady = (4, 0))
+ttk.Radiobutton(options, text = "Native", variable = menubar, command = show_native_menu, value = "native").pack(anchor = "w", pady = (4, 0))
+ttk.Radiobutton(options, text = "Custom", variable = menubar, command = show_custom_menu, value = "custom").pack(anchor = "w", pady = (4, 6))
+
+other_options = ttk.Frame(options)
+other_options.pack(anchor = "w")
+
+ttk.Button(other_options, text = "Open Toplevel", command = tk.Toplevel).pack(side = "left", anchor = "w", pady = (10, 0))
+ttk.Button(other_options, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(side = "left", padx = (8, 0), anchor = "w", pady = (10, 0))
+ttk.Button(other_options, text = "Show file dialog", command = lambda: fd.askdirectory()).pack(side = "left", padx = (8, 0), anchor = "w", pady = (10, 0))
 ttk.Button(options, text = "Send <<ThemeChanged>> event", command = lambda: window.event_generate("<<ThemeChanged>>")).pack(anchor = "w", pady = (10, 0))
 
 window.update()
