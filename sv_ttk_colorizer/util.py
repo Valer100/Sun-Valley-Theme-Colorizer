@@ -36,15 +36,15 @@ color_constants_patch_replace = f'''def set_theme(theme: str, root: tkinter.Tk |
         sel_fg = "#ffffff"
         selection_background = "{accent_light}"
         sel_bg = "{accent_light}"
-        accent = "{accent_dark}
+        accent = "{accent_dark}"
     elif theme.lower() == "light":
         background = "#fafafa"
         bg = "#fafafa"
         foreground = "#1c1c1c"
         fg = "#1c1c1c"
-        foreground_disabled": "#a0a0a0"
+        foreground_disabled = "#a0a0a0"
         fg_dis = "#a0a0a0"
-        selection_foreground": "#ffffff"
+        selection_foreground = "#ffffff"
         sel_fg = "#ffffff"
         selection_background = "{accent_light}"
         sel_bg = "{accent_light}"
