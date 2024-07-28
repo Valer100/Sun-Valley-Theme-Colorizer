@@ -218,7 +218,6 @@ other_options.pack(anchor = "w")
 ttk.Button(other_options, text = "Open Toplevel", command = tk.Toplevel).pack(side = "left", anchor = "w", pady = (10, 0))
 ttk.Button(other_options, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(side = "left", padx = (8, 0), anchor = "w", pady = (10, 0))
 ttk.Button(other_options, text = "Show file dialog", command = lambda: fd.askdirectory()).pack(side = "left", padx = (8, 0), anchor = "w", pady = (10, 0))
-ttk.Button(options, text = "Send <<ThemeChanged>> event", command = lambda: window.event_generate("<<ThemeChanged>>")).pack(anchor = "w", pady = (10, 0))
 
 window.update()
 
