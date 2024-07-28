@@ -15,13 +15,12 @@ window.iconphoto(True, icon)
 checked = tk.BooleanVar(value = True)
 unchecked = tk.BooleanVar(value = False)
 disabled = tk.BooleanVar(value = False)
-native_menu_bool = tk.BooleanVar(value = False)
-custom_menu_bool = tk.BooleanVar(value = False)
 radio = tk.StringVar(value = "1")
 radio_enabled = tk.StringVar(value = "1")
 option = tk.StringVar(value = "Python")
 progress = tk.IntVar(value = 0)
 menubar = tk.StringVar(value = "none")
+disable_widgets = tk.BooleanVar(value = False)
 
 test_menu = tk.Menu()
 for i in range(5):
@@ -203,9 +202,24 @@ def update_colors():
 
 def toggle_theme(): sv_ttk.toggle_theme(); update_colors()
 
+def change_state_for_all_widgets(parent, state):
+    for widget in parent.winfo_children():
+        if isinstance(widget, (ttk.Frame, tk.Frame, ttk.Labelframe)):
+            change_state_for_all_widgets(widget, state)
+        else:
+            if isinstance(widget, (ttk.Checkbutton, ttk.Radiobutton)) and widget["text"] == "Disabled": return
+
+            try: widget["state"] = state
+            except: pass
+
+def change_widgets_state():
+    if disable_widgets.get(): change_state_for_all_widgets(frame, "disabled")
+    else: change_state_for_all_widgets(frame, "enabled")
+
 ttk.Label(options, text = "Options", font = ("Segoe UI Semibold", 18)).pack(anchor = "w", pady = (0, 18))
 
 ttk.Checkbutton(options, text = "Dark Mode", command = toggle_theme, style = "Switch.TCheckbutton").pack(anchor = "w")
+ttk.Checkbutton(options, text = "Disable all widgets", variable = disable_widgets, command = change_widgets_state).pack(anchor = "w", pady = (10, 0))
 
 ttk.Label(options, text = "Menu bar", font = ("Segoe UI Semibold", 13)).pack(anchor = "w", pady = (16, 8))
 ttk.Radiobutton(options, text = "None", variable = menubar, command = hide_menu, value = "none").pack(anchor = "w", pady = (4, 0))
