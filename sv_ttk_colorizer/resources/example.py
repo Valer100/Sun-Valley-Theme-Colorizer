@@ -64,9 +64,16 @@ options.pack(fill = "x")
 scrollbar_example = ttk.Frame(notebook, width = 751)
 scrollbar_example.pack(fill = "x")
 
+color_constants = ttk.Frame(notebook, padding = 16)
+color_constants.pack(fill = "x")
+
 notebook.add(text = "Widgets", child = frame)
 notebook.add(text = "Scrollbar", child = scrollbar_example)
+notebook.add(text = "Color constants", child = color_constants)
 notebook.add(text = "Options", child = options)
+
+try: sv_ttk.bg
+except: notebook.forget(2)
 
 frame1 = ttk.Frame(frame)
 frame1.pack()
@@ -174,6 +181,7 @@ scrollbar.pack(side = "left", fill = "y", pady = 8)
 
 text.configure(yscrollcommand = scrollbar.set)
 
+
 def hide_menu():
     window.configure(menu = "")
     menu_bar.forget()
@@ -200,7 +208,7 @@ def update_colors():
         if sv_ttk.get_theme() == "dark": window.configure(bg = "#1c1c1c")
         else: window.configure(bg = "#fafafa")
 
-def toggle_theme(): sv_ttk.toggle_theme(); update_colors()
+def toggle_theme(): sv_ttk.toggle_theme(); update_colors(); update_color_constants()
 
 def change_state_for_all_widgets(parent, state):
     for widget in parent.winfo_children():
@@ -233,7 +241,39 @@ ttk.Button(other_options, text = "Open Toplevel", command = tk.Toplevel).pack(si
 ttk.Button(other_options, text = "Show message box", command = lambda: msg.showinfo("Test message box", "This is a test message box.")).pack(side = "left", padx = (8, 0), anchor = "w", pady = (10, 0))
 ttk.Button(other_options, text = "Show file dialog", command = lambda: fd.askdirectory()).pack(side = "left", padx = (8, 0), anchor = "w", pady = (10, 0))
 
+
+def add_color_constant_preview(title, color):
+    global constants_list
+
+    item = ttk.Frame(constants_list)
+    item.pack(fill = "x", pady = (0, 16))
+
+    ttk.Label(item, text = title, width = 70).pack(side = "left")
+    tk.Frame(item, width = 30, height = 30, background = color, highlightbackground = sv_ttk.fg, highlightthickness = 1).pack(side = "right")
+    ttk.Label(item, text = color, font = "Consolas").pack(padx = 10, side = "right")
+
+def update_color_constants():
+    global constants_list
+
+    try: constants_list.forget()
+    except: pass
+
+    window.update()
+    constants_list = ttk.Frame(color_constants)
+
+    add_color_constant_preview("Background (background/bg): ", sv_ttk.bg)
+    add_color_constant_preview("Foreground (foreground/fg): ", sv_ttk.fg)
+    add_color_constant_preview("Foreground (disabled) (foreground_disabled/fg_dis): ", sv_ttk.fg_dis)
+    add_color_constant_preview("Selection background (selection_background/sel_bg): ", sv_ttk.sel_bg)
+    add_color_constant_preview("Selection foreground (selection_foreground/sel_fg): ", sv_ttk.sel_fg)
+    add_color_constant_preview("Accent (accent): ", sv_ttk.accent)
+
+    constants_list.place(relx = .5, rely = .5, anchor = "center")
+
 window.update()
+
+try: update_color_constants()
+except: pass
 
 geometry = window.geometry().split("+")[0].split("x")
 window.minsize(width = geometry[0], height = geometry[1])
