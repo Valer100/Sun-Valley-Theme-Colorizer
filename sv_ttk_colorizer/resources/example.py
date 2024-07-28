@@ -76,7 +76,6 @@ try: sv_ttk.bg
 except: notebook.forget(2)
 
 frame1 = ttk.Frame(frame)
-frame1.pack()
 
 main = ttk.Frame(frame1)
 main.pack(side = "left")
@@ -260,25 +259,25 @@ def update_color_constants():
 
     window.update()
     constants_list = ttk.Frame(color_constants)
-
-    add_color_constant_preview("Background (background/bg): ", sv_ttk.bg)
-    add_color_constant_preview("Foreground (foreground/fg): ", sv_ttk.fg)
-    add_color_constant_preview("Foreground (disabled) (foreground_disabled/fg_dis): ", sv_ttk.fg_dis)
-    add_color_constant_preview("Selection background (selection_background/sel_bg): ", sv_ttk.sel_bg)
-    add_color_constant_preview("Selection foreground (selection_foreground/sel_fg): ", sv_ttk.sel_fg)
-    add_color_constant_preview("Accent (accent): ", sv_ttk.accent)
+    
+    try:
+        add_color_constant_preview("Background (background/bg): ", sv_ttk.bg)
+        add_color_constant_preview("Foreground (foreground/fg): ", sv_ttk.fg)
+        add_color_constant_preview("Foreground (disabled) (foreground_disabled/fg_dis): ", sv_ttk.fg_dis)
+        add_color_constant_preview("Selection background (selection_background/sel_bg): ", sv_ttk.sel_bg)
+        add_color_constant_preview("Selection foreground (selection_foreground/sel_fg): ", sv_ttk.sel_fg)
+        add_color_constant_preview("Accent (accent): ", sv_ttk.accent)
+    except: pass
 
     constants_list.place(relx = .5, rely = .5, anchor = "center")
 
 window.update()
 
-try: update_color_constants()
-except: pass
+update_color_constants()
 
 geometry = window.geometry().split("+")[0].split("x")
 window.minsize(width = geometry[0], height = geometry[1])
 
-frame1.forget()
 frame1.place(relx = .5, rely = .5, anchor = "center")
 
 window.mainloop()
