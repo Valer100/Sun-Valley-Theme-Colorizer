@@ -181,15 +181,34 @@ def update_accents():
     accent_light = "#{:02x}{:02x}{:02x}".format(accent_light_rgb[0], accent_light_rgb[1], accent_light_rgb[2])
     accent_dark = "#{:02x}{:02x}{:02x}".format(accent_dark_rgb[0], accent_dark_rgb[1], accent_dark_rgb[2])
 
-    get_accents_patch_replace = f'''def get_accent_color() -> str:
-    if get_theme() == "dark": return "{accent_dark}"
-    return "{accent_light}"
-    
-def get_selection_accent_color() -> str: return "{accent_light}"
+    color_constants_patch_replace = f'''def set_theme(theme: str, root: tkinter.Tk | None = None) -> None:
+    global background, bg, foreground, fg, foreground_disabled, fg_dis, selection_foreground, sel_fg, selection_background, sel_bg, accent 
 
-
-use_dark_theme = partial(set_theme, "dark")
-use_light_theme = partial(set_theme, "light")'''
+    if theme.lower() == "dark":
+        background = "#1c1c1c"
+        bg = "#1c1c1c"
+        foreground = "#fafafa"
+        fg = "#fafafa"
+        foreground_disabled = "#595959"
+        fg_dis = "#595959"
+        selection_foreground = "#ffffff"
+        sel_fg = "#ffffff"
+        selection_background = "{accent_light}"
+        sel_bg = "{accent_light}"
+        accent = "{accent_dark}"
+    elif theme.lower() == "light":
+        background = "#fafafa"
+        bg = "#fafafa"
+        foreground = "#1c1c1c"
+        fg = "#1c1c1c"
+        foreground_disabled = "#a0a0a0"
+        fg_dis = "#a0a0a0"
+        selection_foreground = "#ffffff"
+        sel_fg = "#ffffff"
+        selection_background = "{accent_light}"
+        sel_bg = "{accent_light}"
+        accent = "{accent_light}"
+'''
 
 def update_preview(hue):
     global preview
