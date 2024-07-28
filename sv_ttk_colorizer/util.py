@@ -20,18 +20,36 @@ accent_light = "#005fb8"
 accent_dark = "#57c8ff"
 
 
-get_accents_patch_find = '''use_dark_theme = partial(set_theme, "dark")
-use_light_theme = partial(set_theme, "light")'''
+color_constants_patch_find = '''def set_theme(theme: str, root: tkinter.Tk | None = None) -> None:'''
 
-get_accents_patch_replace = f'''def get_accent_color() -> str:
-    if get_theme() == "dark": return "{accent_dark}"
-    return "{accent_light}"
-    
-def get_selection_accent_color() -> str: return "{accent_light}"
+color_constants_patch_replace = f'''def set_theme(theme: str, root: tkinter.Tk | None = None) -> None:
+    global background, bg, foreground, fg, foreground_disabled, fg_dis, selection_foreground, sel_fg, selection_background, sel_bg, accent 
 
-
-use_dark_theme = partial(set_theme, "dark")
-use_light_theme = partial(set_theme, "light")'''
+    if theme.lower() == "dark":
+        background = "#1c1c1c"
+        bg = "#1c1c1c"
+        foreground = "#fafafa"
+        fg = "#fafafa"
+        foreground_disabled = "#595959"
+        fg_dis = "#595959"
+        selection_foreground = "#ffffff"
+        sel_fg = "#ffffff"
+        selection_background = "{accent_light}"
+        sel_bg = "{accent_light}"
+        accent = "{accent_dark}
+    elif theme.lower() == "light":
+        background = "#fafafa"
+        bg = "#fafafa"
+        foreground = "#1c1c1c"
+        fg = "#1c1c1c"
+        foreground_disabled": "#a0a0a0"
+        fg_dis = "#a0a0a0"
+        selection_foreground": "#ffffff"
+        sel_fg = "#ffffff"
+        selection_background = "{accent_light}"
+        sel_bg = "{accent_light}"
+        accent = "{accent_light}"
+'''
 
 toolbutton_fix_find = '''empty 152 64 10 10 \\'''
 toolbutton_fix_replace = '''empty 152 209 20 20 \\'''

@@ -221,9 +221,9 @@ def main():
     util.add_switch(options, "Don't change menu colors on Windows and macOS", menu_revert_colors)
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
 
-    util.add_switch(options, "Add functions to get the accent colors", accent_funcs)
+    util.add_switch(options, "Add color constants for programmatic access", accent_funcs)
 
-    warning2 = ttk.Label(options, text = "This option will add 2 new functions to the sv_ttk module: get_accent_color() and get_selection_accent_color()", foreground = util.warning, wraplength = 250)
+    warning2 = ttk.Label(options, text = "You can learn more about this option in Help.", foreground = util.warning, wraplength = 250)
     warning2.pack(pady = (8, 0), anchor = "w")
 
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
@@ -317,7 +317,7 @@ def main():
                 open(util.sv_ttk_download + "/__init__.py", "w").write(__init__file)
 
             if accent_funcs.get():
-                __init__file = open(util.sv_ttk_download + "/__init__.py", "r").read().replace(util.get_accents_patch_find, util.get_accents_patch_replace)
+                __init__file = open(util.sv_ttk_download + "/__init__.py", "r").read().replace(util.color_constants_patch_find, util.color_constants_patch_replace)
                 open(util.sv_ttk_download + "/__init__.py", "w").write(__init__file)
 
             if fix_lag.get():
