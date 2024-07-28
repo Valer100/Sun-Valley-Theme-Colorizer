@@ -57,33 +57,9 @@ class MenuFix(tkinter.Menu):
 
 tkinter.Menu = MenuFix'''
 
-dm_titlebars_find1 = '''use_dark_theme = partial(set_theme, "dark")'''
+dm_titlebars_find1 = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.tcl").absolute()'''
 
-dm_titlebars_replace1 = '''def get_windows_version() -> int:
-    import sys
-
-    if sys.platform == "win32":
-        # Running on Windows
-        version = sys.getwindowsversion()
-
-        if version.major == 10 and version.build >= 22000:
-            # Windows 11
-            return 11
-        elif version.major == 10:
-            # Windows 10
-            return 10
-        else:
-            # Other Windows version (like 7, 8, 8.1, etc...)
-            return version.major
-    else:
-        # Not running on Windows
-        return 0
-
-use_dark_theme = partial(set_theme, "dark")'''
-
-dm_titlebars_find2 = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.tcl").absolute()'''
-
-dm_titlebars_replace2 = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.tcl").absolute()
+dm_titlebars_replace1 = '''TCL_THEME_FILE_PATH = Path(__file__).with_name("sv.tcl").absolute()
 
 
 # A hacky way to change a Toplevel's title bar color after it's created
@@ -96,24 +72,26 @@ class ThemedToplevel(tkinter.Toplevel):
 
 tkinter.Toplevel = ThemedToplevel'''
 
-dm_titlebars_find3 = '''style.theme_use(f"sun-valley-{theme}")'''
+dm_titlebars_find2 = '''style.theme_use(f"sun-valley-{theme}")'''
 
-dm_titlebars_replace3 = '''# Set title bar color on Windows
+dm_titlebars_replace2 = '''# Set title bar color on Windows
     def set_title_bar_color(root):
-        if get_windows_version() == 10:
-            import pywinstyles
+        import sys
 
-            if theme == "dark": pywinstyles.apply_style(root, "dark")
-            else: pywinstyles.apply_style(root, "normal")
-
-            # A hacky way to update the title bar's color on Windows 10 (it doesn't update instantly like on Windows 11)
-            root.wm_attributes("-alpha", 0.99)
-            root.wm_attributes("-alpha", 1)
-        elif get_windows_version() == 11:
+        if sys.platform == "win32":
             import pywinstyles
-            
-            if theme == "dark": pywinstyles.change_header_color(root, "#1c1c1c")
-            elif theme == "light": pywinstyles.change_header_color(root, "#fafafa")
+            version = sys.getwindowsversion()
+
+            if version.major == 10 and version.build >= 22000:
+                if theme == "dark": pywinstyles.change_header_color(root, "#1c1c1c")
+                elif theme == "light": pywinstyles.change_header_color(root, "#fafafa")
+            elif version.major == 10:
+                if theme == "dark": pywinstyles.apply_style(root, "dark")
+                else: pywinstyles.apply_style(root, "normal")
+
+                # A hacky way to update the title bar's color on Windows 10 (it doesn't update instantly like on Windows 11)
+                root.wm_attributes("-alpha", 0.99)
+                root.wm_attributes("-alpha", 1)
 
     def set_title_bar_color_toplevels():
         for widget in style.master.winfo_children():

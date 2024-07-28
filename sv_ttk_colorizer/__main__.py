@@ -313,7 +313,7 @@ def main():
             open(util.sv_ttk_dark, "w").write(dark_tcl)
 
             if dm_titlebars.get():
-                __init__file = open(util.sv_ttk_download + "/__init__.py", "r").read().replace(util.dm_titlebars_find1, util.dm_titlebars_replace1).replace(util.dm_titlebars_find2, util.dm_titlebars_replace2).replace(util.dm_titlebars_find3, util.dm_titlebars_replace3)
+                __init__file = open(util.sv_ttk_download + "/__init__.py", "r").read().replace(util.dm_titlebars_find1, util.dm_titlebars_replace1).replace(util.dm_titlebars_find2, util.dm_titlebars_replace2)
                 open(util.sv_ttk_download + "/__init__.py", "w").write(__init__file)
 
             if accent_funcs.get():
