@@ -223,7 +223,7 @@ def main():
 
     util.add_switch(options, "Add color constants for programmatic access", accent_funcs)
 
-    warning2 = ttk.Label(options, text = "You can learn more about this option in Help.", foreground = util.warning, wraplength = 250)
+    warning2 = ttk.Label(options, text = "You can learn more about this option in Help, in the \"Color constants\" category.", foreground = util.warning, wraplength = 250)
     warning2.pack(pady = (8, 0), anchor = "w")
 
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
