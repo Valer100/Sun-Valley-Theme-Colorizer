@@ -245,7 +245,7 @@ def add_color_constant_preview(title, color):
     global constants_list
 
     item = ttk.Frame(constants_list)
-    item.pack(fill = "x", pady = (0, 16))
+    item.pack(fill = "x", pady = (0, 8))
 
     ttk.Label(item, text = title, width = 70).pack(side = "left")
     tk.Frame(item, width = 30, height = 30, background = color, highlightbackground = sv_ttk.fg, highlightthickness = 1).pack(side = "right")
@@ -269,10 +269,11 @@ def update_color_constants():
         add_color_constant_preview("Accent (accent): ", sv_ttk.accent)
     except: pass
 
-    constants_list.place(relx = .5, rely = .5, anchor = "center")
+    constants_list.place(relx = .5, rely = .55, anchor = "center")
 
 window.update()
 
+ttk.Label(color_constants, text = "Color constants", font = ("Segoe UI Semibold", 18)).pack(anchor = "w", pady = (0, 18))
 update_color_constants()
 
 geometry = window.geometry().split("+")[0].split("x")
