@@ -41,6 +41,13 @@ Well, like I said before, it downloads the latest version of the theme from GitH
   <br><br>
   <img src="https://raw.githubusercontent.com/Valer100/Sun-Valley-Theme-Colorizer/main/screenshots/screenshot_light_win.png"/>
 </details>
+<details>
+  <summary>Linux</summary>
+  <br>
+  <img src="https://raw.githubusercontent.com/Valer100/Sun-Valley-Theme-Colorizer/main/screenshots/screenshot_dark_linux.png"/>
+  <br><br>
+  <img src="https://raw.githubusercontent.com/Valer100/Sun-Valley-Theme-Colorizer/main/screenshots/screenshot_light_linux.png"/>
+</details>
 
 ## License (of the module)
 [MIT](https://github.com/Valer100/Sun-Valley-Theme-Colorizer/blob/main/LICENSE)
