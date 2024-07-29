@@ -42,10 +42,10 @@ def show():
 
     def show_faq(): 
         uncheck_all()
+        show_help_info("How can I use this tool?", "heading")
+        show_help_info("\nChoose the accent color you want using the slider and enable/disable options to your liking. When you're done, click the \"Save\" button and save the modified theme in your project's root folder. That's it.\n\n")
         show_help_info("What's this package doing?", "heading")
-        show_help_info("\nThis package downloads sv_ttk from GitHub, changes the hue for the widgets by modifying some files and saves the modified theme anywhere you want.\n\n")
-        show_help_info("How do I use the folder in my project?", "heading")
-        show_help_info("\nSimply put the folder in your project's root folder and you're done. It should work.")
+        show_help_info("\nAt your choice, this package downloads the theme from GitHub or uses it from site-packages, changes the hue for the widgets by modifying some files and saves the modified theme anywhere you want.\n\n")
         select_category(category_faq)
 
     def show_give_feedback():
@@ -82,10 +82,13 @@ def show():
         show_help_info(" sel_fg ", "code_reference")
         show_help_info(" - returns the selected foreground color (for selected text)\n\n")
         show_help_info(" accent ", "code_reference")
-        show_help_info(" - returns the accent color")
+        show_help_info(" - returns the accent color\n\n")
+        show_help_info("How can I use them?", "heading")
+        show_help_info("\nThis basic example shows you how can you set a tk Frame's background color to the accent color (you can do more than just that):\n\n")
+        show_help_info("\nframe = tkinter.Frame(root, background = sv_ttk.accent)\nframe.pack()\n\n", "code")
         select_category(category_color_constants)
 
-    category_faq = ttk.Button(categories, text = "Frequently asked questions", width = 25, style = "Selected.Accent.TButton", command = show_faq)
+    category_faq = ttk.Button(categories, text = "Getting started", width = 25, style = "Selected.Accent.TButton", command = show_faq)
     category_faq.pack()
 
     category_color_constants = ttk.Button(categories, text = "Color constants", width = 25, style = "Selected.Accent.TButton", command = show_color_constants)
