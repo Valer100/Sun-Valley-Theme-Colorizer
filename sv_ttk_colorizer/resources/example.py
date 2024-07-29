@@ -219,6 +219,8 @@ def change_state_for_all_widgets(parent, state):
             try: widget["state"] = state
             except: pass
 
+            if state == "enabled": readonlycombo["state"] = "readonly"
+
 def change_widgets_state():
     if disable_widgets.get(): change_state_for_all_widgets(frame, "disabled")
     else: change_state_for_all_widgets(frame, "enabled")
