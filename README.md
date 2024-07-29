@@ -35,11 +35,11 @@ Well, like I said before, it downloads the latest version of the theme from GitH
 
 ## Screenshots
 <details>
-  <summary>Show</summary>
+  <summary>Windows</summary>
   <br>
-  <img src="https://raw.githubusercontent.com/Valer100/Sun-Valley-Theme-Colorizer/main/screenshots/screenshot_dark.png"/>
+  <img src="https://raw.githubusercontent.com/Valer100/Sun-Valley-Theme-Colorizer/main/screenshots/screenshot_dark_win.png"/>
   <br><br>
-  <img src="https://raw.githubusercontent.com/Valer100/Sun-Valley-Theme-Colorizer/main/screenshots/screenshot_light.png"/>
+  <img src="https://raw.githubusercontent.com/Valer100/Sun-Valley-Theme-Colorizer/main/screenshots/screenshot_light_win.png"/>
 </details>
 
 ## License (of the module)
