@@ -88,6 +88,7 @@ def main():
                 hue_slider.create_image(thumb_coords[0], thumb_coords[1], image = hue_thumb, anchor = "center", tag = "thumb_hover")
 
             window.configure(cursor = "watch")
+            hue_slider.configure(cursor = "watch")
             window.update()
             util.update_preview(hue_value)
             util.update_accents()
@@ -96,6 +97,7 @@ def main():
             preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview, anchor = "center", tag = "accent")
             preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_text, anchor = "center", tag = "text")
             window.configure(cursor = "")
+            hue_slider.configure(cursor = "")
 
     def gen_export_file(): 
         return f'''// This is a Sun Valley Theme Colorizer configuration file.
