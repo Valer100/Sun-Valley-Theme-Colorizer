@@ -30,8 +30,6 @@ python -m sv_ttk_colorizer
 ## Requirements
 - 🐍 Python 3.8 or newer (like the theme)
 
-- 🖥️ Minimum screen resolution of 1280x720 (not mandatory) (the modified theme will work on any resolution)
-
 ## What's this module doing?
 At your choice, this package downloads the theme from GitHub or copies it from site-packages, then it changes the hue of the spritesheet images, changes some colors in ```light.tcl``` and ```dark.tcl``` and then it gives you the modified theme in a folder named ```sv_ttk``` that you have to move to the root folder of your project. You don't need to make any changes to your code.
 
