@@ -24,9 +24,8 @@ def main():
         if os.path.exists(appdirs.user_data_dir("sv_ttk_colorizer") + "/dark_mode"): 
             if open(appdirs.user_data_dir("sv_ttk_colorizer") + "/dark_mode").read() == "1": dark_mode.set(True)
 
-    window.minsize(width = 1307, height = 600)
-    window.configure()
-
+    window.minsize(width = 1280, height = 600)
+    
     dm_titlebars = tk.BooleanVar(value = False)
     menu_revert_colors = tk.BooleanVar(value = False)
     accent_funcs = tk.BooleanVar(value = False)
@@ -59,6 +58,10 @@ def main():
 
     window.configure(cursor = "watch")
     window.update()
+
+    if window.winfo_screenwidth() < 1280 or window.winfo_screenheight() < 720:
+        msg.showerror("Low screen resolution", f"Your screen resolution is very low ({window.winfo_screenwidth()}x{window.winfo_screenheight()}) and your experience may be affected. For a better experience, you should consider changing your screen resolution to at least 1280x720.")
+
     image = tk.PhotoImage(file = util.root_folder + f"/resources/image.png")
 
     window.configure(cursor = "")
