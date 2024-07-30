@@ -45,7 +45,7 @@ def show():
         show_help_info("How can I use this tool?", "heading")
         show_help_info("\nChoose the accent color you want using the slider and enable/disable options to your liking. When you're done, click the \"Save\" button and save the modified theme in your project's root folder. That's it.\n\n")
         show_help_info("What's this package doing?", "heading")
-        show_help_info("\nAt your choice, this package downloads the theme from GitHub or uses it from site-packages, changes the hue for the widgets by modifying some files and saves the modified theme anywhere you want.\n\n")
+        show_help_info("\nAt your choice, this package downloads the theme from GitHub or copies it from site-packages, changes the hue for the widgets by modifying some files and saves the modified theme anywhere you want.\n\n")
         select_category(category_faq)
 
     def show_give_feedback():
