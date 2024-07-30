@@ -5,9 +5,10 @@ from urllib.request import urlretrieve
 from zipfile import ZipFile
 
 def main():
-    global hue_value, hue_thumb, hue_thumb_pressed, is_editing_allowed
+    global hue_value, hue_thumb, hue_thumb_pressed, is_editing_allowed, preview_theme
     hue_value = 0
     is_editing_allowed = True
+    preview_theme = "light"
 
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -69,7 +70,14 @@ def main():
 
     ttk.Separator(frame, orient = "vertical").pack(side = "right", fill = "y")
 
-    def update_preview_theme():
+    def update_preview_theme(theme):
+        global preview_theme
+        preview_theme = theme
+
+        if theme == "dark": light["style"] = "TButton"; dark["style"] = "Accent.TButton"
+        else: light["style"] = "Accent.TButton"; dark["style"] = "TButton"
+
+        util.update_preview_assets(theme)
         preview.delete("window")
         preview.delete("accent")
         preview.delete("text")
@@ -93,7 +101,7 @@ def main():
             window.update()
             util.update_preview(hue_value)
             util.update_accents()
-            update_preview_theme()
+            update_preview_theme(preview_theme)
             window.configure(cursor = "")
             hue_slider.configure(cursor = "")
 
@@ -169,6 +177,20 @@ def main():
 
     export = ttk.Button(import_export, text = "Export", style = "Accent.TButton", command = export_settings)
     export.grid(row = 0, column = 1, sticky = "nesw", padx = (4, 0))
+
+    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (0, 16))
+
+    ttk.Label(options, text = "Preview theme").pack(anchor = "w")
+    theme_switcher_preview = ttk.Frame(options)
+    theme_switcher_preview.pack(anchor = "w", pady = (8, 16), padx = (0, 24), fill = "x")
+    theme_switcher_preview.columnconfigure(index = 0, weight = 1)
+    theme_switcher_preview.columnconfigure(index = 1, weight = 1)
+
+    light = ttk.Button(theme_switcher_preview, text = "Light", style = "Accent.TButton", command = lambda: update_preview_theme("light"))
+    light.grid(row = 0, column = 0, sticky = "nesw", padx = (0, 4))
+
+    dark = ttk.Button(theme_switcher_preview, text = "Dark", command = lambda: update_preview_theme("dark"))
+    dark.grid(row = 0, column = 1, sticky = "nesw", padx = (4, 0))
 
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (0, 16))
 

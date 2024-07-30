@@ -220,7 +220,7 @@ def update_accents():
 '''
 
 def update_preview(hue):
-    global preview, is_accent_modified
+    global preview, is_accent_modified, preview_theme
 
     shutil.copyfile(root_folder + "/resources/light/preview_accent.png", root_folder + "/resources/light/preview_accent_modified.png")
     shutil.copyfile(root_folder + "/resources/dark/preview_accent.png", root_folder + "/resources/dark/preview_accent_modified.png")
