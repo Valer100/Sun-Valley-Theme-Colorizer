@@ -182,10 +182,12 @@ def change_hue_and_save(path, hue):
 
 def update_accents():
     global accent_light, accent_dark, color_constants_patch_replace
-    img = Image.open(root_folder + "/resources/preview_accent_modified.png")
 
-    accent_light_rgb = img.getpixel((50, 75))
-    accent_dark_rgb = img.getpixel((537, 75))
+    img_light = Image.open(root_folder + "/resources/light/preview_accent_modified.png")
+    accent_light_rgb = img_light.getpixel((310, 373))
+
+    img_dark = Image.open(root_folder + "/resources/dark/preview_accent_modified.png")
+    accent_dark_rgb = img_dark.getpixel((310, 373))
 
     accent_light = "#{:02x}{:02x}{:02x}".format(accent_light_rgb[0], accent_light_rgb[1], accent_light_rgb[2])
     accent_dark = "#{:02x}{:02x}{:02x}".format(accent_dark_rgb[0], accent_dark_rgb[1], accent_dark_rgb[2])
