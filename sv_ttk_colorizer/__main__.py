@@ -16,15 +16,11 @@ def main():
 
     dark_mode = tk.BooleanVar(value = False)
 
-    if sys.platform == "win32" or sys.platform == "darwin": 
-        window.state("zoomed")
-    else: 
-        window.wm_attributes("-zoomed", True)
-
+    if not sys.platform == "win32" or sys.platform == "darwin": 
         if os.path.exists(appdirs.user_data_dir("sv_ttk_colorizer") + "/dark_mode"): 
             if open(appdirs.user_data_dir("sv_ttk_colorizer") + "/dark_mode").read() == "1": dark_mode.set(True)
 
-    window.minsize(width = 1280, height = 600)
+    window.minsize(width = 900, height = 600)
     
     dm_titlebars = tk.BooleanVar(value = False)
     menu_revert_colors = tk.BooleanVar(value = False)
@@ -59,9 +55,6 @@ def main():
     window.configure(cursor = "watch")
     window.update()
 
-    if window.winfo_screenwidth() < 1280 or window.winfo_screenheight() < 720:
-        msg.showerror("Low screen resolution", f"Your screen resolution is very low ({window.winfo_screenwidth()}x{window.winfo_screenheight()}) and your experience may be affected. For a better experience, you should consider changing your screen resolution to at least 1280x720.")
-
     image = tk.PhotoImage(file = util.root_folder + f"/resources/image.png")
 
     window.configure(cursor = "")
@@ -75,6 +68,14 @@ def main():
     options_frame.pack(side = "right", anchor = "n", fill = "y")
 
     ttk.Separator(frame, orient = "vertical").pack(side = "right", fill = "y")
+
+    def update_preview_theme():
+        preview.delete("window")
+        preview.delete("accent")
+        preview.delete("text")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_bg, anchor = "center", tag = "window")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview, anchor = "center", tag = "accent")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_text, anchor = "center", tag = "text")
 
     def update_preview(event):
         if is_editing_allowed:
@@ -92,10 +93,7 @@ def main():
             window.update()
             util.update_preview(hue_value)
             util.update_accents()
-            preview.delete("accent")
-            preview.delete("text")
-            preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview, anchor = "center", tag = "accent")
-            preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_text, anchor = "center", tag = "text")
+            update_preview_theme()
             window.configure(cursor = "")
             hue_slider.configure(cursor = "")
 
@@ -419,7 +417,7 @@ def main():
         preview.update()
         preview.delete("all")
         preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = image, anchor = "center")
-        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_bg, anchor = "center")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_bg, anchor = "center", tag = "window")
         preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview, anchor = "center", tag = "accent")
         preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_text, anchor = "center", tag = "text")
 

@@ -2,6 +2,7 @@ import tkinter as tk, colorsys, shutil, sys, appdirs, os, darkdetect
 from tkinter import ttk
 from PIL import Image
 
+is_accent_modified = False
 latest_sv_ttk = "https://github.com/rdbende/Sun-Valley-ttk-theme/archive/refs/heads/main.zip"
 sv_ttk_license = "https://raw.githubusercontent.com/rdbende/Sun-Valley-ttk-theme/main/LICENSE"
 dm_titlebars_patch = "https://raw.githubusercontent.com/Valer100/Sun-Valley-ttk-theme/windows-titlebar-tweaks/sv_ttk/__init__.py"
@@ -12,9 +13,17 @@ if os.path.exists(root_folder + "/resources"): shutil.rmtree(root_folder + "/res
 
 shutil.copytree("resources", root_folder + "/resources")
 
-preview_bg = tk.PhotoImage(file = root_folder + "/resources/preview2.png")
-preview_text = tk.PhotoImage(file = root_folder + "/resources/preview_accent_text.png")
-preview = tk.PhotoImage(file = root_folder + "/resources/preview_accent.png")
+def update_preview_assets(theme):
+    global preview_bg, preview_text, preview, preview_theme, is_accent_changed
+
+    preview_theme = theme
+    preview_bg = tk.PhotoImage(file = root_folder + f"/resources/{theme}/preview.png")
+    preview_text = tk.PhotoImage(file = root_folder + f"/resources/{theme}/preview_accent_text.png")
+
+    if is_accent_modified: preview = tk.PhotoImage(file = root_folder + f"/resources/{theme}/preview_accent_modified.png")
+    else: preview = tk.PhotoImage(file = root_folder + f"/resources/{theme}/preview_accent.png")
+
+update_preview_assets("light")
 
 accent_light = "#005fb8"
 accent_dark = "#57c8ff"
@@ -211,12 +220,15 @@ def update_accents():
 '''
 
 def update_preview(hue):
-    global preview
+    global preview, is_accent_modified
 
-    shutil.copyfile(root_folder + "/resources/preview_accent.png", root_folder + "/resources/preview_accent_modified.png")
-    change_hue_and_save(root_folder + "/resources/preview_accent_modified.png", hue)
+    shutil.copyfile(root_folder + "/resources/light/preview_accent.png", root_folder + "/resources/light/preview_accent_modified.png")
+    shutil.copyfile(root_folder + "/resources/dark/preview_accent.png", root_folder + "/resources/dark/preview_accent_modified.png")
+    change_hue_and_save(root_folder + "/resources/light/preview_accent_modified.png", hue)
+    change_hue_and_save(root_folder + "/resources/dark/preview_accent_modified.png", hue)
 
-    preview = tk.PhotoImage(file = root_folder + "/resources/preview_accent_modified.png")
+    is_accent_modified = True
+    update_preview_assets(preview_theme)
 
 def set_title_bar_color(root, theme):
     if get_windows_version() == 10:
