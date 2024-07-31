@@ -134,6 +134,7 @@ def show():
 
     show_faq()
 
+    util.fix_mouse_focus(window)
     window.focus_set()
     window.grab_set()
     window.update()

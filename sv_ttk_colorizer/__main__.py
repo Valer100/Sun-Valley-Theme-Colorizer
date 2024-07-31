@@ -462,7 +462,8 @@ def main():
         preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_text, anchor = "center", tag = "text")
 
     if not (sys.platform == "win32" or sys.platform == "darwin") and dark_mode.get(): toggle_theme()
-
+    
+    util.fix_mouse_focus(window)
     preview.bind("<Configure>", on_resize)
     window.mainloop()
 

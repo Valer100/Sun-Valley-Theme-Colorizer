@@ -304,3 +304,10 @@ def add_radiobutton(parent, text, variable, value):
     label.bind("<Enter>", on_enter)
     label.bind("<Leave>", on_leave)
     label.bind("<ButtonRelease-1>", on_click)
+
+def fix_mouse_focus(parent):
+    for widget in parent.winfo_children():
+        if isinstance(widget, (tk.Frame, ttk.Frame, tk.Canvas)): fix_mouse_focus(widget)
+        else: 
+            widget.bind("<ButtonRelease-1>", lambda event: parent.focus_set(), add = "+")
+            widget.bind("<B1-Leave>", lambda event: parent.focus_set(), add = "+")
