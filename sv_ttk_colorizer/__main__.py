@@ -301,7 +301,7 @@ def main():
                 try: urlretrieve(util.latest_sv_ttk, util.root_folder + "/temp/sv_ttk.zip")
                 except:
                     allow_editing()
-                    msg.showerror("Failed to download sv_ttk", "Check your internet connection and try again. If your internet connection is down or unstable, try choosing \"Use the version of sv_ttk from site-packages\" under \"Working mode\".")
+                    msg.showerror("Failed to download sv_ttk", "Check your internet connection and try again. If your internet connection is down or unstable, try choosing \"Use sv_ttk from site-packages\" under \"Working mode\".")
                     return
 
                 status["text"] = "Unzipping sv-ttk..."
