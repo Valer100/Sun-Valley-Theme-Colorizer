@@ -67,12 +67,14 @@ def main():
 
     theme_switcher_preview = ttk.Frame(preview, padding = 4)
     theme_switcher_preview.pack(pady = (19, 16))
+    theme_switcher_preview.columnconfigure(index = 0, weight = 1, minsize = 134)
+    theme_switcher_preview.columnconfigure(index = 1, weight = 1, minsize = 134)
 
-    light = ttk.Button(theme_switcher_preview, width = 13, text = "Light", style = "Accent.TButton", command = lambda: update_preview_theme("light"))
-    light.pack(side = "left", padx = (0, 6))
+    light = ttk.Button(theme_switcher_preview, text = "Light", style = "Accent.TButton", command = lambda: update_preview_theme("light"))
+    light.grid(row = 0, column = 0, sticky = "nesw", padx = (0, 6))
 
-    dark = ttk.Button(theme_switcher_preview, width = 13, text = "Dark", command = lambda: update_preview_theme("dark"))
-    dark.pack(side = "left", padx = (6, 0))
+    dark = ttk.Button(theme_switcher_preview, text = "Dark", command = lambda: update_preview_theme("dark"))
+    dark.grid(row = 0, column = 1, sticky = "nesw", padx = (6, 0))
 
     options_frame = ttk.Frame(frame, padding = (24, 8, 0, 24))
     options_frame.pack(side = "right", anchor = "n", fill = "y")
