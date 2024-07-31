@@ -12,6 +12,10 @@ def main():
 
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
+    if sys.platform == "win32":
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("SunValleyThemeColorizer")
+
     window = tk.Tk()
     window.title("Sun Valley Theme Colorizer")
 
