@@ -440,6 +440,12 @@ def main():
     preview.create_image(preview.winfo_width() // 2, 12, image = switcher_bg, anchor = "n", tag = "switcher_bg")
     preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_bg, anchor = "center", tag = "window")
 
+    def toggle_preview_theme(event):
+        if dark["style"] == "Accent.TButton": update_preview_theme("light")
+        else: update_preview_theme("dark")
+
+    preview.bind("<ButtonRelease-1>", toggle_preview_theme)
+
     def on_resize(event):
         preview.update()
         preview.delete("all")
