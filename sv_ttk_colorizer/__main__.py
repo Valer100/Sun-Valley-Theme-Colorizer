@@ -397,7 +397,7 @@ def main():
         frame["background"] = util.bg
         preview["background"] = util.bg
         
-        switcher_bg = tk.PhotoImage(file = f"resources/switcher_bg_{sv_ttk.get_theme()}.png")
+        switcher_bg = tk.PhotoImage(file = f"resources/theme_switcher/bg_{sv_ttk.get_theme()}.png")
         hue_thumb = tk.PhotoImage(file = f"resources/hue_scale/thumb_{sv_ttk.get_theme()}.png")
         hue_thumb_pressed = tk.PhotoImage(file = f"resources/hue_scale/thumb_pressed_{sv_ttk.get_theme()}.png")
         update_hue_slider()
@@ -439,7 +439,7 @@ def main():
     help_btn = ttk.Button(options_frame, text = "Help", command = assistance.show)
     help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
 
-    switcher_bg = tk.PhotoImage(file = f"resources/switcher_bg_{sv_ttk.get_theme()}.png")
+    switcher_bg = tk.PhotoImage(file = f"resources/theme_switcher/bg_{sv_ttk.get_theme()}.png")
 
     preview.update()
     preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = image, anchor = "center")
@@ -462,7 +462,7 @@ def main():
         preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_text, anchor = "center", tag = "text")
 
     if not (sys.platform == "win32" or sys.platform == "darwin") and dark_mode.get(): toggle_theme()
-    
+
     util.fix_mouse_focus(window)
     preview.bind("<Configure>", on_resize)
     window.mainloop()
