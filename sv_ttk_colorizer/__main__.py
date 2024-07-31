@@ -438,7 +438,7 @@ def main():
     preview.update()
     preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = image, anchor = "center")
     preview.create_image(preview.winfo_width() // 2, 12, image = switcher_bg, anchor = "n", tag = "switcher_bg")
-    preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_bg, anchor = "center")
+    preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_bg, anchor = "center", tag = "window")
 
     def on_resize(event):
         preview.update()
