@@ -12,20 +12,13 @@ def main():
 
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-    if sys.platform == "win32":
-        import ctypes
-        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("SunValleyThemeColorizer")
-
     window = tk.Tk()
     window.title("Sun Valley Theme Colorizer")
 
-    icon_128x128 = tk.PhotoImage(file = "resources/icon/128x128.png")
-    icon_96x96 = tk.PhotoImage(file = "resources/icon/96x96.png")
-    icon_72x72 = tk.PhotoImage(file = "resources/icon/72x72.png")
     icon_48x48 = tk.PhotoImage(file = "resources/icon/48x48.png")
     icon_32x32 = tk.PhotoImage(file = "resources/icon/32x32.png")
     icon_16x16 = tk.PhotoImage(file = "resources/icon/16x16.png")
-    window.iconphoto(True, icon_128x128, icon_96x96, icon_72x72, icon_48x48, icon_32x32, icon_16x16)
+    window.iconphoto(True, icon_48x48, icon_32x32, icon_16x16)
 
     dark_mode = tk.BooleanVar(value = False)
 
