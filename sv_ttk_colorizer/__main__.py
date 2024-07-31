@@ -205,7 +205,8 @@ def main():
 
     def on_progress_change(event):
         global hue_value, hue_thumb, hue_thumb_pressed, is_editing_allowed
-        
+        hue_slider.focus_set()
+
         if is_editing_allowed:
             if event.x >= 10 and event.x <= 240:
                 hue_slider.delete("thumb")
