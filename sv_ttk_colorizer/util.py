@@ -227,10 +227,8 @@ def set_title_bar_color(root, theme):
         if theme == "dark": pywinstyles.change_header_color(root, "#1c1c1c")
         elif theme == "light": pywinstyles.change_header_color(root, "#fafafa")
 
-    icon = tk.PhotoImage(file = "resources/icon.png")
-
-    if not get_windows_version() == 0: root.iconbitmap("resources/icon.ico")
-    else: root.iconphoto(True, icon)
+    # if not get_windows_version() == 0: root.iconbitmap("resources/icon.ico")
+    # else: root.iconphoto(True, icon)
 
 def get_windows_version() -> int:
     if sys.platform == "win32":
