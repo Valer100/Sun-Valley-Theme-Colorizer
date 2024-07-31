@@ -5,7 +5,7 @@ from urllib.request import urlretrieve
 from zipfile import ZipFile
 
 def main():
-    global hue_value, hue_thumb, hue_thumb_pressed, is_editing_allowed, preview_theme
+    global hue_value, hue_thumb, hue_thumb_pressed, is_editing_allowed, preview_theme, switcher_bg
     hue_value = 0
     is_editing_allowed = True
     preview_theme = "light"
@@ -65,6 +65,15 @@ def main():
 
     ttk.Separator(preview, orient = "horizontal").pack(fill = "x")
 
+    theme_switcher_preview = ttk.Frame(preview, padding = 4)
+    theme_switcher_preview.pack(pady = (19, 16))
+
+    light = ttk.Button(theme_switcher_preview, width = 13, text = "Light", style = "Accent.TButton", command = lambda: update_preview_theme("light"))
+    light.pack(side = "left", padx = (0, 6))
+
+    dark = ttk.Button(theme_switcher_preview, width = 13, text = "Dark", command = lambda: update_preview_theme("dark"))
+    dark.pack(side = "left", padx = (6, 0))
+
     options_frame = ttk.Frame(frame, padding = (24, 8, 0, 24))
     options_frame.pack(side = "right", anchor = "n", fill = "y")
 
@@ -81,9 +90,9 @@ def main():
         preview.delete("window")
         preview.delete("accent")
         preview.delete("text")
-        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_bg, anchor = "center", tag = "window")
-        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview, anchor = "center", tag = "accent")
-        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_text, anchor = "center", tag = "text")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_bg, anchor = "center", tag = "window")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview, anchor = "center", tag = "accent")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_text, anchor = "center", tag = "text")
 
     def update_preview(event):
         if is_editing_allowed:
@@ -177,20 +186,6 @@ def main():
 
     export = ttk.Button(import_export, text = "Export", style = "Accent.TButton", command = export_settings)
     export.grid(row = 0, column = 1, sticky = "nesw", padx = (4, 0))
-
-    ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (0, 16))
-
-    ttk.Label(options, text = "Preview theme").pack(anchor = "w")
-    theme_switcher_preview = ttk.Frame(options)
-    theme_switcher_preview.pack(anchor = "w", pady = (8, 16), padx = (0, 24), fill = "x")
-    theme_switcher_preview.columnconfigure(index = 0, weight = 1)
-    theme_switcher_preview.columnconfigure(index = 1, weight = 1)
-
-    light = ttk.Button(theme_switcher_preview, text = "Light", style = "Accent.TButton", command = lambda: update_preview_theme("light"))
-    light.grid(row = 0, column = 0, sticky = "nesw", padx = (0, 4))
-
-    dark = ttk.Button(theme_switcher_preview, text = "Dark", command = lambda: update_preview_theme("dark"))
-    dark.grid(row = 0, column = 1, sticky = "nesw", padx = (4, 0))
 
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (0, 16))
 
@@ -384,7 +379,7 @@ def main():
                 msg.showinfo("Sun Valley Theme Colorizer", "The theme has been successfully modified and saved.")
 
     def toggle_theme():
-        global hue_value, hue_thumb, hue_thumb_pressed
+        global hue_value, hue_thumb, hue_thumb_pressed, switcher_bg
 
         sv_ttk.toggle_theme()
         util.update_colors(sv_ttk.get_theme())
@@ -392,10 +387,14 @@ def main():
         warning2["foreground"] = util.warning
         frame["background"] = util.bg
         preview["background"] = util.bg
-
+        
+        switcher_bg = tk.PhotoImage(file = f"resources/switcher_bg_{sv_ttk.get_theme()}.png")
         hue_thumb = tk.PhotoImage(file = f"resources/hue_scale/thumb_{sv_ttk.get_theme()}.png")
         hue_thumb_pressed = tk.PhotoImage(file = f"resources/hue_scale/thumb_pressed_{sv_ttk.get_theme()}.png")
         update_hue_slider()
+
+        preview.delete("switcher_bg")
+        preview.create_image(preview.winfo_width() // 2, 12, image = switcher_bg, anchor = "n", tag = "switcher_bg")
 
         if sv_ttk.get_theme() == "dark": open(util.root_folder + "/dark_mode", "w").write("1")
         else: open(util.root_folder + "/dark_mode", "w").write("0")
@@ -431,17 +430,21 @@ def main():
     help_btn = ttk.Button(options_frame, text = "Help", command = assistance.show)
     help_btn.pack(side = "bottom", pady = (0, 8), fill = "x", padx = (0, 24))
 
+    switcher_bg = tk.PhotoImage(file = f"resources/switcher_bg_{sv_ttk.get_theme()}.png")
+
     preview.update()
     preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = image, anchor = "center")
-    preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_bg, anchor = "center")
+    preview.create_image(preview.winfo_width() // 2, 12, image = switcher_bg, anchor = "n", tag = "switcher_bg")
+    preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_bg, anchor = "center")
 
     def on_resize(event):
         preview.update()
         preview.delete("all")
         preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = image, anchor = "center")
-        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_bg, anchor = "center", tag = "window")
-        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview, anchor = "center", tag = "accent")
-        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2, image = util.preview_text, anchor = "center", tag = "text")
+        preview.create_image(preview.winfo_width() // 2, 12, image = switcher_bg, anchor = "n", tag = "switcher_bg")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_bg, anchor = "center", tag = "window")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview, anchor = "center", tag = "accent")
+        preview.create_image(preview.winfo_width() // 2, preview.winfo_height() // 2 + 28, image = util.preview_text, anchor = "center", tag = "text")
 
     if not (sys.platform == "win32" or sys.platform == "darwin") and dark_mode.get(): toggle_theme()
 
