@@ -308,6 +308,6 @@ def add_radiobutton(parent, text, variable, value):
 def fix_mouse_focus(parent):
     for widget in parent.winfo_children():
         if isinstance(widget, (tk.Frame, ttk.Frame, tk.Canvas)): fix_mouse_focus(widget)
-        elif not isinstance(widget, (ttk.Entry, ttk.Combobox, ttk.Spinbox)): 
+        elif not isinstance(widget, (ttk.Entry, ttk.Combobox, ttk.Spinbox, tk.Text)): 
             widget.bind("<ButtonRelease-1>", lambda event: parent.focus_set(), add = "+")
             widget.bind("<B1-Leave>", lambda event: parent.focus_set(), add = "+")
