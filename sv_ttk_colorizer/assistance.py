@@ -88,13 +88,13 @@ def show():
         show_help_info("\nframe = tkinter.Frame(root, background = sv_ttk.accent)\nframe.pack()\n\n", "code")
         select_category(category_color_constants)
 
-    category_faq = ttk.Button(categories, text = "Getting started", width = 25, style = "Selected.Accent.TButton", command = show_faq)
+    category_faq = ttk.Button(categories, text = "Getting started", width = 23, style = "Selected.Accent.TButton", command = show_faq)
     category_faq.pack()
 
-    category_color_constants = ttk.Button(categories, text = "Color constants", width = 25, style = "Selected.Accent.TButton", command = show_color_constants)
+    category_color_constants = ttk.Button(categories, text = "Color constants", width = 23, style = "Selected.Accent.TButton", command = show_color_constants)
     category_color_constants.pack(pady = (8, 0))
 
-    category_feedback = ttk.Button(categories, text = "Give feedback", width = 25, style = "Unselected.TLabel", command = show_give_feedback)
+    category_feedback = ttk.Button(categories, text = "Give feedback", width = 23, style = "Unselected.TLabel", command = show_give_feedback)
     category_feedback.pack(pady = (8, 0))
 
     ttk.Separator(frame, orient = "vertical").pack(side = "left", fill = "y")
@@ -107,7 +107,7 @@ def show():
     frame2 = tk.Frame(help_frame, bg = util.bg)
     frame2.pack(fill = "both", expand = True)
 
-    help_info = tk.Text(frame2, width = 70, height = 25, wrap = "word", bg = util.bg, bd = 0, highlightthickness = 0,
+    help_info = tk.Text(frame2, width = 60, height = 23, wrap = "word", bg = util.bg, bd = 0, highlightthickness = 0,
                         font = ("Segoe UI", 11), padx = 16, pady = 16, state = "disabled")
     help_info.pack(side = "left", fill = "both", expand = True)
     help_info.tag_configure("normal", font = ("Segoe UI", 11))
