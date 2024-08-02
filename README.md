@@ -6,7 +6,7 @@
 
 This Python module allows you to change the accent color of [@rdbende](https://github.com/rdbende)'s [Sun Valley ttk theme](https://github.com/rdbende/Sun-Valley-ttk-theme) and to apply other tweaks and improvements without the need to manually download the theme from GitHub, change the hue of the spritesheet files and change some colors in the tcl files. This module does everything for you.
 
-## How to install
+## 📦 How to install
 Run this command in your terminal:
 ```
 pip install sv_ttk_colorizer
@@ -27,13 +27,13 @@ If all the commands above didn't work, try this one (it looks like your Python i
 python -m sv_ttk_colorizer
 ```
 
-## Requirements
+## 📋 Requirements
 - 🐍 Python 3.8 or newer (like the theme)
 
-## What's this module doing?
+## 🤔 What's this module doing?
 At your choice, this package downloads the theme from GitHub or copies it from site-packages, then it changes the hue of the spritesheet images, changes some colors in ```light.tcl``` and ```dark.tcl``` and then it gives you the modified theme in a folder named ```sv_ttk``` that you have to move to the root folder of your project. You don't need to make any changes to your code.
 
-## Screenshots
+## 📸 Screenshots
 <details>
   <summary>Windows</summary>
   <br>
@@ -49,5 +49,5 @@ At your choice, this package downloads the theme from GitHub or copies it from s
   <img src="https://raw.githubusercontent.com/Valer100/Sun-Valley-Theme-Colorizer/main/screenshots/screenshot_light_linux.png"/>
 </details>
 
-## License (of the module)
+## 📜 License (of this package)
 [MIT](https://github.com/Valer100/Sun-Valley-Theme-Colorizer/blob/main/LICENSE)
