@@ -26,6 +26,11 @@ setup(
     ],
     package_data={
         "sv_ttk_colorizer": ["resources/*"],
+        "sv_ttk_colorizer": ["resources/dark/*"],
+        "sv_ttk_colorizer": ["resources/hue_scale/*"],
+        "sv_ttk_colorizer": ["resources/icon/*"],
+        "sv_ttk_colorizer": ["resources/light/*"],
+        "sv_ttk_colorizer": ["resources/theme_switcher/*"],
     },
     entry_points = {
         "console_scripts": [
