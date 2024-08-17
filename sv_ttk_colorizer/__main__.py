@@ -335,8 +335,8 @@ def main():
 
             if include_examplepy.get(): shutil.copyfile(util.root_folder + "/resources/example.py", util.sv_ttk_download + "/example.py")
 
-            light_tcl = open(util.sv_ttk_light, "r").read().replace("#005fb8", util.accent_light).replace("#2f60d8", util.accent_light).replace("#c1d8ee", util.accent_dark)
-            dark_tcl = open(util.sv_ttk_dark, "r").read().replace("#57c8ff", util.accent_dark).replace("#2f60d8", util.accent_light).replace("#25536a", util.accent_light)
+            light_tcl = open(util.sv_ttk_light, "r").read().replace("#005fb8", util.accent_light).replace("#2f60d8", util.accent_light).replace("#c1d8ee", "#dadada")
+            dark_tcl = open(util.sv_ttk_dark, "r").read().replace("#57c8ff", util.accent_dark).replace("#2f60d8", util.accent_light).replace("#25536a", "#252525")
 
             open(util.sv_ttk_light, "w").write(light_tcl)
             open(util.sv_ttk_dark, "w").write(dark_tcl)
