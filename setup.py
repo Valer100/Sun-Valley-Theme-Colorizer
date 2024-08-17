@@ -4,7 +4,7 @@ description = open("README.md", "r", encoding = "utf8").read()
 
 setup(
     name = "sv_ttk_colorizer",
-    version = "1.3.1",
+    version = "1.3.2",
     python_requires = ">=3.8",
     license = "MIT",
     author = "Valer100",
@@ -25,12 +25,7 @@ setup(
         "tkscrollframe"
     ],
     package_data={
-        "sv_ttk_colorizer": ["resources/*"],
-        "sv_ttk_colorizer": ["resources/dark/*"],
-        "sv_ttk_colorizer": ["resources/hue_scale/*"],
-        "sv_ttk_colorizer": ["resources/icon/*"],
-        "sv_ttk_colorizer": ["resources/light/*"],
-        "sv_ttk_colorizer": ["resources/theme_switcher/*"],
+        "sv_ttk_colorizer": ["resources/*", "resources/dark/*", "resources/hue_scale/*", "resources/icon/*", "resources/light/*", "resources/theme_switcher/*"]
     },
     entry_points = {
         "console_scripts": [
