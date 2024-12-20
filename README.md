@@ -4,6 +4,14 @@
 
 # Sun Valley Theme Colorizer
 
+[![PyPI](https://img.shields.io/pypi/v/sv_ttk_colorizer)](https://pypi.org/project/sv_ttk_colorizer/)
+[![Format](https://img.shields.io/pypi/format/sv_ttk_colorizer)]()
+[![Downloads](https://img.shields.io/pepy/dt/sv_ttk_colorizer)](https://pypi.org/project/sv_ttk_colorizer/)
+[![Stars](https://img.shields.io/github/stars/Valer100/Sun-Valley-Theme-Colorizer?style=flat&color=yellow)]()
+[![Contributors](https://img.shields.io/github/contributors/Valer100/Sun-Valley-Theme-Colorizer)]()
+[![Last commit](https://img.shields.io/github/last-commit/Valer100/Sun-Valley-Theme-Colorizer)]()
+[![License](https://img.shields.io/github/license/Valer100/Sun-Valley-Theme-Colorizer)](https://github.com/Valer100/Sun-Valley-Theme-Colorizer/blob/main/LICENSE)
+
 This Python module allows you to change the accent color of [@rdbende](https://github.com/rdbende)'s [Sun Valley ttk theme](https://github.com/rdbende/Sun-Valley-ttk-theme) and to apply other tweaks and improvements without the need to manually download the theme from GitHub, change the hue of the spritesheet files and change some colors in the tcl files. This module does everything for you.
 
 ## 📦 How to install
