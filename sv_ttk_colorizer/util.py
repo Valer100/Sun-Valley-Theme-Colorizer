@@ -13,17 +13,17 @@ if os.path.exists(root_folder + "/resources"): shutil.rmtree(root_folder + "/res
 
 shutil.copytree("resources", root_folder + "/resources")
 
-def update_preview_assets(theme):
+def update_preview_assets(theme, dark_titlebar):
     global preview_bg, preview_text, preview, preview_theme, is_accent_changed
 
     preview_theme = theme
-    preview_bg = tk.PhotoImage(file = root_folder + f"/resources/{theme}/preview.png")
+    preview_bg = tk.PhotoImage(file = root_folder + f"/resources/{theme}/preview{'_2' if not dark_titlebar and theme == 'dark' else ''}.png")
     preview_text = tk.PhotoImage(file = root_folder + f"/resources/{theme}/preview_accent_text.png")
 
     if is_accent_modified: preview = tk.PhotoImage(file = root_folder + f"/resources/{theme}/preview_accent_modified.png")
     else: preview = tk.PhotoImage(file = root_folder + f"/resources/{theme}/preview_accent.png")
 
-update_preview_assets("light")
+update_preview_assets("light", False)
 
 accent_light = "#005fb8"
 accent_dark = "#57c8ff"
@@ -121,7 +121,7 @@ dm_titlebars_replace2 = '''# Set title bar color on Windows
 
 
 def update_colors(theme):
-    global bg, warning, bg_wallpaper, accent, reference
+    global bg, warning, accent, reference
 
     if theme == "dark": 
         bg = "#202020"
@@ -201,7 +201,7 @@ def update_accents():
         accent = "{accent_light}"
 '''
 
-def update_preview(hue):
+def update_preview(hue, dark_titlebar):
     global preview, is_accent_modified, preview_theme
 
     shutil.copyfile(root_folder + "/resources/light/preview_accent.png", root_folder + "/resources/light/preview_accent_modified.png")
@@ -210,7 +210,7 @@ def update_preview(hue):
     change_hue_and_save(root_folder + "/resources/dark/preview_accent_modified.png", hue)
 
     is_accent_modified = True
-    update_preview_assets(preview_theme)
+    update_preview_assets(preview_theme, dark_titlebar)
 
 def set_title_bar_color(root, theme):
     if get_windows_version() == 10:
@@ -259,11 +259,11 @@ class AutoScrollbar(ttk.Scrollbar):
             
         ttk.Scrollbar.set(self, lo, hi)
 
-def add_switch(parent, text, variable):
+def add_switch(parent, text, variable, command = None):
     layout = ttk.Frame(parent)
     layout.pack(fill = "x", pady = (16, 0))
 
-    checkbox = ttk.Checkbutton(layout, variable = variable, style = "Switch.TCheckbutton")
+    checkbox = ttk.Checkbutton(layout, variable = variable, style = "Switch.TCheckbutton", command = command)
     checkbox.pack(side = "left")
 
     def on_enter(event):

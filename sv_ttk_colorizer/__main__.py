@@ -94,7 +94,7 @@ def main():
         if theme == "dark": light["style"] = "TButton"; dark["style"] = "Accent.TButton"
         else: light["style"] = "Accent.TButton"; dark["style"] = "TButton"
 
-        util.update_preview_assets(theme)
+        util.update_preview_assets(theme, dm_titlebars.get())
         preview.delete("window")
         preview.delete("accent")
         preview.delete("text")
@@ -116,7 +116,7 @@ def main():
             window.configure(cursor = "watch")
             hue_slider.configure(cursor = "watch")
             window.update()
-            util.update_preview(hue_value)
+            util.update_preview(hue_value, dm_titlebars.get())
             util.update_accents()
             update_preview_theme(preview_theme)
             window.configure(cursor = "")
@@ -240,7 +240,7 @@ def main():
 
     ttk.Separator(options, orient = "vertical").pack(fill = "x", pady = (16, 0))
 
-    util.add_switch(options, "Dark Mode title bars on Windows", dm_titlebars)
+    util.add_switch(options, "Dark Mode title bars on Windows", dm_titlebars, lambda: update_preview_theme(preview_theme))
 
     warning1 = ttk.Label(options, text = "This setting requires an additional dependency for your project: pywinstyles.", foreground = util.warning, wraplength = 270)
     warning1.pack(pady = (8, 0), anchor = "w")
