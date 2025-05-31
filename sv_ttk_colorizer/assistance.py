@@ -6,6 +6,7 @@ except Exception as e: from sv_ttk_colorizer import util # type: ignore
 
 def show():
     window = tk.Toplevel()
+    window.withdraw()
     window.title("Help")
     util.set_title_bar_color(window, sv_ttk.get_theme())
 
@@ -140,3 +141,4 @@ def show():
     window.update()
     geometry = window.geometry().split("+")[0].split("x")
     window.minsize(width = geometry[0], height = geometry[1])
+    window.deiconify()
