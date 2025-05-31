@@ -273,7 +273,7 @@ def add_switch(parent, text, variable, command = None):
         if not str(checkbox["state"]).__contains__("disabled"): checkbox.configure(state = "!active")
 
     def on_click(event):
-        if not str(checkbox["state"]).__contains__("disabled"): variable.set(not variable.get())
+        if not str(checkbox["state"]).__contains__("disabled"): checkbox.invoke()
         checkbox.focus_set()
 
     label = ttk.Label(layout, text = text, wraplength = 200, anchor = "w")
@@ -296,7 +296,7 @@ def add_radiobutton(parent, text, variable, value):
         if not str(radiobutton["state"]).__contains__("disabled"): radiobutton.configure(state = "!active")
 
     def on_click(event):
-        if not str(radiobutton["state"]).__contains__("disabled"): variable.set(value)
+        if not str(radiobutton["state"]).__contains__("disabled"): radiobutton.invoke()
         radiobutton.focus_set()
 
     label = ttk.Label(layout, text = text, wraplength = 200, anchor = "w")
