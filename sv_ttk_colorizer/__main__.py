@@ -12,14 +12,31 @@ def main():
 
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
+    if sys.platform == "win32":
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("Valer100.sv_ttk_c")
+
     window = tk.Tk()
     window.title("Sun Valley Theme Colorizer")
 
-    icon_48x48 = tk.PhotoImage(file = "resources/icon/48x48.png")
-    icon_32x32 = tk.PhotoImage(file = "resources/icon/32x32.png")
-    icon_16x16 = tk.PhotoImage(file = "resources/icon/16x16.png")
+    icon_16 = tk.PhotoImage(file = "resources/icon/16.png")
+    icon_20 = tk.PhotoImage(file = "resources/icon/20.png")
+    icon_24 = tk.PhotoImage(file = "resources/icon/24.png")
+    icon_32 = tk.PhotoImage(file = "resources/icon/32.png")
+    icon_40 = tk.PhotoImage(file = "resources/icon/40.png")
+    icon_48 = tk.PhotoImage(file = "resources/icon/48.png")
+    icon_64 = tk.PhotoImage(file = "resources/icon/64.png")
+    icon_72 = tk.PhotoImage(file = "resources/icon/72.png")
+    icon_96 = tk.PhotoImage(file = "resources/icon/96.png")
+    icon_128 = tk.PhotoImage(file = "resources/icon/128.png")
+    icon_144 = tk.PhotoImage(file = "resources/icon/144.png")
+    icon_196 = tk.PhotoImage(file = "resources/icon/196.png")
+    icon_256 = tk.PhotoImage(file = "resources/icon/256.png")
     
-    if sys.platform == "win32": window.iconphoto(True, icon_48x48, icon_32x32, icon_16x16)
+    window.iconphoto(
+        True, icon_16, icon_20, icon_24, icon_32, icon_40, icon_48, icon_64,
+        icon_72, icon_96, icon_128, icon_144, icon_196, icon_256
+    )
 
     dark_mode = tk.BooleanVar(value = False)
 
